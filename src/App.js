@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment } from 'react'
+import { Route, Switch, withRouter } from "react-router-dom";
+import {connect} from "react-redux";
+import Navbar from './components/Navbar';
+import About from './components/About';
+import LoginForm from './components/LoginForm';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+        <Navbar />
+        <Switch>
+          <Route exact path="/about" component={About} />
+          <Route path="/" component={LoginForm} />
+        </Switch>
+        {/* <Switch>
+          <Route exact path="/" render={() => <Redirect to="/login" />} />
+          <Route exact path="/profile" render={() =>
+            this.state.currentUser ? <Profile
+              currentUser={this.state.currentUser} />:
+              <Redirect to="/login" />
+          } />
+          <Route exact path="/login" render={() =>
+            this.state.currentUser ?
+            <Redirect to="/profile"/> :
+            <LoginForm updateUser={this.updateUser}/>
+          } />
+          <Route component={NotFound} />
+        </Switch> */}
+      </Fragment>
   );
 }
 
