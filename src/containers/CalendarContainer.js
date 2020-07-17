@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import FullCalendar, { formatDate } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -7,12 +8,14 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS, createEventId } from '../fullcalender/Cal-Util'
 import '../styles/Calendar.css';
 
-export default class CalenderContainer extends React.Component {
+class CalenderContainer extends React.Component {
 
   state = {
     weekendsVisible: true,
     currentEvents: []
   }
+
+  
 
   render() {
     return (
@@ -134,4 +137,17 @@ function renderSidebarEvent(event) {
   )
 }
   
-// export default connect(mapStateToProps, actionCreators)(CalenderContainer)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user
+  }
+}
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     fetchingUser: (token) => dispatch(fetchingUser(token))
+   
+//   }
+// }
+
+export default withRouter(connect(mapStateToProps)(CalenderContainer));

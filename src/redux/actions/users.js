@@ -19,6 +19,13 @@ export const loadingUser = () => {
   return { type: "LOADING_USER" }
 }
 
+export const clearLoading = () => {
+  return { type: "CLEAR_LOADING" }
+}
+
+export const displayError = (errors) => {
+  return { type: "THROW_ERROR", errors }
+}
 
 
 export const handlingLoginSubmit = (user_data) => {
@@ -66,9 +73,13 @@ export const fetchingUser = (token) => {
         if (data.user.id !== undefined) {
           console.log(data)
           dispatch(handleLoginSubmit(data))
-        } 
+        }else {localStorage.clear();} 
       })
   }
+}
+
+export const clearError = () => {
+  return { type: "CLEAR_ERROR" }
 }
 
 export const updateUser = (user) => {

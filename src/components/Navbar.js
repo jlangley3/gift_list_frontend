@@ -39,7 +39,7 @@ class NavBar extends Component {
           <React.Fragment>
             <Menu.Item 
               name='home' 
-              as={ Link } to='/'
+              as={ Link } to='/profile'
             >
               <Icon name='car' size='big' color='green' />
             </Menu.Item>

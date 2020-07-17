@@ -9,7 +9,6 @@ class Profile extends React.Component{
 
   render() {
     let {avatar, username, first_name, last_name} = this.props.user
-   
 
     return (
        <Fragment>
