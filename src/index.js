@@ -6,8 +6,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from "./redux/store";
+import "semantic-ui-css/semantic.min.css";
 // import registerServiceWorker from "./registerServiceWorker";
-// import "semantic-ui-css/semantic.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
