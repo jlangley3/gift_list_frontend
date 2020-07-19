@@ -1,17 +1,21 @@
 import React, { Fragment } from "react";
 import { withRouter } from "react-router";
 import {connect} from "react-redux";
-import { handlingLoginSubmit } from '../redux/actions/users'
+import { Link } from 'react-router-dom'
+import { handlingLoginSubmit, clearError } from '../redux/actions/users';
+import { isEmpty } from 'lodash';
 import defaultProfile from '../images/Mario.jpeg';
-import { Button, Form, Segment, Message } from "semantic-ui-react";
+import { Button, Divider, Grid, Form, Segment, Message } from "semantic-ui-react";
 // import '../styles/Login.css';
 
 class LoginForm extends React.Component {
-
-  state = {
-    username: "",
-    password: ""
-  };
+  constructor(){
+    super()
+    this.state = {
+      username: '',
+      password: ''
+    }
+  }
 
   handleChange = (event, { name, value }) => {
     this.setState({ [name]: value });
@@ -35,6 +39,8 @@ class LoginForm extends React.Component {
   render() {
     return (
       <Segment>
+        <Grid columns={2} relaxed='very' stackable>
+        <Grid.Column>
         <Form
           onSubmit={this.handleSubmit}
           size="mini"
@@ -58,7 +64,9 @@ class LoginForm extends React.Component {
             />
           </Form.Group>
           <Button type="submit">Login</Button>
-        </Form>
+         </Form>
+         </Grid.Column>
+        </Grid>
       </Segment>
     );
   }
@@ -68,13 +76,15 @@ class LoginForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    error: state.error
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handlingLoginSubmit: (user) => dispatch(handlingLoginSubmit(user)),
+    clearError: () => dispatch(clearError())
   }
 }
 

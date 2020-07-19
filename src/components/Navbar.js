@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from 'react-redux'
 import { Menu, Dropdown, Modal, Segment, Label, Icon, Popup, Feed } from 'semantic-ui-react'
+import { isEmpty } from 'lodash'
 import { logoutUser } from '../redux/actions/users'
 
 // import '../styles/Nav.css';
@@ -34,11 +35,11 @@ class NavBar extends Component {
         <Menu 
           inverted
           stackable
-        >
-        { this.props.user ?
+          >
+          { !isEmpty(this.props.user) ?
           <React.Fragment>
             <Menu.Item 
-              name='home' 
+              name='profile' 
               as={ Link } to='/profile'
             >
               <Icon name='car' size='big' color='green' />
@@ -59,10 +60,38 @@ class NavBar extends Component {
                 <Icon name='sign-in' size='large' color='green'/>
 
               </Menu.Item> 
+              <Menu.Item 
+                name='event_form' 
+                as={ Link } to='/new_event'
+              >
+                <Icon name='add' size='large' color='green'/>
+
+              </Menu.Item> 
+              <Menu.Item 
+                name='reminder_form' 
+                as={ Link } to='/reminder_form'
+              >
+                <Icon name='eye dropper' size='large' color='green'/>
+
+              </Menu.Item> 
+              <Menu.Item 
+                name='contact_form' 
+                as={ Link } to="contacts/new"
+              >
+                <Icon name='address book' size='large' color='green'/>
+
+              </Menu.Item> 
+              <Menu.Item 
+                name='friends' 
+                as={ Link } to="friends"
+              >
+                <Icon name='find' size='large' color='green'/>
+
+              </Menu.Item> 
               <Dropdown
                 trigger={this.avatar()}
                 pointing='top right' 
-                icon={null}             
+                // icon={null}             
                 >
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>

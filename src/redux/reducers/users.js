@@ -7,7 +7,6 @@ const userReducer = (state = {}, action) => {
       case "UPDATING_USER":
         return action.user.user
       case "LOGOUT_USER":
-         localStorage.clear();
         return {}
       default:
         return state

@@ -1,25 +1,71 @@
 const URL = () => {
-    return `http://localhost:3000/api/v1`
-  }
-  
-  export const fetchedEvents = (payload) => {
-    return { type: "FETCHED_EVENTS", payload }
-  }
-  
+  return `http://localhost:3000/api/v1`
+}
 
-  export const fetchingEvents = (user_data) => {
-    console.log(user_data)
- 
-    fetch(`${URL()}/events`)
-    .then(res => res.json())
-    .then(data => {
-      console.log("fetching events", data)
-      if(data.error){
-        console.log(data)
-        alert(data.message)
-      }else{
-        dispatch(fetchedEvents(data))
-      }
+const authHeaders = () => {
+  const token = localStorage.getItem('token')
+  
+  return {
+    'Content-Type': 'application/json',
+    "Authentication": localStorage.getItem("token")
+  }
+}
+  
+export const addingEvent = newEventData => {
+  return (dispatch) => {
+    
+    fetch(`${URL()}/events`, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify(newEventData)
+    })
+    .then(resp => resp.json())
+    .then(newEvent => dispatch(addEvent(newEvent)))
+  }
+}
+
+export const addEvent = newEvent => {
+  return {type: "ADD_EVENT", event: newEvent}
+}
+
+
+export const updatingEvent = event => {
+  return (dispatch) => {
+    fetch(`${URL()}/events/${event.id}`, {
+      method: 'PATCH',
+      headers: authHeaders(),
+      body: JSON.stringify(event)
+    })
+    .then(resp => resp.json())
+    .then(eventData => {
+      console.log(eventData)
+      dispatch(updateEvent(eventData))
     })
   }
+}
+
+
+export const updateEvent = newEvent => {
+  return {type: "UPDATE_EVENT", event: newEvent}
+}
+
+export const deletingEvent = thisEvent => {
   
+  return (dispatch) => {
+    fetch(`${URL()}/events/${thisEvent.id}`, {
+      method: 'DELETE',
+      headers: authHeaders(),
+      body: JSON.stringify(thisEvent)
+    })
+    .then(resp => resp.json())
+    .then(eventData => {
+      debugger;
+      console.log(eventData)
+      dispatch(deleteEvent(eventData))
+    })
+  }
+}
+
+export const deleteEvent = newEvent => {
+  return {type: "DELETE_EVENT", event: newEvent}
+}

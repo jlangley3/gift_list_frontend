@@ -2,7 +2,10 @@ import React, { Fragment } from "react";
 import { Card, Image } from "semantic-ui-react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import {connect} from "react-redux";
-import { fetchingUser } from '../redux/actions/users'
+import { fetchingUser } from '../redux/actions/users';
+import Reminders from "./Reminders.js";
+import Contacts from "./Contacts.js"
+import Gifts from "./Gifts.js"
 import Events from "./Events.js"
 
 class Profile extends React.Component{
@@ -20,6 +23,9 @@ class Profile extends React.Component{
       </Card.Content>
     </Card>
          {this.props.user.events.map(event => { return <Events key={event.id} event={event}/>})}
+         {this.props.user.reminders.map(reminder => { return <Reminders key={reminder.id} reminder={reminder}/>})}
+         {this.props.user.contacts.map(contact => { return <Contacts key={contact.id} contact={contact}/>})}
+         {this.props.user.gifts.map(gift => { return <Gifts key={gift.id} gift={gift}/>})}
        </Fragment>
     )
   }

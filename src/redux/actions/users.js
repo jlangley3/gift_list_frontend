@@ -11,7 +11,7 @@ const authHeaders = () => {
   }
 }
 
-export const handleLoginSubmit = (payload) => {
+export const handledLoginSubmit = (payload) => {
   return { type: "FETCHED_USER", payload }
 }
 
@@ -44,15 +44,19 @@ export const handlingLoginSubmit = (user_data) => {
     })
   }).then(res => res.json())
   .then(data => {
-    console.log("server response", data)
-    if(data.error){
-      console.log(data)
-      alert(data.message)
-    }else{
-      dispatch(handleLoginSubmit(data))
+    console.log(data)
+    if (data.authenticated) {
+      dispatch(handledLoginSubmit(data))
       localStorage.setItem('token', data.token)
-      
+    } else {
+      console.log(data)
+      dispatch(displayError(data.message))
+      dispatch(clearLoading())
     }
+  })
+  .catch((error) => {
+    dispatch(displayError(error))
+    throw error
   })
 }
 }
@@ -71,9 +75,35 @@ export const fetchingUser = (token) => {
       .then(resp => resp.json())
       .then(data => {
         if (data.user.id !== undefined) {
-          console.log(data)
-          dispatch(handleLoginSubmit(data))
-        }else {localStorage.clear();} 
+          console.log(data.user)
+          dispatch(handledLoginSubmit(data))
+        } else {
+          dispatch(clearLoading())
+        }
+      })
+  }
+}
+
+export const addingUser = user => {
+  return (dispatch) => {
+    dispatch(loadingUser)
+
+    fetch(`${URL()}/users`, {
+      method: 'POST',
+      // headers: {'Content-Type': 'application/json'},
+      body: user
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        if (data.authenticated) {
+          dispatch(handledLoginSubmit(data))
+          localStorage.setItem('token', data.token)
+        } else {
+          console.log(data.message)
+          dispatch(displayError(data))
+          dispatch(clearLoading())
+        }
       })
   }
 }

@@ -1,22 +1,21 @@
 import React, {Component, Fragment} from "react"
 import { Card, Image } from "semantic-ui-react";
-import { Route, Switch, Redirect, withRouter, Link, NavLink, } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
 
 
-class Events extends Component {
+class Gifts extends Component {
     render() {
-   
-        let { budget, date, title, id} = this.props.event
+        let { name, link, price, rating, } = this.props.gift
         return (
             <Fragment>
-            <Card as={Link} to={`/events/${id}`}>
-               <Image src="https://www.eventelephant.com/wp-content/uploads/2019/01/EventElephant.jpg" alt="No Picture" />
+            <Card>
+               <Image src="https://www.creativefabrica.com/wp-content/uploads/2018/10/Happy-Birthday-Gift-Green-and-Black-by-Surya-Darmawan-580x386.jpg" alt="No Picture" />
                <Card.Content>
-                 <Card.Header>{title}</Card.Header>
+                 <Card.Header>{name}</Card.Header>
          
-                 <Card.Description>{date}{"   "}{budget}</Card.Description>
+                 <Card.Description>{"Price: "}{price}{"  Rating: "}{rating}</Card.Description>
                </Card.Content>
              </Card>
             </Fragment>
@@ -38,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Events));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Gifts));

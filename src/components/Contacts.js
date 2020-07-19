@@ -1,22 +1,21 @@
 import React, {Component, Fragment} from "react"
 import { Card, Image } from "semantic-ui-react";
-import { Route, Switch, Redirect, withRouter, Link, NavLink, } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
 
 
-class Events extends Component {
+class Contacts extends Component {
     render() {
-   
-        let { budget, date, title, id} = this.props.event
+        let { name, birthday} = this.props.contact
         return (
             <Fragment>
-            <Card as={Link} to={`/events/${id}`}>
-               <Image src="https://www.eventelephant.com/wp-content/uploads/2019/01/EventElephant.jpg" alt="No Picture" />
+            <Card>
+               <Image src="https://www.netclipart.com/pp/m/402-4026927_blank-avatar-black-png.png" alt="No Picture" />
                <Card.Content>
-                 <Card.Header>{title}</Card.Header>
+                 <Card.Header>{name}</Card.Header>
          
-                 <Card.Description>{date}{"   "}{budget}</Card.Description>
+                 <Card.Description>{"Birthday: "}{birthday}</Card.Description>
                </Card.Content>
              </Card>
             </Fragment>
@@ -38,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Events));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Contacts));
