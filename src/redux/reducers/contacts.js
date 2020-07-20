@@ -2,7 +2,7 @@ const contactsReducer = (state = [], action) => {
 
     switch (action.type) {
       case "FETCHED_USER":
-        return action.payload.user.contacts
+        return action.payload.contacts
       case "ADD_CONTACT":
         return [...state, action.contact]
       case "UPDATE_CONTACT":

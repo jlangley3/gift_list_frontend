@@ -41,7 +41,7 @@ const remindersReducer = (state = [], action) => {
 
   switch (action.type) {
     case "FETCHED_USER":
-      return action.payload.reminders
+      return action.payload.user.reminders
     case 'ADD_REMINDER':
       return [...state, action.reminder]
     case "UPDATE_REMINDER":

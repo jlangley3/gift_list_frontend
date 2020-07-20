@@ -1,18 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Segment, Button, Grid, Dropdown } from 'semantic-ui-react';
-import { addingGiftContact } from '../redux/actions/gifts';
+import { Segment, Button, Grid, Dropdown, Form } from 'semantic-ui-react';
+import { addingGift } from '../redux/actions/gifts';
 
-class EventContacts extends React.Component {
+class GiftForm extends React.Component {
 
       constructor(){
           super();
           this.state = {
-            currentContact: null
+            currentContact: null,
+            currentGift: null
           }
       }
 
-
+      handleChange = (event, { name, value }) => {
+        this.setState({ [name]: value });
+      };
     contactDropdown = () => {
         return (
         this.props.user.contacts.map(contact => {return {key: contact.id, text: contact.name, value: contact}}) 
@@ -23,7 +26,7 @@ class EventContacts extends React.Component {
      
     handleSubmitForm = (event) => {
        
-        this.props.addingGiftContact(this.state.currentContact, this.props.event)
+        this.props.addingGift(this.state, this.props.event)
     }
 
     render(){
@@ -32,7 +35,12 @@ class EventContacts extends React.Component {
         <div>
             EC
             <Grid.Column>
-         
+            <Form.Input 
+              fluid label='gift' 
+              name='currentGift'
+              placeholder='Gift'
+              onChange={this.handleChange}
+              value={this.state.currentGift} />
                 <Dropdown
                   name='kind'
                   placeholder="Select and option"
@@ -58,9 +66,9 @@ const mapStateToProps = (state )=> {
   
   const mapDispatchToProps = dispatch => {
     return {
-      addingGiftContact: (newContact, thisEvent) => dispatch(addingGiftContact(newContact, thisEvent))
+      addingGiftContact: (newContactGift, thisEvent) => dispatch(addingGift(newContactGift, thisEvent))
       
     }
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(EventContacts)
+  export default connect(mapStateToProps, mapDispatchToProps)(GiftForm)

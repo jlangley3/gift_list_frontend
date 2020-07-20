@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Container, List, Icon, Divider, Modal, Grid, Button, Label } from 'semantic-ui-react'
+import { Image, Header, Container, List, Icon, Divider, Modal, Grid, Button, Label, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import EditReminder from './EditReminder';
 import moment from 'moment';
@@ -9,6 +9,7 @@ import EventContacts from './EventContacts';
 import EventForm from './EventForm';
 import { isEmpty } from 'lodash';
 import { updatingEvent, deletingEvent, addingEvent} from '../redux/actions/events';
+import GiftForm from './GiftForm';
 
 
 class ContactShow extends React.PureComponent {
@@ -21,7 +22,8 @@ class ContactShow extends React.PureComponent {
         editEventModal: false,
         editingEvent: null,
         newEventModal: false,
-        addContactModal: false
+        addContactModal: false,
+        newGiftModal: false
     }
   }
  
@@ -42,10 +44,28 @@ class ContactShow extends React.PureComponent {
           content='Add Contacts to this Gift List'
           primary
         />}
-        open={this.state.newReminderModal}
+        open={this.state.addContactModal}
         onClose={() => this.handleClose('newGiftModal')}
       >
         <EventContacts event={this.props.event} title={'Add Contacts to List'} handleClose={() => this.handleClose('newEventModal')} />
+        <p />
+      </Modal>
+    )
+  }
+
+  addGiftBtn = () => {
+    return (
+      <Modal
+        size='tiny'
+        trigger={<Button
+          onClick={() => this.handleOpen('newGiftModal')}
+          content='Add gifts for contacts'
+          primary
+        />}
+        open={this.state.newGiftModal}
+        onClose={() => this.handleClose('newGiftModal')}
+      >
+        <GiftForm event={this.props.event} title={'Add Gifts for Contacts'} handleClose={() => this.handleClose('newEventModal')} />
         <p />
       </Modal>
     )
@@ -108,7 +128,7 @@ class ContactShow extends React.PureComponent {
       >
         <Header icon='trash' content='Delete this event?' />
         <Modal.Content>
-          <p>This is an irreversible action. Are you sure you want to proceed?</p>
+          <p>You Sure?</p>
         </Modal.Content>
         <Modal.Actions>
           <Button negative content='No' onClick={() => this.handleClose('deleteEventModal')} />
@@ -122,7 +142,17 @@ class ContactShow extends React.PureComponent {
     )
   }
 
- 
+     filteredGiftList = () => {
+       let {contacts, gifts} = this.props.event
+       const finalarray = {};
+       contacts.forEach((e1)=> gifts.forEach((e2)=> 
+       {if(e1.id === e2.id){
+         finalarray[e1.name] = e2.name
+       }}));
+       return finalarray;
+    }
+     
+   
 
   render(){
       console.log(this.props)
@@ -144,11 +174,13 @@ class ContactShow extends React.PureComponent {
         <Image floated='right' size='large' src="https://www.eventelephant.com/wp-content/uploads/2019/01/EventElephant.jpg" alt="No Picture" />
         <Grid.Row columns={2}>
           <Grid.Column width={4}>
-            <Button>Click!</Button>
+          <ul>
+              {!isEmpty(this.props.event.gifts) ? this.props.event.gifts.map(gift => <li>{gift}</li> ) : <h3>"Please add Contacts to this list"</h3>}
+            </ul>
           </Grid.Column>
           <Grid.Column>
             <ul>
-              {!isEmpty(this.props.event.contacts) ? this.props.event.contacts.map(contact => <li>{contact.name}</li> ) : <h3>"Please add Contacts to this list"</h3>}
+              {!isEmpty(this.props.event.contacts) ? this.props.event.contacts.map(contact => <li>{contact}</li> ) : <h3>"Please add Contacts to this list"</h3>}
             </ul>
           </Grid.Column>
         </Grid.Row>
@@ -163,6 +195,9 @@ class ContactShow extends React.PureComponent {
           <Grid.Column>
             { this.addContactBtn() }
           </Grid.Column>
+          <Grid.Column>
+            { this.addGiftBtn() }
+          </Grid.Column>
         </Grid.Row>
 
       </Grid>
@@ -172,7 +207,8 @@ class ContactShow extends React.PureComponent {
 
 const mapStateToProps = (state) => {
   return { 
-      user: state.user 
+      user: state.user,
+      contacts: state.contacts 
     }
 }
 
@@ -187,3 +223,27 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactShow)
+
+
+
+
+// let contacts = [{name: "tom", id: "2"}, {name: "pam", id: "1"}]
+
+// let gifts = [{name: "poom", id: "1"}, {name: "tommy", id: "2"}, {name: "fish", id: "2"}]
+
+
+// function compare(arr1,arr2){
+// const finalarray = [];
+
+// arr1.forEach((e1)=> arr2.forEach((e2)=> 
+//                {if(e1.id === e2.id){
+//                  finalarray[e1.name] = e2.name
+//                }}));
+//                return finalarray;
+// }
+
+// let jim = compare(contacts, gifts)
+// let fish = jim.map(j => return `${Object.key} & ${Object.value}`)
+
+
+// console.log(fish)

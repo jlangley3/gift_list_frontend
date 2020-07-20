@@ -59,7 +59,6 @@ export const deletingEvent = thisEvent => {
     })
     .then(resp => resp.json())
     .then(eventData => {
-      debugger;
       console.log(eventData)
       dispatch(deleteEvent(eventData))
     })

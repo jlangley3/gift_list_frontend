@@ -3,7 +3,7 @@
 const eventsReducer = (state = {}, action) => {
     switch (action.type) {
       case '"FETCHED_USER"':
-        return action.payload.user.events
+        return action.payload.events
         case "ADD_EVENT":
           return [...state, action.event]
         case "UPDATE_EVENT":
