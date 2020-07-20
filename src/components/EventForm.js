@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addingEvent, updatingEvent } from '../redux/actions/events'
 import { Header, Segment, Grid, Icon, Transition, Dropdown, Checkbox, Input, Button, Modal, Form } from 'semantic-ui-react'
-import DateTimePicker from 'react-datetime-picker';
-import moment from 'moment'
+
 
 
 

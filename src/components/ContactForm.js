@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addingContact, updatingContact } from '../redux/actions/contacts'
 import { Segment, Button, Grid, Dropdown } from 'semantic-ui-react'
-import toast from 'toasted-notes'
-import 'toasted-notes/src/styles.css';
+
 
 class ContactForm extends React.Component {
   constructor(props){
@@ -28,7 +27,7 @@ class ContactForm extends React.Component {
     // console.log(this.props)
 
     if (this.state.name === '') {
-      toast.notify('Please enter a name', {duration: null})
+      alert('Please enter a name', {duration: null})
 
     } else if (this.props.contact) {
         const updatedContact = {
