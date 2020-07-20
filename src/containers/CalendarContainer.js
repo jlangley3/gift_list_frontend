@@ -9,16 +9,11 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { INITIAL_EVENTS, createEventId } from '../fullcalender/Cal-Util';
 import '../styles/Calendar.css';
-
 import moment from 'moment';
-
-import ReminderForm from '../components/ReminderForm';
 import EventForm from '../components/EventForm';
-import ReminderShow from '../components/ReminderShow';
+import EventShow from '../components/EventShow';
 import { Modal, Button, Segment } from 'semantic-ui-react';
-import { deletingReminder } from '../redux/actions';
-import DeleteConfirmation from '../components/DeleteConfirm';
-
+import { addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events'
 
 class CalenderContainer extends React.Component {
   constructor() {
@@ -29,14 +24,12 @@ class CalenderContainer extends React.Component {
       editForm: false,
       weekendsVisible: true,
       currentEvents: []
-      // deleteConfirmation: false
     }
   }
 
   handleOpen = (event) => this.setState({modalOpen: true, featuredEvent: event})
   handleClose = () => this.setState({modalOpen: false, editForm: false, deleteConfirmation: false})
   toggleEditForm = () => this.setState({editForm: !this.state.editForm})
-  // openDeleteConfirmation = () => this.setState({deleteConfirmation: true})
   closeDeleteConfirmation = () => this.setState({deleteConfirmation: false, editForm: false, modalOpen: false})
 
   render() {
@@ -57,7 +50,7 @@ class CalenderContainer extends React.Component {
             selectMirror={true}
             dayMaxEvents={true}
             weekends={this.state.weekendsVisible}
-            initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+            events={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
             select={(event, e) => {this.handleOpen(event)}}
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
@@ -78,17 +71,16 @@ class CalenderContainer extends React.Component {
          >
          {!this.state.editForm ? 
          <Segment>
-           <ReminderShow
+           <EventShow
              reminder={this.state.featuredEvent}
              handleClose={this.handleClose}
            />
-           <Button content='Edit Reminder' onClick={this.toggleEditForm}/> 
-           <DeleteConfirmation reminder={this.state.featuredEvent} handleClose={this.closeDeleteConfirmation}/>
+           <Button content='Edit Event' onClick={this.toggleEditForm}/> 
          </Segment>
          :
-         <ReminderForm 
+         <EventForm 
            contact={null} 
-           title={'Update reminder!'} 
+           title={'Update Event!'} 
            reminder={this.state.featuredEvent} 
            handleClose={this.handleClose}
          />
@@ -195,15 +187,15 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user,
     reminders: state.reminders,
     loading: state.loading,
-    recurringReminders: state.recurringReminders,
-    calendarFilter: state.calendarFilter,
     contacts: state.contacts
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    deletingReminder: (reminder) => dispatch(deletingReminder(reminder))
+    deletingEvent: (event) => dispatch(deletingEvent(event)),
+    updatingEvent: (event) => dispatch(updatingEvent),
+    addingEvent: (event) => dispatch(addingEvent)
   }
 }
 

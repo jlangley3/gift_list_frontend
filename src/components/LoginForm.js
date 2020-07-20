@@ -38,16 +38,20 @@ class LoginForm extends React.Component {
 
   render() {
     return (
+      <Grid.Row>
       <Segment>
         <Grid columns={2} relaxed='very' stackable>
         <Grid.Column>
         <Form
           onSubmit={this.handleSubmit}
-          size="mini"
+          size="large"
           key="mini" 
+          postition="center"
         >
-          <Form.Group widths="equal">
+          
+          <Form.Group widths="equal" className='ui form'>
             <Form.Input
+              className="field"
               label="username"
               placeholder="username"
               name="username"
@@ -55,6 +59,7 @@ class LoginForm extends React.Component {
               value={this.state.username}
             />
             <Form.Input
+              className="field"
               type="password"
               label="password"
               placeholder="password"
@@ -66,8 +71,12 @@ class LoginForm extends React.Component {
           <Button type="submit">Login</Button>
          </Form>
          </Grid.Column>
+         <Grid.Column textAlign='center' verticalAlign='middle'>
+                <Button content='Sign Up' as={ Link } to='/signup' icon='signup' size='big'/>
+        </Grid.Column>
         </Grid>
       </Segment>
+      </Grid.Row>
     );
   }
 }

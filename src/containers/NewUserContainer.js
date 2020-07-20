@@ -1,11 +1,15 @@
 import React from 'react'
-import UserForm from '../components/UserForm'
+import UserForm from '../components/Register'
 
-export default () => {
-  return (
+export default class NewUserContainer extends React.Component{
+
+  render(){
+    return (
     <div className='wrapper'>
-      <h2>Sign Up Here!</h2>
+      <h2>Sign Up!</h2>
       <UserForm />
     </div>
   )
+  
+}
 }

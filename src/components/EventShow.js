@@ -1,10 +1,7 @@
 import React from 'react'
 import { Image, Header, Container, List, Icon, Divider, Modal, Grid, Button, Label, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux';
-import EditReminder from './EditReminder';
 import moment from 'moment';
-import { formatReminder } from '../helper/functions'
-import ReminderForm from './ReminderForm';
 import EventContacts from './EventContacts';
 import EventForm from './EventForm';
 import { isEmpty } from 'lodash';
@@ -85,7 +82,7 @@ class ContactShow extends React.PureComponent {
         open={this.state.newReminderModal}
         onClose={() => this.handleClose('newEventModal')}
       >
-        <ReminderForm contact={this.props.contact} title={'Create a new reminder!'} handleClose={() => this.handleClose('newReminderModal')} />
+        <EventForm contact={this.props.contact} title={'Create a new Event!'} handleClose={() => this.handleClose('newReminderModal')} />
         <p />
       </Modal>
     )
@@ -145,9 +142,9 @@ class ContactShow extends React.PureComponent {
      filteredGiftList = () => {
        let {contacts, gifts} = this.props.event
        const finalarray = {};
-       contacts.forEach((e1)=> gifts.forEach((e2)=> 
-       {if(e1.id === e2.id){
-         finalarray[e1.name] = e2.name
+            contacts.forEach((e1)=> gifts.forEach((e2)=> 
+                {if(e1.id === e2.id){
+                    finalarray[e1.name] = e2.name
        }}));
        return finalarray;
     }
@@ -238,6 +235,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(ContactShow)
 // arr1.forEach((e1)=> arr2.forEach((e2)=> 
 //                {if(e1.id === e2.id){
 //                  finalarray[e1.name] = e2.name
+                         //or  finalarray[name] = e1.name
+                         // finalarray[gift] = e2.name
 //                }}));
 //                return finalarray;
 // }

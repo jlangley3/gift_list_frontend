@@ -24,7 +24,7 @@ class ContactForm extends React.Component {
 
 
   submitForm = () => {
-    // e.preventDefault()
+    // event.preventDefault()
     // console.log(this.props)
 
     if (this.state.name === '') {
@@ -63,9 +63,8 @@ class ContactForm extends React.Component {
     return ([
       {key: 'family', text: 'Family', value: 'Family'},
       {key: 'friend', text:'Friend', value: 'Friend'},
-      {key: 'colleague', text: 'Colleague', value: 'Colleague'},
-      {key: 'acquaintance', text: 'Acquaintance', value:'Acquaintance'},
-      {key: 'I dont Know this Bamma', text: 'I dont Know this Bamma', value:'I dont Know this Bamma'}
+      {key: 'Co-Worker', text: 'Co-Worker', value: 'Co-Worker'},
+      {key: 'I dont Know this Person', text: 'I dont Know this Person', value:'I dont Know this Person'}
     ])
   }
 
@@ -79,6 +78,7 @@ class ContactForm extends React.Component {
             <Grid.Column>
               <div className='ui form'>
                 <img className='ui small image' src={ this.state.avatar } alt='user_avatar'/><br />
+                <label htmlFor='avatar'>Contact Picture Link::</label>
                 <input type='text' value={this.state.avatar} name='avatar' onChange={this.handleChange}></input><br />
 
 
@@ -89,7 +89,7 @@ class ContactForm extends React.Component {
                 
                 <label htmlFor='name'>Name:</label>
                 <input type='text' value={this.state.name} name='name' onChange={this.handleChange}></input><p />
-                <label htmlFor="avatar">Type:</label>
+                <label htmlFor="type">Type:</label>
                 <Dropdown
                   name='kind'
                   placeholder="Select and option"

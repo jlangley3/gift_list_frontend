@@ -4,7 +4,6 @@ import { Link, NavLink, withRouter } from "react-router-dom";
 import { Card } from 'semantic-ui-react';
 import NoContacts from '../components/NoContacts';
 import { Grid, Button } from 'semantic-ui-react';
-
 import Events from '../components/Events.js'
 
 class Homepage extends React.Component{

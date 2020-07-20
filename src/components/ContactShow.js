@@ -1,13 +1,9 @@
 import React from 'react'
 import { Image, Header, Container, List, Icon, Divider, Modal, Grid, Button, Label } from 'semantic-ui-react'
 import { connect } from 'react-redux';
-import EditReminder from './EditReminder';
 import moment from 'moment';
-import { formatReminder } from '../helper/functions'
-import ReminderForm from './ReminderForm';
-
 import ContactForm from './ContactForm';
-import { deletingContact} from '../redux/actions/contacts';
+import { deletingContact, addingContact, updatingContact} from '../redux/actions/contacts';
 
 
 class ContactShow extends React.PureComponent {
@@ -17,71 +13,37 @@ class ContactShow extends React.PureComponent {
     super();
     console.log(this.props)
     this.state = {
-        editReminderModal: false,
-        editingReminder: null,
-        newReminderModal: false,
         editContactModal: false,
-        deleteContactModal: false,
-        newEncounterModal: false,
+        deleteContactModal: false
+      
     }
   }
  
 
   handleOpen = (modal) => this.setState({ [modal]: true })
   handleClose = (modal) => this.setState({ [modal]: false })
-  handleEncounterModal = () => this.setState({ newEncounterModal: !this.state.newEncounterModal })
 
-  toggleEditReminderModal = r => this.setState({editReminderModal: !this.state.editReminderModal, editingReminder: r})
 
-  displayPriorityColor = (r) => {
-    switch (r.priority){
-      case 1:
-        return 'red'
-      case 2:
-        return 'yellow'
-      case 3:
-        return 'blue'
-      case 4: 
-        return 'grey'
-      default:
-        return 'blue'
-    }
-  }
 
-  displayPeriod = (r) => {
-    switch (r.period) {
-      case 'daily':
-        return r.interval > 1 ? `every ${r.interval} days` : 'every day'
-      case 'weekly':
-        return r.interval > 1 ? `every ${r.interval} weeks` : 'every week'
-      case 'monthly':
-        return r.interval > 1 ? `every ${r.interval} months` : 'every month'
-      case 'yearly':
-        return r.interval > 1 ? `every ${r.interval} years` : 'every year'
-      default:
-        break;
-    }
-  }
-
-  
-  createReminderBtn = () => {
+  createContactBtn = () => {
     return (
       <Modal
         size='tiny'
         trigger={<Button
-          onClick={() => this.handleOpen('newReminderModal')}
-          content='Add Reminder'
-          primary
+          onClick={() => this.handleOpen('createContactModal')}
+          content='Create Friend'
+          basic
+          color='green'
         />}
-        open={this.state.newReminderModal}
-        onClose={() => this.handleClose('newReminderModal')}
+        open={this.state.createContactModal}
+        onClose={() => this.handleClose('createContactModal')}
+        closeIcon
       >
-        <ReminderForm contact={this.props.contact} title={'Create a new reminder!'} handleClose={() => this.handleClose('newReminderModal')} />
-        <p />
+          
+        <ContactForm contact={this.props.contact} handleClose={() => this.handleClose('createContactModal')} />
       </Modal>
     )
   }
-
  
   editContactBtn = () => {
     return (
@@ -118,7 +80,7 @@ class ContactShow extends React.PureComponent {
       >
         <Header icon='trash' content='Delete this contact?' />
         <Modal.Content>
-          <p>This is an irreversible action. Are you sure you want to proceed?</p>
+          <p>You Sure?</p>
         </Modal.Content>
         <Modal.Actions>
           <Button negative content='No' onClick={() => this.handleClose('deleteContactModal')} />
@@ -144,7 +106,6 @@ class ContactShow extends React.PureComponent {
             <Header as='h2' dividing>
               <Header.Content>
                 { name } 
-                <Header.Subheader>Friends since { moment(created_at).format('ll') }</Header.Subheader>
                 <Header.Subheader>Birthday { moment(birthday).format('ll') }</Header.Subheader>
               </Header.Content>
             </Header>
@@ -164,7 +125,7 @@ class ContactShow extends React.PureComponent {
 
         <Grid.Row columns={4}>
           <Grid.Column>
-            { this.createReminderBtn() }
+            { this.createContactBtn() }
           </Grid.Column>
     
           <Grid.Column>
@@ -181,12 +142,14 @@ class ContactShow extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  return { repeatingReminders: state.repeating, user: state.user }
+  return { events: state.events, user: state.user }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deletingContact: contact => dispatch(deletingContact(contact)),
+    deletingContact: (contact) => dispatch(deletingContact(contact)),
+    addingContact: (contact) => dispatch(addingContact(contact)),
+    updatingCOntact: (contact) => dispatch(updatingContact)
   
     
   }

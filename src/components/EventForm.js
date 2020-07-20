@@ -6,11 +6,7 @@ import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment'
 
 
-const options = [
-    { key: 'm', text: 'Male', value: 'male' },
-    { key: 'f', text: 'Female', value: 'female' },
-    { key: 'o', text: 'Other', value: 'other' },
-  ]
+
 class EventForm extends React.Component {
   constructor(props){
     super(props)
@@ -63,20 +59,28 @@ class EventForm extends React.Component {
       render() {
         const { value } = this.state
         return (
+          <Grid padded columns={3} stackable centered>
+          <Grid.Row>
+            {this.props.event ? <h3>Edit {this.props.event.name}</h3> : <h3>ADD NEW GIFT LIST</h3> }
+          </Grid.Row>
+          <Grid.Row>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group widths='equal'>
+            <Grid.Column>
               <Form.Input 
               fluid label='Title' 
               name='title'
               placeholder='Title'
               onChange={this.handleChange}
               value={this.state.title} />
+              
               <Form.Input 
               fluid label='Budget'
               name='budget'
               placeholder='Budget' 
               onChange={this.handleChange}
               value={this.state.budget}/>
+              
               <Form.Input 
               fluid label='start_date'
               name='start_date' 
@@ -89,22 +93,26 @@ class EventForm extends React.Component {
               placeholder='end_date' 
               onChange={this.handleChange}
               value={this.state.end_date}/>
+              
               <input
-                   type='date'
-                  className='date-picker'
-                  name='start_date'
-                  value={this.state.start_date}
-                  onChange={this.handleStartDateChange}/>
-                  <input
-                      type='date'
-                      className='date-picker'
-                      name='end_date'
-                      value={this.state.end_date}
-                      onChange={this.handleEndDateChange}/>
+              type='date'
+              className='date-picker'
+              name='start_date'
+              value={this.state.start_date}
+              onChange={this.handleStartDateChange}/>
+              <input
+              type='date'
+              className='date-picker'
+              name='end_date'
+              value={this.state.end_date}
+              onChange={this.handleEndDateChange}/>
+              </Grid.Column>
             </Form.Group>
 
             <Form.Button>Submit</Form.Button>
           </Form>
+          </Grid.Row>
+          </Grid>
         )
       }
     }

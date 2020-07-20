@@ -6,37 +6,26 @@ import { isEmpty } from 'lodash'
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
 
-class UserForm extends React.Component {
+class Register extends React.Component {
   constructor(){
     super()
     this.state = {
-      avatar: 'https://ayogo.com/wp-content/uploads/2015/06/jp-avatar-placeholder.png',
+      avatar: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a1ef46f1-9f1e-4542-8632-9441452f929f/d8ps1ub-8813fb32-6d9f-41cc-bace-da6a88708528.jpg/v1/fill/w_768,h_768,q_75,strp/goku_ssj_facebook_profil_by_mjd360_d8ps1ub-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD03NjgiLCJwYXRoIjoiXC9mXC9hMWVmNDZmMS05ZjFlLTQ1NDItODYzMi05NDQxNDUyZjkyOWZcL2Q4cHMxdWItODgxM2ZiMzItNmQ5Zi00MWNjLWJhY2UtZGE2YTg4NzA4NTI4LmpwZyIsIndpZHRoIjoiPD03NjgifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.Y7tLWTAFNHwto9jSmxFbwK18QFmsIWC-2_Hpk5c-jnk',
       first_name: '',
       last_name: '',
       username: '',
-      password: ''
+      password: '',
+      id: null
     }
   }
 
   componentDidMount() {
     if (this.props.user.id) {
-      const { id, avatar, bio, first_name, last_name, email, username, splash_image } = this.props.user
-      this.setState({ id, avatar, bio, first_name, last_name, email, username, splash_image })
+      const { id, avatar,first_name, last_name, username } = this.props.user
+      this.setState({ id, avatar, first_name, last_name, username })
     }
   }
 
-  componentDidUpdate() {
-    if (this.props.notifications.length >= 1 || !isEmpty(this.props.notifications)) {
-      if (this.props.notifications.status !== 500) {
-        console.log(isEmpty(this.props.notifications.message))
-        this.props.notifications.message.forEach(e => toast.notify(e, {duration: null}))
-        this.props.clearError()
-      } else {
-        toast.notify(this.props.notifications.error, {duration: null})
-        this.props.clearError()
-      }
-    }
-  }
 
   handleChange = e => {
     if (e.target.name !== 'photo'){
@@ -55,8 +44,6 @@ class UserForm extends React.Component {
     const data = new FormData()
     const formObj = {...this.state}
 
-    if (isEmpty(formObj['photo'])) delete formObj['photo']
-    console.log(formObj)
     
     if (this.props.user.id) {
       for (let key in formObj){
@@ -80,11 +67,12 @@ class UserForm extends React.Component {
 
   resetState = () => {
     this.setState({
-      avatar: 'https://ayogo.com/wp-content/uploads/2015/06/jp-avatar-placeholder.png',
+      avatar: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a1ef46f1-9f1e-4542-8632-9441452f929f/d8ps1ub-8813fb32-6d9f-41cc-bace-da6a88708528.jpg/v1/fill/w_768,h_768,q_75,strp/goku_ssj_facebook_profil_by_mjd360_d8ps1ub-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD03NjgiLCJwYXRoIjoiXC9mXC9hMWVmNDZmMS05ZjFlLTQ1NDItODYzMi05NDQxNDUyZjkyOWZcL2Q4cHMxdWItODgxM2ZiMzItNmQ5Zi00MWNjLWJhY2UtZGE2YTg4NzA4NTI4LmpwZyIsIndpZHRoIjoiPD03NjgifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.Y7tLWTAFNHwto9jSmxFbwK18QFmsIWC-2_Hpk5c-jnk',
       first_name: '',
       last_name: '',
       username: '',
-      password: ''
+      password: '',
+      id: null
     })
   }
 
@@ -136,9 +124,6 @@ class UserForm extends React.Component {
           </div>
         </Grid.Column>
         </Grid>
-
-        <img src="https://wallpaperaccess.com/full/898474.jpg" />
-
       </Segment>
     )
 
@@ -161,4 +146,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserForm)
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

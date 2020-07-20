@@ -12,16 +12,14 @@ import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import LoginForm from './components/LoginForm';
 import EventForm from './components/EventForm';
-import ReminderForm from './components/ReminderForm';
 import NotFound from './components/NotFound';
 import CalendarContainer from './containers/CalendarContainer';
-import ContactCardContainer from './containers/ContactCardContainer'
+import ContactCardContainer from './containers/ContactContainer'
 import ContactForm from './components/ContactForm';
 import NewUserContainer from './containers/NewUserContainer';
-import EditUserContainer from './containers/EditUserContainer';
 import ContactShow from './components/ContactShow';
 import EventShow from './components/EventShow';
-import Homepage from './containers/Homepage';
+import Homepage from './containers/HomeContainer';
 import './App.css';
 
 class App extends React.Component {
@@ -78,26 +76,18 @@ class App extends React.Component {
                 return !isEmpty(this.props.user) ? <ContactForm /> : <Redirect to='/login' />
               }}
               />
-        <Route exact path='/reminder_form' render={() => {
-                return !isEmpty(this.props.user) ? <ReminderForm /> : <Redirect to='/login' />
-              }}
-              />
 
         <Route exact path='/signup' render={() => {
                 return isEmpty(this.props.user) ? <NewUserContainer /> : <Redirect to='/' />
               }}
               />
 
-        <Route exact path='/profile/edit' render={() => {
-                return !isEmpty(this.props.user) ? <EditUserContainer /> : <Redirect to='/login' />
-              }} 
-              />
         <Route exact path='/profile' render={() => {
                 return !isEmpty(this.props.user) ? <Profile /> : <Redirect to='/login' />
               }} 
               />
 
-        <Route exact path='/friends' render={() => {
+        <Route exact path='/contacts' render={() => {
                 return !isEmpty(this.props.user) ? <ContactCardContainer /> : <Redirect to='/login' />
               }}
               />
@@ -115,14 +105,13 @@ class App extends React.Component {
               }}
               />
 
-          <Route exact path='/friends/:id' render={props => {
-                const friendId = parseInt(props.match.params.id)
-                const friend = this.props.contacts.find(c => c.id === friendId)
-                // const reminders = this.props.reminders.filter(r => r.contact_id === friendId)
+          <Route exact path='/contacts/:id' render={props => {
+                const contactId = parseInt(props.match.params.id)
+                const contact = this.props.contacts.find(c => c.id === contactId)
 
-                return !isEmpty(this.props.user) && friend ? (
+                return !isEmpty(this.props.user) && contact ? (
                   <div className='contact-details'>
-                    <ContactShow contact={friend} /> 
+                    <ContactShow contact={contact} /> 
                   </div>
                 ) : <Redirect to='/login' />
               }}
