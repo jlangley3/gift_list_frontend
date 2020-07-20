@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Header, Icon, Segment } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 const NoContacts = () => (
   <Segment placeholder>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Container, List, Icon, Divider, Modal, Grid, Button, Label, Form } from 'semantic-ui-react'
+import { Image, Header, Modal, Grid, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import EventContacts from './EventContacts';
@@ -153,6 +153,7 @@ class ContactShow extends React.PureComponent {
 
   render(){
       console.log(this.props)
+      debugger;
     const {event: {title, start_date, end_date, budget, repeating}} = this.props
     return(
       <Grid columns='equal' padded stackable>

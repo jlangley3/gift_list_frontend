@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { Checkbox } from 'semantic-ui-react';
 import Moment from 'react-moment';
 import FullCalendar, { formatDate } from '@fullcalendar/react';
@@ -9,7 +9,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { INITIAL_EVENTS, createEventId } from '../fullcalender/Cal-Util';
 import '../styles/Calendar.css';
-import moment from 'moment';
+// import moment from 'moment';
 import EventForm from '../components/EventForm';
 import EventShow from '../components/EventShow';
 import { Modal, Button, Segment } from 'semantic-ui-react';
@@ -20,7 +20,7 @@ class CalenderContainer extends React.Component {
     super()
     this.state = {
       modalOpen: false,
-      featuredEvent: {},
+      thisEvent: {},
       editForm: false,
       weekendsVisible: true,
       currentEvents: []
@@ -55,11 +55,11 @@ class CalenderContainer extends React.Component {
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
             eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
-            /* you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventChange={function(){}}
-            eventRemove={function(){}}
-            */
+            //you can update a remote database when these fire:
+            eventAdd={(event) => this.props.addEvent(event)}
+            eventChange={(event) => this.props.updateEvent(event)}
+            eventRemove={(event) => this.props.deleteEvent(event)}
+        
            />
            <Modal
            open={this.state.modalOpen}
@@ -72,7 +72,7 @@ class CalenderContainer extends React.Component {
          {!this.state.editForm ? 
          <Segment>
            <EventShow
-             reminder={this.state.featuredEvent}
+             reminder={this.state.thisEvent}
              handleClose={this.handleClose}
            />
            <Button content='Edit Event' onClick={this.toggleEditForm}/> 
@@ -81,7 +81,7 @@ class CalenderContainer extends React.Component {
          <EventForm 
            contact={null} 
            title={'Update Event!'} 
-           reminder={this.state.featuredEvent} 
+           reminder={this.state.thisEvent} 
            handleClose={this.handleClose}
          />
        }
@@ -149,8 +149,8 @@ class CalenderContainer extends React.Component {
     }
   }
 
-  handleEventClick = (clickInfo) => {
-    if (alert(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+  handleEventClick = (event, clickInfo) => {
+    if (alert(event)) {
       clickInfo.event.remove()
     }
   }

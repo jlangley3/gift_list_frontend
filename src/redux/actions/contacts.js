@@ -3,8 +3,6 @@ const URL = () => {
   }
   
   const authHeaders = () => {
-    const token = localStorage.getItem('token')
-    
     return {
       'Content-Type': 'application/json',
       "Authentication": localStorage.getItem("token")
@@ -62,14 +60,11 @@ const URL = () => {
   }
   
   
-  const updateSearchTerm = searchTerm => {
-    return { type: "UPDATE_SEARCH_TERM", searchTerm }
-  }
+
 
   export {
     addingContact,
     deletingContact,
     updatingContact,
-    updateSearchTerm,
     updateContact
   }

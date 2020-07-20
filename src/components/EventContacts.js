@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Segment, Button, Grid, Dropdown } from 'semantic-ui-react';
+import { Button, Grid, Dropdown } from 'semantic-ui-react';
 import { addingGiftContact } from '../redux/actions/gifts';
 
 class EventContacts extends React.Component {

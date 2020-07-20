@@ -3,8 +3,6 @@ const URL = () => {
   }
   
   const authHeaders = () => {
-    const token = localStorage.getItem('token')
-    
     return {
       'Content-Type': 'application/json',
       "Authentication": localStorage.getItem("token")

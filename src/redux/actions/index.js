@@ -1,13 +1,12 @@
 
-import { logoutUser, updatingUser, clearError, handlingLoginSubmit, addingUser, fetchingUser, clearLoading } from './users'
-import { addingContact, deletingContact, updatingContact, updateSearchTerm } from './contacts'
+import { logoutUser, updatingUser, handlingLoginSubmit, addingUser, fetchingUser, clearLoading } from './users'
+import { addingContact, deletingContact, updatingContact} from './contacts'
 import { addingEvent, updatingEvent, deletingEvent} from './events'
 import {addGift, addingGiftContact} from './gifts'
 
 export {
 
   fetchingUser,
-  updateSearchTerm,
   addingEvent,
   addingContact,
   updatingEvent,
@@ -16,7 +15,6 @@ export {
   updatingUser,
   updatingContact,
   handlingLoginSubmit,
-  clearError,
   logoutUser,
   addingUser,
   clearLoading,

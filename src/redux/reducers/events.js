@@ -1,6 +1,6 @@
 
 
-const eventsReducer = (state = {}, action) => {
+const eventsReducer = (state = [], action) => {
     switch (action.type) {
       case '"FETCHED_USER"':
         return action.payload.events

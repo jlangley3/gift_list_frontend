@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addingUser, updatingUser, clearError } from '../redux/actions'
+import { addingUser, updatingUser} from '../redux/actions'
 import { Segment, Grid, Button } from 'semantic-ui-react'
 
 class Register extends React.Component {
@@ -11,8 +11,8 @@ class Register extends React.Component {
       first_name: '',
       last_name: '',
       username: '',
-      password: '',
-      id: null
+      password: ''
+ 
     }
   }
 
@@ -25,19 +25,12 @@ class Register extends React.Component {
 
 
   handleChange = e => {
-    if (e.target.name !== 'photo'){
       this.setState({
         [e.target.name]: e.target.value
       })
-    } else {
-      this.setState({
-        [e.target.name]: e.target.files[0]
-      })
-    }
   }
 
   handleSubmit = () => {
-
       this.props.addingUser(this.state)
       this.resetState()
 
@@ -51,8 +44,7 @@ class Register extends React.Component {
       first_name: '',
       last_name: '',
       username: '',
-      password: '',
-      id: null
+      password: ''
     })
   }
 
@@ -101,8 +93,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addingUser: (contact) => dispatch(addingUser(contact)),
-    updatingUser: (user, id) => dispatch(updatingUser(user, id)),
-    clearError: () => dispatch(clearError())
+    updatingUser: (user, id) => dispatch(updatingUser(user, id))
+   
   }
 }
 

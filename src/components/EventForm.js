@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addingEvent, updatingEvent } from '../redux/actions/events'
-import { Header, Segment, Grid, Icon, Transition, Dropdown, Checkbox, Input, Button, Modal, Form } from 'semantic-ui-react'
+import { Grid, Form } from 'semantic-ui-react'
 
 
 
@@ -19,14 +19,18 @@ class EventForm extends React.Component {
         }
       }
     
-      handleChange = (event, { name, value }) => {
-        this.setState({ [name]: value });
-      };
+      handleChange = event => this.setState({
+        [event.target.name]: event.target.value
+      })
 
       handleStartDateChange = e => {
-        this.state.end_date === '' ? this.setState({start_date: e.target.value, end_date: e.target.value}) : this.setState({start_date: e.target.value})
+        this.state.end_date === '' ? this.setState({
+          start_date: e.target.value, end_date: e.target.value}) : this.setState({start_date: e.target.value
+          })
       }
-      handleEndDateChange = e => this.setState({end_date: e.target.value})
+      handleEndDateChange = e => this.setState({
+        end_date: e.target.value
+      })
 
 
       handleSubmit = event => {
@@ -58,13 +62,13 @@ class EventForm extends React.Component {
       render() {
         const { value } = this.state
         return (
-          <Grid padded columns={3} stackable centered>
+          <Grid padded columns={1} stackable centered>
           <Grid.Row>
             {this.props.event ? <h3>Edit {this.props.event.name}</h3> : <h3>ADD NEW GIFT LIST</h3> }
           </Grid.Row>
           <Grid.Row>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Group widths='equal'>
+          <Form size="large" onSubmit={this.handleSubmit}>
+            <Form.Group >
             <Grid.Column>
               <Form.Input 
               fluid label='Title' 
@@ -80,31 +84,28 @@ class EventForm extends React.Component {
               onChange={this.handleChange}
               value={this.state.budget}/>
               
+    
               <Form.Input 
               fluid label='start_date'
-              name='start_date' 
-              placeholder='start_date' 
-              onChange={this.handleChange}
-              value={this.state.start_date}/>
-              <Form.Input 
-              fluid label='end_date'
-              name='end_date' 
-              placeholder='end_date' 
-              onChange={this.handleChange}
-              value={this.state.end_date}/>
-              
-              <input
               type='date'
               className='date-picker'
               name='start_date'
+              placeholder={this.state.start_date} 
               value={this.state.start_date}
               onChange={this.handleStartDateChange}/>
-              <input
+              
+              <Form.Input 
+               max={5}
+              fluid label='end_date'
+              name='end_date' 
+              placeholder={this.state.end_date} 
               type='date'
               className='date-picker'
-              name='end_date'
               value={this.state.end_date}
               onChange={this.handleEndDateChange}/>
+              
+ 
+
               </Grid.Column>
             </Form.Group>
 

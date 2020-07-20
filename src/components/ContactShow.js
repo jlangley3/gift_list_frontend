@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Container, List, Icon, Divider, Modal, Grid, Button, Label } from 'semantic-ui-react'
+import { Image, Header, Modal, Grid, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import ContactForm from './ContactForm';
@@ -98,6 +98,7 @@ class ContactShow extends React.PureComponent {
 
   render(){
       console.log(this.props)
+
     const {contact: {name, created_at, kind, avatar, birthday}} = this.props
     return(
       <Grid columns='equal' padded stackable>

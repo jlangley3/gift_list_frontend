@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { deletingContact } from '../redux/actions/contacts';
 import { deletingEvent } from '../redux/actions/events';
-import { Card, Icon, Image, Label } from 'semantic-ui-react';
+import { Card, Image, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 

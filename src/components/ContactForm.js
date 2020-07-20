@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addingContact, updatingContact } from '../redux/actions/contacts'
-import { Segment, Button, Grid, Dropdown } from 'semantic-ui-react'
+import { Button, Grid, Dropdown } from 'semantic-ui-react'
 
 
 class ContactForm extends React.Component {
@@ -18,16 +18,17 @@ class ContactForm extends React.Component {
     }
   }
 
-  handleChange = e => this.setState({[e.target.name]: e.target.value})
-  handleKindChange = (e, { value }) => this.setState({kind: value})
+  handleChange = event => this.setState({
+    [event.target.name]: event.target.value
+  })
+
+  changeKind = (event) => this.setState({kind: event.target.value})
 
 
-  submitForm = () => {
-    // event.preventDefault()
-    // console.log(this.props)
-
+  handleSubmit = () => {
+ 
     if (this.state.name === '') {
-      alert('Please enter a name', {duration: null})
+      alert('Please enter a name')
 
     } else if (this.props.contact) {
         const updatedContact = {
@@ -93,13 +94,13 @@ class ContactForm extends React.Component {
                   name='kind'
                   placeholder="Select and option"
                   options={this.kindDropdown()}
-                  onChange={this.handleKindChange}
+                  onChange={this.changeKind}
                   value={this.state.kind}
                   selection
                 /><p />
 
                
-              <Button onClick={this.submitForm}>Submit</Button>
+              <Button onClick={this.handleSubmit}>Submit</Button>
             </div>
 
           </Grid.Column>

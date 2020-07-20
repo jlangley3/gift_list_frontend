@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux'
-import { Menu, Dropdown, Modal, Segment, Label, Icon, Popup, Feed } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import { logoutUser } from '../redux/actions/users'
 // import '../styles/Nav.css';
@@ -18,11 +18,11 @@ class NavBar extends Component {
     return (
       <nav>
         <Menu 
-          stackable
+          
           >
           { !isEmpty(this.props.user) ?
           <React.Fragment>
-            <Menu.Item position="center" header><h2>Gift List</h2></Menu.Item>
+            <Menu.Item  header><h2>Gift List</h2></Menu.Item>
             <Menu.Item 
               name='profile' 
               as={ Link } to='/profile'

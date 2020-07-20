@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ContactCard from '../components/ContactCard'
-import { Checkbox, Input, Grid, Sticky, Ref } from 'semantic-ui-react'
-import { updateSearchTerm } from '../redux/actions/contacts'
+import {  Grid } from 'semantic-ui-react'
+
 
 
 class ContactContainer extends Component {
@@ -27,18 +27,18 @@ class ContactContainer extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     contacts: state.contacts,
-    searchTerm: state.searchTerm
+  
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateSearchTerm: (searchTerm) => dispatch(updateSearchTerm(searchTerm))
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+    
+//   }
+// }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactContainer)
+export default connect(mapStateToProps)(ContactContainer)

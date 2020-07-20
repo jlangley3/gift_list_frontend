@@ -20,15 +20,6 @@ const contactsReducer = (state = [], action) => {
     }
   }
   
-  const searchTermReducer = (state = '', action) => {
-    switch (action.type) {
-      case "UPDATE_SEARCH_TERM":
-        return action.searchTerm
-      case "LOGOUT_USER":
-        return ''
-      default:
-        return state
-    }
-  }
+
   
-  export { contactsReducer, searchTermReducer }
+  export { contactsReducer}

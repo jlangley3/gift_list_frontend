@@ -23,10 +23,6 @@ export const clearLoading = () => {
   return { type: "CLEAR_LOADING" }
 }
 
-export const displayError = (errors) => {
-  return { type: "THROW_ERROR", errors }
-}
-
 
 export const handlingLoginSubmit = (user_data) => {
   console.log(user_data)
@@ -50,13 +46,11 @@ export const handlingLoginSubmit = (user_data) => {
       localStorage.setItem('token', data.token)
     } else {
       console.log(data)
-      dispatch(displayError(data.message))
       dispatch(clearLoading())
     }
   })
   .catch((error) => {
-    dispatch(displayError(error))
-    throw error
+    alert(error.message)
   })
 }
 }
@@ -90,8 +84,13 @@ export const addingUser = user => {
 
     fetch(`${URL()}/users`, {
       method: 'POST',
-      // headers: {'Content-Type': 'application/json'},
-      body: user
+      headers: {
+        "Content-Type" : "application/json",
+        "Accept" : "application/json"
+      },
+      body: JSON.stringify({
+        user: user
+      })
     })
       .then(res => res.json())
       .then(data => {
@@ -101,16 +100,12 @@ export const addingUser = user => {
           localStorage.setItem('token', data.token)
         } else {
           console.log(data.message)
-          dispatch(displayError(data))
           dispatch(clearLoading())
         }
       })
   }
 }
 
-export const clearError = () => {
-  return { type: "CLEAR_ERROR" }
-}
 
 export const updateUser = (user) => {
   return { type: "UPDATING_USER", user: user }

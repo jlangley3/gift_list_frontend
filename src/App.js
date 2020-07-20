@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import {connect} from "react-redux";
-import Moment from 'react-moment';
 import 'moment-timezone';
 
 import { fetchingUser, clearLoading } from './redux/actions/users';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card } from 'semantic-ui-react';
 import NoContacts from '../components/NoContacts';
 import { Grid, Button } from 'semantic-ui-react';

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Card, Image } from "semantic-ui-react";
-import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
 import Reminders from "./Reminders.js";

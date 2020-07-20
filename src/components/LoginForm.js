@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { withRouter } from "react-router";
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom'
 import { handlingLoginSubmit, clearError } from '../redux/actions/users';
-import { Button, Divider, Grid, Form, Segment, Message } from "semantic-ui-react";
+import { Button, Grid, Form, Segment, Header } from "semantic-ui-react";
 // import '../styles/Login.css';
 
 class LoginForm extends React.Component {
@@ -37,8 +37,12 @@ class LoginForm extends React.Component {
   render() {
     return (
       <Grid.Row>
+        <Grid.Row>
+        <Header icon textAlign='center' as='h1'>Login</Header>
+        </Grid.Row>
       <Segment>
-        <Grid columns={2} relaxed='very' stackable>
+        <Grid columns={2} relaxed='very' stackable centered >
+        <Grid.Row>
         <Grid.Column>
         <Form
           onSubmit={this.handleSubmit}
@@ -69,6 +73,7 @@ class LoginForm extends React.Component {
           <Button type="submit">Login</Button>
          </Form>
          </Grid.Column>
+         </Grid.Row>
          <Grid.Column textAlign='center' verticalAlign='middle'>
                 <Button content='Sign Up' as={ Link } to='/signup' icon='signup' size='big'/>
         </Grid.Column>
@@ -90,8 +95,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handlingLoginSubmit: (user) => dispatch(handlingLoginSubmit(user)),
-    clearError: () => dispatch(clearError())
+    handlingLoginSubmit: (user) => dispatch(handlingLoginSubmit(user))
+    
   }
 }
 

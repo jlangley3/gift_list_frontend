@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Segment, Button, Grid, Dropdown, Form } from 'semantic-ui-react';
+import { Button, Grid, Dropdown, Form } from 'semantic-ui-react';
 import { addingGift } from '../redux/actions/gifts';
 
 class GiftForm extends React.Component {
