@@ -7,13 +7,14 @@ import FullCalendar, { formatDate } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { INITIAL_EVENTS, createEventId } from '../fullcalender/Cal-Util';
+// import { INITIAL_EVENTS, createEventId } from '../fullcalender/Cal-Util';
 import '../styles/Calendar.css';
 // import moment from 'moment';
-import EventForm from '../components/NewEventForm';
+import EditEventForm from '../components/NewEventForm';
 import EventShow from '../components/EventShow';
 import { Modal, Button, Segment } from 'semantic-ui-react';
-import { addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events'
+import { addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events';
+import { setCurrentEvent } from '../redux/actions';
 
 class CalenderContainer extends React.Component {
   constructor() {
@@ -27,12 +28,34 @@ class CalenderContainer extends React.Component {
     }
   }
 
-  handleOpen = (event) => this.setState({modalOpen: true, featuredEvent: event})
+  handleOpen = (event) => this.setState({modalOpen: true, thisEvent: event.extendedProps})
   handleClose = () => this.setState({modalOpen: false, editForm: false, deleteConfirmation: false})
-  toggleEditForm = () => this.setState({editForm: !this.state.editForm})
-  closeDeleteConfirmation = () => this.setState({deleteConfirmation: false, editForm: false, modalOpen: false})
+
+  
+  
+  
+  formatEvents = () => {
+    return this.props.events.map(event => {
+              const {title, end_date, start_date} = event
+  
+              let startTime = new Date(start_date)
+              let endTime = new Date(end_date)
+  
+              return {
+                title: title, 
+                start: startTime,
+                end: endTime, 
+                extendedProps: {...event}
+              }
+          })
+  }
+
+  
 
   render() {
+    console.log(this.state.thisEvent)
+    
+
     return (
       <div className='demo-app'>
         {this.renderSidebar()}
@@ -50,7 +73,7 @@ class CalenderContainer extends React.Component {
             selectMirror={true}
             dayMaxEvents={true}
             weekends={this.state.weekendsVisible}
-            events={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+            initialEvents={this.formatEvents()} // alternatively, use the `events` setting to fetch from a feed
             select={(event, e) => {this.handleOpen(event)}}
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
@@ -61,32 +84,16 @@ class CalenderContainer extends React.Component {
             eventRemove={(event) => this.props.deleteEvent(event)}
         
            />
-           <Modal
+                 <Modal
            open={this.state.modalOpen}
-           onClose={() => {
-             this.toggleEditForm()
-             this.handleClose()
-           }} 
-           size='small'
-         >
-         {!this.state.editForm ? 
-         <Segment>
-           <EventShow
-             reminder={this.state.thisEvent}
-             handleClose={this.handleClose}
-           />
-           <Button content='Edit Event' onClick={this.toggleEditForm}/> 
-         </Segment>
-         :
-         <EventForm 
-           contact={null} 
+           onClose={() => {this.handleClose()}} 
+           size='small'>
+                <EditEventForm 
            title={'Update Event!'} 
-           reminder={this.state.thisEvent} 
+           event={this.state.thisEvent} 
            handleClose={this.handleClose}
          />
-       }
        </Modal>
-          
         </div>
       </div>
     )
@@ -117,9 +124,9 @@ class CalenderContainer extends React.Component {
               onChange={this.handleWeekendsToggle}/>
         </div>
         <div className='demo-app-sidebar-section'>
-          <h2>All Events ({this.props.user.events.length})</h2>
+          <h2>All Events ({this.props.events.length})</h2>
           <ul>
-            {this.props.user.events.map(renderSidebarEvent)}
+            {this.props.events.map(renderSidebarEvent)}
           </ul>
         </div>
       </div>
@@ -140,7 +147,7 @@ class CalenderContainer extends React.Component {
 
     if (title) {
       calendarApi.addEvent({
-        id: createEventId(),
+        id: "2",
         title,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
@@ -150,7 +157,7 @@ class CalenderContainer extends React.Component {
   }
 
   handleEventClick = (event, clickInfo) => {
-    if (alert(event)) {
+    if (alert(clickInfo)) {
       clickInfo.event.remove()
     }
   }
@@ -166,7 +173,7 @@ class CalenderContainer extends React.Component {
 function renderEventContent(eventInfo) {
   return (
     <>
-      <b>{eventInfo.timeText}</b>
+      {/* <b>{eventInfo.timeText}</b> */}
       <i>{eventInfo.event.title}</i>
     </>
   )
@@ -175,8 +182,8 @@ function renderEventContent(eventInfo) {
 function renderSidebarEvent(event) {
   return (
     <li key={event.id}>
-      <Moment>{event.date}</Moment>
-      <b>{formatDate(event.date, {year: 'numeric', month: 'short', day: 'numeric'})}</b> 
+      {/* <Moment>{event.start_date}</Moment> */}
+      <b>{formatDate(event.start_date, {year: 'numeric', month: 'long', day: 'numeric'})}</b> 
       <i>{event.title}</i>
     </li>
   )
@@ -185,9 +192,11 @@ function renderSidebarEvent(event) {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
+    events: state.events,
     reminders: state.reminders,
     loading: state.loading,
-    contacts: state.contacts
+    contacts: state.contacts,
+    currentEvent: state.currentEvent
   }
 }
 
@@ -195,7 +204,8 @@ const mapDispatchToProps = dispatch => {
   return {
     deletingEvent: (event) => dispatch(deletingEvent(event)),
     updatingEvent: (event) => dispatch(updatingEvent),
-    addingEvent: (event) => dispatch(addingEvent)
+    addingEvent: (event) => dispatch(addingEvent),
+    setCurrentEvent: (e) => dispatch(setCurrentEvent(e))
   }
 }
 

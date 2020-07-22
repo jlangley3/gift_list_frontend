@@ -28,7 +28,7 @@ class ContactShow extends React.PureComponent {
 
   handleOpen = (modal) => this.setState({ [modal]: true })
   handleClose = (modal) => this.setState({ [modal]: false })
-  toggleEditEventModal = e => this.setState({editEventModal: !this.state.editEventModal, editingEvent: e})
+  
 
 
   addContactBtn = () => {

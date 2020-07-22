@@ -3,9 +3,9 @@ let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of tod
 
 export const INITIAL_EVENTS = [
   {
-    id: createEventId(),
-    title: 'WHWBHBHBAHDSbahdbevent',
-    start: todayStr
+    id: 4,
+    title: 'slim',
+    start: '2020-07-21'
   },
   {
     id: createEventId(),
