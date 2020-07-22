@@ -1,6 +1,6 @@
 const giftsReducer = (state = [], action) => {
     switch (action.type) {
-      case '"FETCHED_USER"':
+      case "FETCHED_USER":
         return action.payload.user.gifts
         case "ADD_GIFT":
           return [...state, action.gift]

@@ -6,7 +6,7 @@ const NoContacts = () => (
   <Segment placeholder>
     <Header icon>
       <Icon name='user plus' />
-      You don't have any contacts yet.
+      You do not have any Lists or Contacts.
     </Header>
     <Button primary>Add New Contact</Button>
   </Segment>

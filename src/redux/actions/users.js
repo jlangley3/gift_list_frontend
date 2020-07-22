@@ -11,8 +11,8 @@ const authHeaders = () => {
   }
 }
 
-export const handledLoginSubmit = (payload) => {
-  return { type: "FETCHED_USER", payload }
+export const handledLoginSubmit = (user_data) => {
+  return { type: "FETCHED_USER", payload: user_data}
 }
 
 export const loadingUser = () => {
@@ -24,8 +24,8 @@ export const clearLoading = () => {
 }
 
 
-export const handlingLoginSubmit = (user_data) => {
-  console.log(user_data)
+export const handlingLoginSubmit = (user_auth) => {
+  console.log(user_auth)
   return (dispatch) => {
     dispatch(loadingUser)
 
@@ -36,16 +36,16 @@ export const handlingLoginSubmit = (user_data) => {
       "Accept" : "application/json"
     },
     body: JSON.stringify({
-      user: user_data
+      user: user_auth
     })
   }).then(res => res.json())
-  .then(data => {
-    console.log(data)
-    if (data.authenticated) {
-      dispatch(handledLoginSubmit(data))
-      localStorage.setItem('token', data.token)
+  .then(auth_data => {
+    console.log(auth_data)
+    if (auth_data.authenticated) {
+      dispatch(handledLoginSubmit(auth_data))
+      localStorage.setItem('token', auth_data.token)
     } else {
-      console.log(data)
+      console.log(auth_data)
       dispatch(clearLoading())
     }
   })
@@ -67,10 +67,10 @@ export const fetchingUser = (token) => {
       }
     })
       .then(resp => resp.json())
-      .then(data => {
-        if (data.user.id !== undefined) {
-          console.log(data.user)
-          dispatch(handledLoginSubmit(data))
+      .then(user_data => {
+        if (user_data.user.id !== undefined) {
+          console.log(user_data.user)
+          dispatch(handledLoginSubmit(user_data))
         } else {
           dispatch(clearLoading())
         }

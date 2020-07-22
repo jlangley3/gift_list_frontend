@@ -28,6 +28,7 @@ export const addEvent = newEvent => {
 
 
 export const updatingEvent = event => {
+  
   return (dispatch) => {
     fetch(`${URL()}/events/${event.id}`, {
       method: 'PATCH',
@@ -59,10 +60,45 @@ export const deletingEvent = thisEvent => {
     .then(eventData => {
       console.log(eventData)
       dispatch(deleteEvent(eventData))
+      dispatch(editCurrentEvent(eventData))
     })
   }
 }
 
 export const deleteEvent = newEvent => {
   return {type: "DELETE_EVENT", event: newEvent}
+}
+
+
+
+export const addingEventContact = (newContactData, thisEvent) => {
+  return (dispatch) => {
+    fetch(`${URL()}/gifts`, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({
+        name: "No Gift Yet",
+        event_id: thisEvent.id,
+        contact_id: newContactData.id
+        
+      })
+    })
+    .then(resp => resp.json())
+    .then(newGift => {
+      dispatch(addEventContact(newContactData));
+      dispatch(addGiftToEvent(newGift))
+    })
+  }
+}
+export const addEventContact = (contact) => {
+  return { type: "ADD_CONTACT_TO_CURRENT_EVENT", contact: contact}
+}
+export const addGiftToEvent = (gift) => {
+  return { type: "ADD_GIFT_TO_CURRENT_EVENT", gift: gift}
+}
+export const setCurrentEvent = (e) => {
+  return { type: "CURRENT_EVENT", payload: e}
+}
+export const editCurrentEvent = (e) => {
+  return { type: "EDIT_CURRENT_EVENT", payload: e}
 }

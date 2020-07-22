@@ -10,7 +10,7 @@ import Navbar from './components/Navbar';
 
 import Profile from './components/Profile';
 import LoginForm from './components/LoginForm';
-import EventForm from './components/EventForm';
+import EventForm from './components/NewEventForm';
 import NotFound from './components/NotFound';
 import CalendarContainer from './containers/CalendarContainer';
 import ContactCardContainer from './containers/ContactContainer'
@@ -36,9 +36,13 @@ class App extends React.Component {
   }
 
   render(){
+    const divStyle = {
+      color: 'blue',
+      backgroundColor: 'black',
+    };
     if (this.props.loading) {
       return (
-        <div className="App">
+        <div className="App" style={divStyle}>
           <Navbar />
           <div className='loading'>
             <Image
@@ -93,26 +97,24 @@ class App extends React.Component {
           
           <Route exact path='/events/:id' render={props => {
                 const eventId = parseInt(props.match.params.id)
-                const list = this.props.user.events.find(c => c.id === eventId)
-                // const reminders = this.props.reminders.filter(r => r.contact_id === friendId)
-
+                const list = this.props.events.find(event=> event.id === eventId)
                 return !isEmpty(this.props.user) && list ? (
                   <div className='contact-details'>
                     <EventShow event={list} /> 
                   </div>
-                ) : <Redirect to='/login' />
+                ) : <Redirect to='/' />
               }}
               />
 
           <Route exact path='/contacts/:id' render={props => {
                 const contactId = parseInt(props.match.params.id)
-                const contact = this.props.contacts.find(c => c.id === contactId)
+                const contact = this.props.contacts.find(contact => contact.id === contactId)
 
                 return !isEmpty(this.props.user) && contact ? (
                   <div className='contact-details'>
                     <ContactShow contact={contact} /> 
                   </div>
-                ) : <Redirect to='/login' />
+                ) : <Redirect to='/' />
               }}
               />
 
@@ -131,7 +133,8 @@ const mapStateToProps = (state) => {
     loading: state.loading,
     reminders: state.reminders,
     contacts: state.contacts,
-    events: state.events
+    events: state.events,
+    currentEvent: state.currentEvents
   }
 }
 

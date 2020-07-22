@@ -1,58 +1,63 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Grid, Dropdown, Form } from 'semantic-ui-react';
-import { addingGift } from '../redux/actions/gifts';
+import { Button, Grid, Form } from 'semantic-ui-react';
+import {  updatingGift } from '../redux/actions/gifts';
 
 class GiftForm extends React.Component {
 
-      constructor(){
-          super();
-          this.state = {
-            currentContact: null,
-            currentGift: null
+      constructor(props){
+        super(props)
+        console.log(props)
+            this.state = {
+              id: props.gift ? props.gift.id : "",
+              name: props.gift ? props.gift.name : "",
+              price: props.gift ? props.gift.price : "",
+              given: props.gift ? props.gift.given : false,
+              rating: props.gift ? props.gift.rating : 0,
+              link: props.gift ? props.gift.link : "No Link",
+              event_id: props.gift ? props.gift.event_id : "",
+              contact_id: props.gift ? props.gift.contact_id : ""
+            }
           }
-      }
 
-      handleChange = (event, { name, value }) => {
-        this.setState({ [name]: value });
-      };
-    contactDropdown = () => {
-        return (
-        this.props.user.contacts.map(contact => {return {key: contact.id, text: contact.name, value: contact}}) 
-        )
-      }
-    handleContactChange = (e, { value }) => this.setState({currentContact: value})
+      handleChange = event => this.setState({
+        [event.target.name]: event.target.value
+      })
+
 
      
     handleSubmitForm = (event) => {
-       
-        this.props.addingGift(this.state, this.props.event)
+      event.preventDefault();
+        this.props.updatingGift(this.state);
+        this.props.handleClose('editGiftModal')
+        // this.props.addingGiftToCurrentEvent(this.state)
     }
 
     render(){
-        console.log(this.props)
         return (
-        <div>
-            EC
             <Grid.Column>
+            <Form onSubmit={this.handleSubmitForm}>
             <Form.Input 
-              fluid label='gift' 
-              name='currentGift'
-              placeholder='Gift'
+              fluid label='Type Name of Gift' 
+              name='name'
+              placeholder='Gift Name'
               onChange={this.handleChange}
-              value={this.state.currentGift} />
-                <Dropdown
-                  name='kind'
-                  placeholder="Select and option"
-                  options={this.contactDropdown()}
-                 onChange={this.handleContactChange }
-                 value={this.state.currentContact}
-                  selection
-                /><p />
-              <Button onClick={this.handleSubmitForm}>Submit</Button>
-
-          </Grid.Column>
-            </div>)
+              value={this.state.name} />
+              <Form.Input 
+              fluid label='Type price of Gift' 
+              name='price'
+              placeholder='Gift Price'
+              onChange={this.handleChange}
+              value={this.state.price} />
+              <Form.Input 
+              fluid label='Link to Gift' 
+              name='link'
+              placeholder='Link to Gift'
+              onChange={this.handleChange}
+              value={this.state.link} />
+              <Button>Submit</Button>
+              </Form>
+          </Grid.Column>)
     }
 }
 
@@ -66,7 +71,7 @@ const mapStateToProps = (state )=> {
   
   const mapDispatchToProps = dispatch => {
     return {
-      addingGiftContact: (newContactGift, thisEvent) => dispatch(addingGift(newContactGift, thisEvent))
+      updatingGift: (newGift) => dispatch(updatingGift(newGift))
       
     }
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router";
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom'
-import { handlingLoginSubmit, clearError } from '../redux/actions/users';
+import { handlingLoginSubmit } from '../redux/actions/users';
 import { Button, Grid, Form, Segment, Header } from "semantic-ui-react";
 // import '../styles/Login.css';
 

@@ -1,8 +1,8 @@
 
 import { logoutUser, updatingUser, handlingLoginSubmit, addingUser, fetchingUser, clearLoading } from './users'
 import { addingContact, deletingContact, updatingContact} from './contacts'
-import { addingEvent, updatingEvent, deletingEvent} from './events'
-import {addGift, addingGiftContact} from './gifts'
+import { addingEvent, updatingEvent, deletingEvent, setCurrentEvent, editCurrentEvent, addingEventContact} from './events'
+import {addGift, updatingGift, deletingGift} from './gifts'
 
 export {
 
@@ -19,5 +19,10 @@ export {
   addingUser,
   clearLoading,
   addGift,
-  addingGiftContact,
+  addingEventContact,
+  updatingGift,
+  setCurrentEvent,
+  editCurrentEvent,
+  deletingGift
+  
 }

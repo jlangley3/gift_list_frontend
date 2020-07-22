@@ -15,17 +15,17 @@ render(){
          <Grid>
            <Grid.Row>
              <Grid.Column >
-               <h1>Wat Up Hommie, {this.props.user.username} !</h1>
+               <h1>Wat Up {this.props.user.username}!</h1>
              </Grid.Column>
            </Grid.Row>
    
            <Grid.Row>
              <Grid.Column>
-               {this.props.contacts.length === 0 ?
+               {this.props.events.length === 0 ?
                <NoContacts />
                :
                <Card.Group itemsPerRow={4} stackable>
-                 {this.props.user.events.map(event => { return <Events key={event.id} event={event}/>})}
+                 {this.props.events.map(event => { return <Events key={event.id} event={event}/>})}
                </Card.Group>
                }
              </Grid.Column>

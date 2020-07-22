@@ -11,10 +11,10 @@ class EventForm extends React.Component {
     super(props)
     console.log(props)
         this.state = {
-          title: props.event ? props.event.title : null,
-          start_date: props.event ? props.event.start_date : null,
-          end_date: props.event ? props.event.start_date : null,
-          budget: props.event ? props.event.budget: null,
+          title: props.event ? props.event.title : "",
+          start_date: props.event ? props.event.start_date : "",
+          end_date: props.event ? props.event.start_date : "",
+          budget: props.event ? props.event.budget: "",
           
         }
       }
@@ -23,13 +23,15 @@ class EventForm extends React.Component {
         [event.target.name]: event.target.value
       })
 
-      handleStartDateChange = e => {
+      handleStartDateChange = (event) => {
         this.state.end_date === '' ? this.setState({
-          start_date: e.target.value, end_date: e.target.value}) : this.setState({start_date: e.target.value
+          start_date: event.target.value, 
+          end_date: event.target.value}) : 
+          this.setState({start_date: event.target.value
           })
       }
-      handleEndDateChange = e => this.setState({
-        end_date: e.target.value
+      handleEndDateChange = (event )=> this.setState({
+        end_date: event.target.value
       })
 
 
@@ -37,14 +39,16 @@ class EventForm extends React.Component {
         event.preventDefault();
         const newEvent = {
             event: {
+                
                 title: this.state.title,
                 start_date: this.state.start_date,
                 end_date: this.state.end_date,
                 budget: this.state.budget,
-                user_id: this.props.user ? this.props.user.id : null
+                user_id: this.props.user ? this.props.user.id : ""
               }
             }
-          this.props.addingEvent(newEvent)
+          this.props.addingEvent(newEvent);
+          this.props.handleClose('editEventModal');
           this.resetForm()
       }
     
@@ -52,15 +56,15 @@ class EventForm extends React.Component {
         this.setState({
             title: '',
             date: '',
-            budget: null,
-            user_id: this.props.user ? this.props.user.id : null
+            budget: "",
+            user_id: this.props.user ? this.props.user.id : ""
           })
       }
 
 
 
       render() {
-        const { value } = this.state
+        
         return (
           <Grid padded columns={1} stackable centered>
           <Grid.Row>
@@ -68,23 +72,29 @@ class EventForm extends React.Component {
           </Grid.Row>
           <Grid.Row>
           <Form size="large" onSubmit={this.handleSubmit}>
-            <Form.Group >
-            <Grid.Column>
+            
+            
               <Form.Input 
               fluid label='Title' 
               name='title'
+              width={12}
               placeholder='Title'
               onChange={this.handleChange}
               value={this.state.title} />
               
               <Form.Input 
               fluid label='Budget'
+              width={12}
               name='budget'
               placeholder='Budget' 
               onChange={this.handleChange}
               value={this.state.budget}/>
               
-    
+              <Form.Input 
+              fluid label='Choosen Start Date'
+              name='start_date' 
+              placeholder={this.state.start_date} 
+              value={this.state.start_date}/>
               <Form.Input 
               fluid label='start_date'
               type='date'
@@ -93,9 +103,13 @@ class EventForm extends React.Component {
               placeholder={this.state.start_date} 
               value={this.state.start_date}
               onChange={this.handleStartDateChange}/>
-              
+              <Grid.Row>
+            <Form.Input 
+              fluid label='Choosen End Date'
+              name='end_date' 
+              placeholder={this.state.end_date} 
+              value={this.state.end_date}/>
               <Form.Input 
-               max={5}
               fluid label='end_date'
               name='end_date' 
               placeholder={this.state.end_date} 
@@ -103,12 +117,7 @@ class EventForm extends React.Component {
               className='date-picker'
               value={this.state.end_date}
               onChange={this.handleEndDateChange}/>
-              
- 
-
-              </Grid.Column>
-            </Form.Group>
-
+            </Grid.Row>
             <Form.Button>Submit</Form.Button>
           </Form>
           </Grid.Row>
@@ -127,8 +136,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addingEvent: (event) => dispatch(addingEvent(event)),
-    updatingEvent: (event) => dispatch(updatingEvent(event))
+    addingEvent: (newEvent) => dispatch(addingEvent(newEvent)),
+    updatingEvent: (editedEvent) => dispatch(updatingEvent(editedEvent))
   }
 }
 

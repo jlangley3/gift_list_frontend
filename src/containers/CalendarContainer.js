@@ -10,7 +10,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { INITIAL_EVENTS, createEventId } from '../fullcalender/Cal-Util';
 import '../styles/Calendar.css';
 // import moment from 'moment';
-import EventForm from '../components/EventForm';
+import EventForm from '../components/NewEventForm';
 import EventShow from '../components/EventShow';
 import { Modal, Button, Segment } from 'semantic-ui-react';
 import { addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events'
