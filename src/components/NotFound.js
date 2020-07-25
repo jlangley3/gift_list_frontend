@@ -3,10 +3,19 @@ import { Header, Image } from 'semantic-ui-react'
 
 const NotFound = () => (
   <Fragment>
-    <Header size="huge" inverted color="green">
-      Page Not Found
-    </Header>
-    <Image src="https://i1.wp.com/saedx.com/blog/wp-content/uploads/2019/01/saedx-blog-featured-70.jpg?fit=1200%2C500&ssl=1" />
+      <div className="ui grid middle aligned segment green inverted" style="height: 100%; margin: 0;">
+  <div className="ui column center aligned">
+    <div className="ui inverted statistic">
+      <div className="value">404</div>
+      <div className="label">Error</div>
+    </div>
+
+    <div className="ui message green inverted">
+      <div className="header">Description</div>
+      <p>Not found</p>
+    </div>
+  </div>
+</div>
   </Fragment>
 )
 

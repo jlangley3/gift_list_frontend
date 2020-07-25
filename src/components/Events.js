@@ -4,6 +4,7 @@ import { withRouter, Link} from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
 import { setCurrentEvent } from '../redux/actions';
+import EventPic from '../images/Event.jpg'
 import moment from 'moment';
 
 class Events extends Component {
@@ -13,7 +14,7 @@ class Events extends Component {
         return (
             <Fragment>
             <Card as={Link} to={`/events/${id}`} onClick={() => this.props.setCurrentEvent(this.props.event)}>
-               <Image src="https://www.eventelephant.com/wp-content/uploads/2019/01/EventElephant.jpg" alt="No Picture" />
+               <Image src={EventPic} alt="No Picture" />
                <Card.Content>
                  <Card.Header>{title}</Card.Header>
          

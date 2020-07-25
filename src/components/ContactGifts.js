@@ -5,17 +5,17 @@ import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
 
 
-class Contacts extends Component {
+class ContactGifts extends Component {
     render() {
-        let { name, birthday, id} = this.props.contact
+        let { name} = this.props.gift
         return (
             <Fragment>
-            <Card as={Link} to={`/contacts/${id}`}>
-               <Image src="https://www.netclipart.com/pp/m/402-4026927_blank-avatar-black-png.png" alt="No Picture" />
+                <Card>
+               {/* <Image src="https://www.netclipart.com/pp/m/402-4026927_blank-avatar-black-png.png" alt="No Picture" /> */}
                <Card.Content>
                  <Card.Header>{name}</Card.Header>
          
-                 <Card.Description>{"Birthday: "}{birthday}</Card.Description>
+                 {/* <Card.Description>{"Birthday: "}{birthday}</Card.Description> */}
                </Card.Content>
              </Card>
             </Fragment>
@@ -37,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Contacts));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ContactGifts));

@@ -9,7 +9,7 @@ const authHeaders = () => {
   }
 }
   
-export const addingEvent = newEventData => {
+export const addingEvent = (newEventData) => {
   return (dispatch) => {
     
     fetch(`${URL()}/events`, {
@@ -18,9 +18,13 @@ export const addingEvent = newEventData => {
       body: JSON.stringify(newEventData)
     })
     .then(resp => resp.json())
-    .then(newEvent => dispatch(addEvent(newEvent)))
+    .then(newEvent => {
+      dispatch(addEvent(newEvent))
+      })
+      
   }
 }
+
 
 export const addEvent = newEvent => {
   return {type: "ADD_EVENT", event: newEvent}
@@ -39,6 +43,7 @@ export const updatingEvent = event => {
     .then(eventData => {
       console.log(eventData)
       dispatch(updateEvent(eventData))
+      
     })
   }
 }
@@ -86,7 +91,11 @@ export const addingEventContact = (newContactData, thisEvent) => {
     .then(resp => resp.json())
     .then(newGift => {
       dispatch(addEventContact(newContactData));
-      dispatch(addGiftToEvent(newGift))
+      dispatch(addGiftToEvent(newGift));
+      // dispatch(editCurrentEvent({...thisEvent,
+      // gifts: {...gifts, newGift},
+      // contacts: {...contacts, newContactData}
+      // }))
     })
   }
 }

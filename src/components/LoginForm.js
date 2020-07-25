@@ -54,8 +54,8 @@ class LoginForm extends React.Component {
           <Form.Group widths="equal" className='ui form'>
             <Form.Input
               className="field"
-              label="username"
-              placeholder="username"
+              label="Username"
+              placeholder="Username"
               name="username"
               onChange={this.handleChange}
               value={this.state.username}
@@ -63,8 +63,8 @@ class LoginForm extends React.Component {
             <Form.Input
               className="field"
               type="password"
-              label="password"
-              placeholder="password"
+              label="Password"
+              placeholder="Password"
               name="password"
               onChange={this.handleChange}
               value={this.state.password}

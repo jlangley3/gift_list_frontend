@@ -35,7 +35,7 @@ class GiftForm extends React.Component {
 
     render(){
         return (
-            <Grid.Column>
+            <Grid.Row>
             <Form onSubmit={this.handleSubmitForm}>
             <Form.Input 
               fluid label='Type Name of Gift' 
@@ -57,7 +57,7 @@ class GiftForm extends React.Component {
               value={this.state.link} />
               <Button>Submit</Button>
               </Form>
-          </Grid.Column>)
+          </Grid.Row>)
     }
 }
 

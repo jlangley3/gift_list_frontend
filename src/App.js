@@ -19,6 +19,8 @@ import NewUserContainer from './containers/NewUserContainer';
 import ContactShow from './components/ContactShow';
 import EventShow from './components/EventShow';
 import Homepage from './containers/HomeContainer';
+
+import Ed from "./images/Ed.jpg"
 import './App.css';
 
 class App extends React.Component {
@@ -46,7 +48,7 @@ class App extends React.Component {
           <Navbar />
           <div className='loading'>
             <Image
-              centered src='https://c4.wallpaperflare.com/wallpaper/624/484/858/green-cowboy-bebop-edward-black-background-1920x1080-anime-cowboy-bebop-hd-art-wallpaper-preview.jpg' />
+              centered src={Ed} />
           </div>
         </div>
       )
@@ -109,12 +111,11 @@ class App extends React.Component {
           <Route exact path='/contacts/:id' render={props => {
                 const contactId = parseInt(props.match.params.id)
                 const contact = this.props.contacts.find(contact => contact.id === contactId)
-
                 return !isEmpty(this.props.user) && contact ? (
                   <div className='contact-details'>
                     <ContactShow contact={contact} /> 
                   </div>
-                ) : <Redirect to='/' />
+                ) : <Redirect to='/contacts' />
               }}
               />
 

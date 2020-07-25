@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addingContact, updatingContact } from '../redux/actions/contacts'
-import { Button, Grid, Dropdown } from 'semantic-ui-react'
+import { Button, Grid, Dropdown, Form } from 'semantic-ui-react'
 
 
 class ContactForm extends React.Component {
@@ -9,53 +9,40 @@ class ContactForm extends React.Component {
       console.log(props)
     super(props)
     this.state = {
-      id: this.props.contact ? this.props.contact.id : '',
-      name: this.props.contact ? this.props.contact.name : '',
-      birthday: this.props.contact ? this.props.contact.birthday : '',
-      kind: this.props.contact ? this.props.contact.kind : '',
-      
-      avatar: this.props.contact ? this.props.contact.avatar : 'https://listimg.pinclipart.com/picdir/s/351-3519728_png-file-svg-default-profile-picture-free-clipart.png'
+      name: '',
+      birthday:  '',
+      kind: '',
+      avatar: 'https://listimg.pinclipart.com/picdir/s/351-3519728_png-file-svg-default-profile-picture-free-clipart.png'
     }
   }
 
-  handleChange = event => this.setState({
+  handleChange = (event)=> this.setState({
     [event.target.name]: event.target.value
   })
 
-  changeKind = (event) => this.setState({kind: event.target.value})
+  handleChangeKind = (event) => this.setState({kind: event.target.value})
 
 
-  handleSubmit = () => {
+  handleSubmit = event => {
+    event.preventDefault();
  
     if (this.state.name === '') {
       alert('Please enter a name')
 
-    } else if (this.props.contact) {
-        const updatedContact = {
+    } else {
+      const newContact = {
           contact: { 
-            id: this.state.id,
-            name: this.state.first_name,
+            name: this.state.name,
             birthday: this.state.birthday,
             kind: this.state.kind,
-            avatar:this.state.avatar,
+            avatar: this.state.avatar,
             user_id: this.props.id
           }
         }
-        this.props.updatingContact(this.state.id, updatedContact)
-        this.props.handleClose('editContactModal')
-      } else {
-      const newContact = {
-        contact: {
-            name: this.state.name,
-            birthday: this.state.birthday,
-            avatar: this.state.avatar,
-            user_id: this.props.id,
-            kind: this.state.kind
-            
-          }
-        }
+        
       this.props.addingContact(newContact)
-      this.props.handleClose()
+      this.props.handleClose('addContactModal')
+    
       }
   }
 
@@ -78,9 +65,8 @@ class ContactForm extends React.Component {
             <Grid.Column>
               <div className='ui form'>
                 <img className='ui small image' src={ this.state.avatar } alt='user_avatar'/><br />
-                <label htmlFor='avatar'>Contact Picture Link::</label>
-                <input type='text' value={this.state.avatar} name='avatar' onChange={this.handleChange}></input><br />
-
+                <label htmlFor='avatar'>Contact Picture Link:</label>
+                <input type='text' value={this.state.avatar} name='avatar'  onChange={this.handleChange}></input><br />
 
               </div>
             </Grid.Column>
@@ -88,18 +74,24 @@ class ContactForm extends React.Component {
               <div className='ui form' >
                 
                 <label htmlFor='name'>Name:</label>
-                <input type='text' value={this.state.name} name='name' onChange={this.handleChange}></input><p />
+                <input type='text' value={this.state.name} name='name' onChange={this.handleChange} ></input><p />
                 <label htmlFor="type">Type:</label>
                 <Dropdown
                   name='kind'
-                  placeholder="Select and option"
+                  placeholder="Select an Option"
                   options={this.kindDropdown()}
-                  onChange={this.changeKind}
+                  onChange={this.handleChangeKind}
                   value={this.state.kind}
                   selection
-                /><p />
-
-               
+                />
+            <Form.Input
+              fluid label="Birthday"
+              type='date'
+              className='date-picker'
+              name='birthday'
+              placeholder={this.state.birthday} 
+              value={this.state.birthday}
+              onChange={this.handleChange}/>
               <Button onClick={this.handleSubmit}>Submit</Button>
             </div>
 

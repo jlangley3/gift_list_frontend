@@ -1,23 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addingEvent, updatingEvent } from '../redux/actions/events'
-import { Grid, Form } from 'semantic-ui-react'
+import { Grid, Form, Input, Button } from 'semantic-ui-react'
 
 
 
 
-class EventForm extends React.Component {
+class NewEventForm extends React.Component {
   constructor(props){
     super(props)
     console.log(props)
-        this.state = {
-          title: props.event ? props.event.title : "",
-          start_date: props.event ? props.event.start_date : "",
-          end_date: props.event ? props.event.start_date : "",
-          budget: props.event ? props.event.budget: "",
-          
-        }
-      }
+    this.state = {
+      title: props.event ? props.event.title : "",
+      start_date: props.start_date ? props.start_date : "",
+      end_date: props.end_date ? props.end_date : "",
+      budget: props.event ? props.event.budget: "",
+    }
+    console.log(this.state)
+  }
     
       handleChange = event => this.setState({
         [event.target.name]: event.target.value
@@ -35,8 +35,8 @@ class EventForm extends React.Component {
       })
 
 
-      handleSubmit = event => {
-        event.preventDefault();
+      handleSubmit = e => {
+        e.preventDefault();
         const newEvent = {
             event: {
                 
@@ -48,7 +48,7 @@ class EventForm extends React.Component {
               }
             }
           this.props.addingEvent(newEvent);
-          this.props.handleClose('editEventModal');
+          this.props.handleClose('addEventModal');
           this.resetForm()
       }
     
@@ -66,62 +66,47 @@ class EventForm extends React.Component {
       render() {
         
         return (
-          <Grid padded columns={1} stackable centered>
-          <Grid.Row>
-            {this.props.event ? <h3>Edit {this.props.event.name}</h3> : <h3>ADD NEW GIFT LIST</h3> }
-          </Grid.Row>
-          <Grid.Row>
-          <Form size="large" onSubmit={this.handleSubmit}>
-            
-            
-              <Form.Input 
-              fluid label='Title' 
+            <div>
+          <Form onSubmit={this.handleSubmit}>
+        <Form.Group widths='equal'>
+          <Form.Field
+          control={Input}
+              fluid label="Title"
               name='title'
-              width={12}
               placeholder='Title'
               onChange={this.handleChange}
               value={this.state.title} />
-              
-              <Form.Input 
-              fluid label='Budget'
-              width={12}
+          <Form.Field
+            control={Input}
+              fluid label="Budget"
               name='budget'
               placeholder='Budget' 
               onChange={this.handleChange}
               value={this.state.budget}/>
               
-              <Form.Input 
-              fluid label='Choosen Start Date'
-              name='start_date' 
-              placeholder={this.state.start_date} 
-              value={this.state.start_date}/>
-              <Form.Input 
-              fluid label='start_date'
+        </Form.Group>
+        <Form.Group widths='equal'>
+          <Form.Input
+              fluid label="Start Date"
               type='date'
               className='date-picker'
               name='start_date'
               placeholder={this.state.start_date} 
               value={this.state.start_date}
               onChange={this.handleStartDateChange}/>
-              <Grid.Row>
-            <Form.Input 
-              fluid label='Choosen End Date'
-              name='end_date' 
-              placeholder={this.state.end_date} 
-              value={this.state.end_date}/>
-              <Form.Input 
-              fluid label='end_date'
-              name='end_date' 
+          <Form.Input
+              fluid label="End Date"
+              type='date'
               placeholder={this.state.end_date} 
               type='date'
               className='date-picker'
               value={this.state.end_date}
               onChange={this.handleEndDateChange}/>
-            </Grid.Row>
-            <Form.Button>Submit</Form.Button>
-          </Form>
-          </Grid.Row>
-          </Grid>
+        </Form.Group>
+        <Button  >Submit</Button>
+      </Form>
+      </div>
+          
         )
       }
     }
@@ -141,4 +126,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventForm)
+export default connect(mapStateToProps, mapDispatchToProps)(NewEventForm)

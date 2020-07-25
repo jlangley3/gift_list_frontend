@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Grid, Modal, Image, Header, List} from 'semantic-ui-react';
+import { Button, Grid, Modal, Image, Header, List, Icon} from 'semantic-ui-react';
 import { deletingGift } from '../redux/actions/';
 import GiftForm from './GiftForm';
 import moment from 'moment';
@@ -40,19 +40,30 @@ class GiftContact extends React.Component {
               onClose={() => this.handleClose('editGiftModal')}
               centered={false}>
           <Modal.Header as="h1">Edit Gift</Modal.Header>
-          <Modal.Content image>
+          <Modal.Content >
+          <Grid columns={2} divided>
+           <Grid.Row>
+            <Grid.Column>
+              <Header>Add Contacts to List</Header>
+              <Modal.Description>
+              <p>Type the name of the Gift.</p>
+              <p>Pick a Contact from the DropDown.</p>
+              </Modal.Description>
+            </Grid.Column>
+            <Grid.Column>
+              <Icon name='gift' size='massive' color='green' />
+              </Grid.Column>
+              </Grid.Row>
+              </Grid>
+          
+          
           <GiftForm event={this.props.event} 
                     gift={this.props.gift} 
                     contact={this.props.gift.contact} 
                     title={'Edit Gift'} 
                     handleClose={() => this.handleClose('editGiftModal')}
                   />
-          <Image wrapped size='medium' src='https://www.creativefabrica.com/wp-content/uploads/2018/10/Happy-Birthday-Gift-Green-and-Black-by-Surya-Darmawan-580x386.jpg' />
-          <Modal.Description>
-            <Header>Add Contacts to List</Header>
-            <p>Type the name of the Gift.</p>
-            <p>Pick a Contact from the DropDown.</p>
-        </Modal.Description>
+          
           </Modal.Content>
         </Modal>
         )}    

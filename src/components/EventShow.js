@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Modal, Grid, Button, GridColumn, List } from 'semantic-ui-react'
+import { Image, Header, Modal, Grid, Button, GridColumn, List, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import AddEventContacts from './AddEventContacts';
@@ -7,7 +7,8 @@ import EditEventForm from './EditEventForm';
 import { isEmpty } from 'lodash';
 import { updatingEvent, deletingEvent, addingEvent} from '../redux/actions/events';
 import GiftContact from './GiftContact';
-
+import GiftList from "../images/GiftList.png";
+import Edit from "../images/edit.gif";
 
 class ContactShow extends React.PureComponent {
 
@@ -31,6 +32,17 @@ class ContactShow extends React.PureComponent {
   
 
 
+  giftPrice = () => { 
+
+   var cash =  this.props.currentEvent.gifts.reduce(function(previousValue, currentValue) {
+    return { price: previousValue.price + currentValue.price}
+  })
+    return cash.price
+}
+  
+
+
+
   addContactBtn = () => {
     return (
       <Modal 
@@ -38,15 +50,23 @@ class ContactShow extends React.PureComponent {
       open={this.state.addContactModal}
       onClose={() => this.handleClose('addContactModal')}>
       <Modal.Header>Select a Photo</Modal.Header>
-      <Modal.Content image>
+      <Modal.Content >
+      <Grid columns={2} divided>
+           <Grid.Row>
+            <Grid.Column>
       <AddEventContacts event={this.props.event} title={'Add Contacts to List'}  handleClose={() => this.handleClose('addContactModal')}/>
-        <Image wrapped size='medium' src='https://i.pinimg.com/originals/8c/7c/c4/8c7cc4c8776e4ed6577167e7e9b64f13.png' />
+      </Grid.Column>
+            <Grid.Column>
         <Modal.Description>
           <Header>Add Contacts to List</Header>
           <p>
             Pick a Contact from the DropDown to add to this list
           </p>
+          <Icon circular inverted size="huge" color='green' name='users' />
         </Modal.Description>
+        </Grid.Column>
+              </Grid.Row>
+              </Grid>
       </Modal.Content>
     </Modal>
         
@@ -58,22 +78,35 @@ class ContactShow extends React.PureComponent {
     return (
       <Modal trigger={<Button onClick={() => this.handleOpen('editEventModal')}
       basic
-      color='green'>Edit Event</Button>} 
+      color='green'>Edit Gift List</Button>} 
         open={this.state.editEventModal}
         onClose={() => this.handleClose('editEventModal')}
         closeIcon
       centered={false}>
-      <Modal.Header>Select a Photo</Modal.Header>
-      <Modal.Content image>
-        <Image wrapped size='small' src='https://3xoo20ik68l1obvec1hg1f6f-wpengine.netdna-ssl.com/wp-content/uploads/2016/02/edit-logo.gif' />
+      <Modal.Header>Edit Gift List</Modal.Header>
+      <Modal.Content>
+      <Grid columns={2} divided>
+           <Grid.Row>
+        <Grid.Column>
         <Modal.Description>
+            {/* <Grid.Column> */}
+            <Icon circular inverted size="huge" color='green' name="edit" />
+        {/* </Grid.Column> */}
           <Header>Add Contacts to List</Header>
           <p>
-            Type the name of the Gift.
+            Insert the name of the Gift.
           </p>
           <p>Pick a Contact from the DropDown.</p>
         </Modal.Description>
-      </Modal.Content><EditEventForm event={this.props.event} title={"Edit Event Form"} handleClose={() => this.handleClose('editEventModal')}/>
+        </Grid.Column>
+        <Grid.Column>
+      <EditEventForm event={this.props.event} 
+                     title={"Edit Event Form"} 
+                     handleClose={() => this.handleClose('editEventModal')}/>
+      </Grid.Column>
+      </Grid.Row>
+              </Grid>
+      </Modal.Content>
     </Modal>
     )
   }
@@ -108,6 +141,7 @@ class ContactShow extends React.PureComponent {
 
   render(){
       console.log(this.props)
+      debugger;
     const {title, start_date, end_date, budget, repeating} = this.props.currentEvent
     return(
       <Grid columns='equal' padded stackable>
@@ -119,11 +153,14 @@ class ContactShow extends React.PureComponent {
                 <Header.Subheader>Date: { moment(start_date).format('ll') }</Header.Subheader>
                 <Header.Subheader>End: { moment(end_date).format('ll') }</Header.Subheader>
                 <Header.Subheader>Budget: ${ budget}</Header.Subheader>
+                <Header.Subheader>
+                {!isEmpty(this.props.currentEvent) ? <p>Money Spent on Gifts for this List: ${this.giftPrice()}</p> : <p>Money Spent on Gifts for this List: $0</p>}
+                    </Header.Subheader>
               </Header.Content>
             </Header>
           </Grid.Column>
           <Grid.Column>
-          <Image floated='right' size='medium' src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQFgvdiVgACLS3CVHs1F8eYENZe-ATnOtNniQ&usqp=CAU" alt="No Picture" />
+          <Image floated='right' size='medium' src={GiftList} alt="No Picture" />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={1} >

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { userReducer, loadingReducer} from './users';
 import { eventsReducer, setCurrentEventReducer } from './events';
-import { contactsReducer } from './contacts';
+import { contactsReducer, searchTermReducer } from './contacts';
 import {giftsReducer} from './gifts';
 
 const rootReducer = combineReducers({
@@ -10,6 +10,7 @@ const rootReducer = combineReducers({
   contacts: contactsReducer,
   events: eventsReducer,
   gifts: giftsReducer,
+  searchTerm: searchTermReducer,
   currentEvent: setCurrentEventReducer
 });
 

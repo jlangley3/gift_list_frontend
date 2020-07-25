@@ -2,12 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addingUser, updatingUser} from '../redux/actions'
 import { Segment, Grid, Button } from 'semantic-ui-react'
+import Goku from "../images/goku.jpg";
 
 class Register extends React.Component {
   constructor(){
     super()
     this.state = {
-      avatar: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a1ef46f1-9f1e-4542-8632-9441452f929f/d8ps1ub-8813fb32-6d9f-41cc-bace-da6a88708528.jpg/v1/fill/w_768,h_768,q_75,strp/goku_ssj_facebook_profil_by_mjd360_d8ps1ub-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD03NjgiLCJwYXRoIjoiXC9mXC9hMWVmNDZmMS05ZjFlLTQ1NDItODYzMi05NDQxNDUyZjkyOWZcL2Q4cHMxdWItODgxM2ZiMzItNmQ5Zi00MWNjLWJhY2UtZGE2YTg4NzA4NTI4LmpwZyIsIndpZHRoIjoiPD03NjgifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.Y7tLWTAFNHwto9jSmxFbwK18QFmsIWC-2_Hpk5c-jnk',
+      avatar: "../images/goku.jpg",
       first_name: '',
       last_name: '',
       username: '',
@@ -40,7 +41,7 @@ class Register extends React.Component {
 
   resetState = () => {
     this.setState({
-      avatar: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a1ef46f1-9f1e-4542-8632-9441452f929f/d8ps1ub-8813fb32-6d9f-41cc-bace-da6a88708528.jpg/v1/fill/w_768,h_768,q_75,strp/goku_ssj_facebook_profil_by_mjd360_d8ps1ub-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD03NjgiLCJwYXRoIjoiXC9mXC9hMWVmNDZmMS05ZjFlLTQ1NDItODYzMi05NDQxNDUyZjkyOWZcL2Q4cHMxdWItODgxM2ZiMzItNmQ5Zi00MWNjLWJhY2UtZGE2YTg4NzA4NTI4LmpwZyIsIndpZHRoIjoiPD03NjgifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.Y7tLWTAFNHwto9jSmxFbwK18QFmsIWC-2_Hpk5c-jnk',
+      avatar: "../images/goku.jpg",
       first_name: '',
       last_name: '',
       username: '',

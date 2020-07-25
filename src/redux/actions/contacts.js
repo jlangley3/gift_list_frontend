@@ -9,19 +9,19 @@ const URL = () => {
     }
   }
 
-  const addContact = newContactObj => {
-    return { type: "ADD_CONTACT", contact: newContactObj }
+  const addContact = newContact => {
+    return { type: "ADD_CONTACT", contact: newContact }
   }
   
-  const addingContact = contact => {
+  const addingContact = contact_data => {
     return (dispatch) => {
       fetch(`${URL()}/contacts`, {
         method: 'POST',
         headers: authHeaders(),
-        body: JSON.stringify(contact)
+        body: JSON.stringify(contact_data.contact)
       })
         .then(res => res.json())
-        .then(newContactObj => dispatch(addContact(newContactObj)))
+        .then(newContact => dispatch(addContact(newContact)))
     }
   }
   
@@ -52,19 +52,17 @@ const URL = () => {
         headers: authHeaders()
       })
         .then(res => res.json())
-        .then(contactObj => {
-          console.log(contactObj)
-          dispatch(deleteContact(contactObj))
+        .then(oldContact => {
+          console.log(oldContact)
+          dispatch(deleteContact(oldContact))
         })
     }
   }
   
   
-
-
-  export {
-    addingContact,
-    deletingContact,
-    updatingContact,
-    updateContact
+  const updateSearchTerm = searchTerm => {
+    return { type: "UPDATE_SEARCH_TERM", searchTerm }
   }
+  
+  
+  export { addingContact, deletingContact, updatingContact, updateSearchTerm}

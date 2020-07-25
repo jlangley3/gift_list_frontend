@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react"
-import { Card, Image } from "semantic-ui-react";
+import { Card, Image, Icon } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
@@ -11,7 +11,7 @@ class Gifts extends Component {
         return (
             <Fragment>
             <Card>
-               <Image src="https://www.creativefabrica.com/wp-content/uploads/2018/10/Happy-Birthday-Gift-Green-and-Black-by-Surya-Darmawan-580x386.jpg" alt="No Picture" />
+            <Icon name='gift' size='massive' color='green' />
                <Card.Content>
                  <Card.Header>{name}</Card.Header>
          

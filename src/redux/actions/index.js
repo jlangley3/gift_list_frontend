@@ -1,6 +1,6 @@
 
 import { logoutUser, updatingUser, handlingLoginSubmit, addingUser, fetchingUser, clearLoading } from './users'
-import { addingContact, deletingContact, updatingContact} from './contacts'
+import { addingContact, deletingContact, updatingContact, updateSearchTerm } from './contacts'
 import { addingEvent, updatingEvent, deletingEvent, setCurrentEvent, editCurrentEvent, addingEventContact} from './events'
 import {addGift, updatingGift, deletingGift} from './gifts'
 
@@ -23,6 +23,7 @@ export {
   updatingGift,
   setCurrentEvent,
   editCurrentEvent,
-  deletingGift
+  deletingGift,
+  updateSearchTerm
   
 }

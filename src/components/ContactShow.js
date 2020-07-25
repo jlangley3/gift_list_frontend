@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import ContactForm from './ContactForm';
 import { deletingContact, addingContact, updatingContact} from '../redux/actions/contacts';
-
+import { isEmpty } from 'lodash';
+import ContactGifts from "./ContactGifts"
 
 class ContactShow extends React.PureComponent {
 
@@ -23,6 +24,7 @@ class ContactShow extends React.PureComponent {
   handleOpen = (modal) => this.setState({ [modal]: true })
   handleClose = (modal) => this.setState({ [modal]: false })
 
+  
 
 
   createContactBtn = () => {
@@ -94,6 +96,11 @@ class ContactShow extends React.PureComponent {
     )
   }
 
+  listOfGifts = () => {
+ let contactGifts = this.props.contact.gifts.map(gift => {return <ContactGifts key={gift.key} gift={gift}/>})
+ return contactGifts
+  }
+
  
 
   render(){
@@ -113,6 +120,8 @@ class ContactShow extends React.PureComponent {
           </Grid.Column>
         </Grid.Row>
         <Image floated='right' size='large' src={avatar} />
+        {!isEmpty(this.props.contact.gifts) ? <p>Money Spent on Gifts for this List: {this.listOfGifts()}</p> : <p>Money Spent on Gifts for this List: $0</p>}
+        {this.listOfGifts()}
         <Grid.Row columns={2}>
           <Grid.Column width={4}>
             <Button>{kind}</Button>
@@ -123,12 +132,10 @@ class ContactShow extends React.PureComponent {
             </p>
           </Grid.Column>
         </Grid.Row>
-
         <Grid.Row columns={4}>
           <Grid.Column>
             { this.createContactBtn() }
           </Grid.Column>
-    
           <Grid.Column>
             { this.editContactBtn() }
           </Grid.Column>

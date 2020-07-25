@@ -1,39 +1,44 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from "react-router-dom";
-import { Checkbox } from 'semantic-ui-react';
-import Moment from 'react-moment';
-import FullCalendar, { formatDate } from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-// import { INITIAL_EVENTS, createEventId } from '../fullcalender/Cal-Util';
+import { Checkbox, Image, Header, Grid, Icon} from 'semantic-ui-react';
+import FullCalendar, { formatDate } from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
 import '../styles/Calendar.css';
 // import moment from 'moment';
-import EditEventForm from '../components/NewEventForm';
+import NewEventForm from '../components/NewEventForm';
 import EventShow from '../components/EventShow';
 import { Modal, Button, Segment } from 'semantic-ui-react';
-import { addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events';
+import { editCurrentEvent, addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events';
 import { setCurrentEvent } from '../redux/actions';
 
-class CalenderContainer extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      modalOpen: false,
-      thisEvent: {},
-      editForm: false,
-      weekendsVisible: true,
-      currentEvents: []
-    }
+class CalendarContainer extends React.Component {  
+  constructor(props) {
+  super(props)
+  this.state = {
+    modalOpen: false,
+    addEventModal: false,
+    thisEvent: {},
+    weekendsVisible: true,
+    currentEvents: [],
+    currentEvent: props.currentEvent,
+    start_date: "",
+    end_date: ""
   }
+}
+       
 
-  handleOpen = (event) => this.setState({modalOpen: true, thisEvent: event.extendedProps})
-  handleClose = () => this.setState({modalOpen: false, editForm: false, deleteConfirmation: false})
+handleOpen = (clickInfo = null, modal) => { 
+  this.setState({ 
+  [modal]: true, 
+  start_date: clickInfo.startStr,
+  end_date: clickInfo.endStr })}
 
-  
-  
-  
+handleClose = (modal) => this.setState({ [modal]: false })
+
+
   formatEvents = () => {
     return this.props.events.map(event => {
               const {title, end_date, start_date} = event
@@ -50,12 +55,9 @@ class CalenderContainer extends React.Component {
           })
   }
 
-  
+
 
   render() {
-    console.log(this.state.thisEvent)
-    
-
     return (
       <div className='demo-app'>
         {this.renderSidebar()}
@@ -72,28 +74,73 @@ class CalenderContainer extends React.Component {
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
-            weekends={this.state.weekendsVisible}
-            initialEvents={this.formatEvents()} // alternatively, use the `events` setting to fetch from a feed
-            select={(event, e) => {this.handleOpen(event)}}
+            weekends={this.props.weekendsVisible}
+            datesSet={this.handleDates}
+            select={(event) => {this.handleOpen(event, 'addEventModal')}}
+            events={this.formatEvents()}
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
-            eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
-            //you can update a remote database when these fire:
-            eventAdd={(event) => this.props.addEvent(event)}
-            eventChange={(event) => this.props.updateEvent(event)}
-            eventRemove={(event) => this.props.deleteEvent(event)}
-        
-           />
-                 <Modal
-           open={this.state.modalOpen}
-           onClose={() => {this.handleClose()}} 
-           size='small'>
-                <EditEventForm 
-           title={'Update Event!'} 
-           event={this.state.thisEvent} 
-           handleClose={this.handleClose}
+            eventAdd={this.handleEventAdd}
+            eventChange={this.handleEventChange} // called for drag-n-drop/resize
+            eventRemove={this.handleEventRemove}
+          />
+
+          <Modal
+           open={this.state.addEventModal}
+           onClose={() => this.handleClose('addEventModal')}
+           size='small'
+              closeIcon
+              centered={false}>
+              <Modal.Header as="h1">Add A List</Modal.Header>
+              <Modal.Content>
+              <Grid columns={2} divided>
+                <Grid.Row>
+                 <Grid.Column>
+                 <Icon name='gift' size='massive' color='green' />
+                <Modal.Description>
+                  <Header>Add a  Gift List</Header>
+                </Modal.Description>
+                </Grid.Column>
+            <Grid.Column>
+                <NewEventForm 
+           title={'New Event!'} 
+           start_date={this.state.start_date} 
+           end_date={this.state.end_date}
+           handleClose={() => this.handleClose('addEventModal')}
          />
+         </Grid.Column>
+              </Grid.Row>
+              </Grid>
+              </Modal.Content>
        </Modal>
+
+
+        {/* <Modal
+              open={this.state.editEventModal}
+              onClose={() => {
+                this.toggleEditForm()
+                this.handleClose()
+              }} 
+              size='small'
+              >
+              {!this.state.editForm ? 
+              <Segment>
+              <EventShow
+                event={this.state.thisEvent}
+                handleClose={this.handleClose}
+              />
+              <Button content='Edit Event' onClick={this.toggleEditForm}/> 
+              </Segment>
+              :
+              <EditEventForm 
+              contact={null} 
+              title={'Update Event!'} 
+              event={this.state.thisEvent} 
+              handleClose={this.handleClose}
+              />
+              }
+              </Modal> */}
+
         </div>
       </div>
     )
@@ -114,14 +161,11 @@ class CalenderContainer extends React.Component {
           <label>
             <input
               type='checkbox'
-              checked={this.state.weekendsVisible}
-              onChange={this.handleWeekendsToggle}
+              checked={this.props.weekendsVisible}
+              onChange={this.props.toggleWeekends}
             ></input>
             toggle weekends
           </label>
-          <Checkbox toggle 
-              checked={this.state.weekendsVisible}
-              onChange={this.handleWeekendsToggle}/>
         </div>
         <div className='demo-app-sidebar-section'>
           <h2>All Events ({this.props.events.length})</h2>
@@ -133,43 +177,77 @@ class CalenderContainer extends React.Component {
     )
   }
 
-  handleWeekendsToggle = () => {
-    this.setState({
-      weekendsVisible: !this.state.weekendsVisible
-    })
-  }
+  // handlers for user actions
+  // ------------------------------------------------------------------------------------------
 
   handleDateSelect = (selectInfo) => {
-    let title = prompt('Please enter a new title for your event')
+    // this.handleOpen('addEventModal', selectInfo);
+    console.log(selectInfo)
+
     let calendarApi = selectInfo.view.calendar
+    let title = prompt('Please enter a new title for your event')
 
     calendarApi.unselect() // clear date selection
 
     if (title) {
-      calendarApi.addEvent({
-        id: "2",
+      calendarApi.addEvent({ // will render immediately. will call handleEventAdd
         title,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
         allDay: selectInfo.allDay
-      })
+      }, true) // temporary=true, will get overwritten when reducer gives new events
     }
   }
 
-  handleEventClick = (event, clickInfo) => {
-    if (alert(clickInfo)) {
-      clickInfo.event.remove()
+  handleEventClick = (clickInfo) => {
+    console.log(clickInfo)
+    
+    if (alert(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+      clickInfo.event.remove() // will render immediately. will call handleEventRemove
     }
   }
 
-  handleEvents = (events) => {
-    this.setState({
-      currentEvents: events
-    })
+  // handlers that initiate reads/writes via the 'action' props
+  // ------------------------------------------------------------------------------------------
+
+  // handleDates = (rangeInfo) => {
+  //   this.props.requestEvents(rangeInfo.startStr, rangeInfo.endStr)
+  //     .catch(reportNetworkError)
+  // }
+
+  // handleEventAdd = (addInfo) => {
+  //   this.props.createEvent(addInfo.event.toPlainObject())
+  //     .catch(() => {
+  //       reportNetworkError()
+  //       addInfo.revert()
+  //     })
+  // }
+
+  handleEventChange = (changeInfo) => {
+   console.log(changeInfo)
+   let start = changeInfo.event._instance.range.start
+   let end = changeInfo.event._instance.range.end
+     let clickedEvent = changeInfo.event._def.extendedProps
+   this.props.updatingEvent({...clickedEvent, start_date: start, end_date: end });
+   this.props.editCurrentEvent({...clickedEvent, start_date: start, end_date: end });
   }
 
+//   handleEventRemove = (removeInfo) => {
+//     this.props.deleteEvent(removeInfo.event.id)
+//       .catch(() => {
+//         reportNetworkError()
+//         removeInfo.revert()
+//       })
+//   }
+
+// }
+
+
+
+// function reportNetworkError() {
+//   alert('This action could not be completed')
+// }
 }
-
 function renderEventContent(eventInfo) {
   return (
     <>
@@ -188,25 +266,29 @@ function renderSidebarEvent(event) {
     </li>
   )
 }
-  
+
+
+
+
 const mapStateToProps = (state, ownProps) => {
-  return {
-    user: state.user,
-    events: state.events,
-    reminders: state.reminders,
-    loading: state.loading,
-    contacts: state.contacts,
-    currentEvent: state.currentEvent
-  }
+return {
+  user: state.user,
+  events: state.events,
+  reminders: state.reminders,
+  loading: state.loading,
+  contacts: state.contacts,
+  currentEvent: state.currentEvent
+}
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    deletingEvent: (event) => dispatch(deletingEvent(event)),
-    updatingEvent: (event) => dispatch(updatingEvent),
-    addingEvent: (event) => dispatch(addingEvent),
-    setCurrentEvent: (e) => dispatch(setCurrentEvent(e))
-  }
+return {
+  deletingEvent: (event) => dispatch(deletingEvent(event)),
+  updatingEvent: (event) => dispatch(updatingEvent),
+  addingEvent: (event) => dispatch(addingEvent),
+  setCurrentEvent: (e) => dispatch(setCurrentEvent(e)),
+  editCurrentEvent: (e) => dispatch(editCurrentEvent(e))
+}
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CalenderContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CalendarContainer));
