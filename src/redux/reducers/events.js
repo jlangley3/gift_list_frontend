@@ -7,9 +7,8 @@ const eventsReducer = (state = [], action) => {
         case "ADD_EVENT":
           return [...state, action.event]
         case "UPDATE_EVENT":
-          debugger;
           return state.map(event => event.id === action.event.id ? action.event : event)
-        case "DELETE_EVENT":
+          case "DELETE_EVENT":
           return state.filter(event => event.id !== action.event.id)
         case "LOGOUT_USER":
           return []

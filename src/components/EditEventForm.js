@@ -1,7 +1,8 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { editCurrentEvent, updatingEvent } from '../redux/actions/events'
-import { Grid, Form, Button, Radio, Input, Select, TextArea } from 'semantic-ui-react'
+import React from 'react';
+import { connect } from 'react-redux';
+import { editCurrentEvent, updatingEvent } from '../redux/actions/events';
+import { Grid, Form, Button, Radio, Input, Select, TextArea } from 'semantic-ui-react';
+// import {DateInput, TimeInput, DateTimeInput, DatesRangeInput} from 'semantic-ui-calendar-react';
 
 
 class EditEventForm extends React.Component {
@@ -12,7 +13,7 @@ class EditEventForm extends React.Component {
         this.state = {
           title: props.currentEvent ? props.currentEvent.title : "",
           start_date: props.currentEvent ? props.currentEvent.start_date : "",
-          end_date: props.currentEvent ? props.currentEvent.start_date : "",
+          end_date: props.currentEvent ? props.currentEvent.end_date : "",
           budget: props.currentEvent ? props.currentEvent.budget: "",
           
         }
@@ -37,6 +38,7 @@ class EditEventForm extends React.Component {
 
       handleSubmit = event => {
         event.preventDefault();
+        console.log(this.state.start_date)
         const newEvent = {
                 id: this.props.currentEvent.id,
                 title: this.state.title,
@@ -68,7 +70,7 @@ class EditEventForm extends React.Component {
 
       render() {
         return (
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
         <Form.Group widths='equal'>
           <Form.Field
           control={Input}
@@ -98,12 +100,28 @@ class EditEventForm extends React.Component {
           <Form.Input
               fluid label="End Date"
               type='date'
+              name='end_date'
               placeholder={this.state.end_date} 
               type='date'
               className='date-picker'
               value={this.state.end_date}
               onChange={this.handleEndDateChange}/>
         </Form.Group>
+                {/* <DateInput
+                inline
+          name='start_date'
+          placeholder={this.state.start_date} 
+          value={this.state.start_date}
+          iconPosition="left"
+          onChange={this.handleStartDateChange}
+        />
+                <DateInput
+          name='end_date'
+          placeholder={this.state.end_date} 
+          value={this.state.end_date}
+          iconPosition="left"
+          onChange={this.handleEndDateChange}
+        /> */}
         <Form.Field control={Button}>Submit</Form.Field>
       </Form>
           

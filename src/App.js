@@ -5,7 +5,7 @@ import 'moment-timezone';
 
 import { fetchingUser, clearLoading } from './redux/actions/users';
 import { isEmpty } from 'lodash';
-import { Image } from 'semantic-ui-react';
+import { Image, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import Navbar from './components/Navbar';
 
 import Profile from './components/Profile';
@@ -19,6 +19,7 @@ import NewUserContainer from './containers/NewUserContainer';
 import ContactShow from './components/ContactShow';
 import EventShow from './components/EventShow';
 import Homepage from './containers/HomeContainer';
+import Footer from './components/Footer';
 
 import Ed from "./images/Ed.jpg"
 import './App.css';
@@ -44,18 +45,26 @@ class App extends React.Component {
     };
     if (this.props.loading) {
       return (
-        <div className="App" style={divStyle}>
-          <Navbar />
-          <div className='loading'>
-            <Image
-              centered src={Ed} />
-          </div>
-        </div>
+        // <div className="App" style={divStyle}>
+        //   <Navbar />
+        //   <div className='loading'>
+        //     <Image
+        //       centered src={Ed} />
+        //   </div>
+        //   <Footer />
+        // </div>
+   
+        <Dimmer active inverted>
+          <Loader size='massive'>Loading</Loader>
+        </Dimmer>
+  
+
       )
     } else {
     return (
       <Fragment>
         <Navbar  />
+        <div className="App" >
         <Switch>
         <Route exact path='/' render={() => {
                 return isEmpty(this.props.user) ? <Redirect to='/login' /> : <Homepage />
@@ -122,6 +131,8 @@ class App extends React.Component {
           <Redirect from='*' to='/' />
           <Route component={NotFound} />
         </Switch>
+        <Footer />
+        </div>
       </Fragment>
     )
   }

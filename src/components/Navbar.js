@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { Menu, Icon, Image } from 'semantic-ui-react';
+import { Menu, Icon, Image, Header, Segment } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
 import { logoutUser } from '../redux/actions/users';
-import Header from "../images/Header.png";
+import { editCurrentEvent, updatingEvent } from '../redux/actions/events'
+import Head from "../images/Header.png";
 import '../styles/Nav.css';
 
 class NavBar extends Component {
@@ -24,7 +25,7 @@ class NavBar extends Component {
           { !isEmpty(this.props.user) ?
           <React.Fragment>
             <Menu.Item  header src={Header}>
-              <Image as={ Link } to='/profile' src={Header} size="small"/></Menu.Item>
+              <Image as={ Link } to='/profile' src={Head} size="small" onClick={this.props.updatingEvent(this.props.currentEvent)}/></Menu.Item>
             <Menu.Item 
               name='profile' 
               as={ Link } to='/profile'
@@ -62,6 +63,10 @@ class NavBar extends Component {
               <Icon name='add' size='large' color='green'/>
 
             </Menu.Item>  */}
+              <Segment basic>
+             <Header as='h2' textAlign='center'>  Hello {this.props.user.username}!
+                </Header> 
+                </Segment>
 
             <Menu.Item 
               name='logout' 
@@ -96,12 +101,16 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { user: state.user }
+  return { 
+    user: state.user,
+  currentEvent: state.currentEvent }
 }
 
 const mapDispatchToProps = (dispatch )=> {
   return {
-    logoutUser: () => dispatch(logoutUser())
+    logoutUser: () => dispatch(logoutUser()),
+    updatingEvent: (event) => dispatch(updatingEvent(event)),
+    editCurrentEvent: (e) => dispatch(editCurrentEvent(e))
   }
 }
 

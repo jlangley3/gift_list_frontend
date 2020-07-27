@@ -14,7 +14,8 @@ class GiftContact extends React.Component {
               currentContact: props.recipient ? props.recipient: "",
               currentGift: props.gift ? props.gift : "",
               editGiftModal: false,
-              deleteGiftModal: false
+              deleteGiftModal: false,
+              thisEvent: props.event
             }
           }
 
@@ -87,7 +88,7 @@ class GiftContact extends React.Component {
               <Modal.Actions>
                 <Button inverted negative content='No' onClick={() => this.handleClose('deleteGiftModal')} />
                 <Button inverted positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
-                  this.props.deletingGift(this.state.currentGift)
+                  this.props.deletingGift(this.state.currentGift, this.state.thisEvent)
                   this.handleClose('deleteGiftModal')
                 }
                 } />
@@ -144,7 +145,7 @@ const mapStateToProps = (state )=> {
   const mapDispatchToProps = dispatch => {
     return {
       // addingGiftContact: (newContactGift, thisEvent) => dispatch(addingGift(newContactGift, thisEvent)),
-      deletingGift: (gift) => dispatch(deletingGift(gift))
+      deletingGift: (gift, thisEvent) => dispatch(deletingGift(gift, thisEvent))
       
     }
   }

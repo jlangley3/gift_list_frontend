@@ -27,8 +27,15 @@ li {
 
 b { /* used for event dates/times */
   margin-right: 3px;
-  /* color: green */
+  color: green;
+  background-color: green;
 }
+
+/* each event
+/* i {
+  color: green; 
+   background-color: green; 
+} */
 
 .demo-app {
   display: flex;
@@ -82,4 +89,20 @@ b { /* used for event dates/times */
 .fc-day-header {
   font-size: 1.5em;
   color: #00b294;
+}
+
+.colors {
+  background-color: green;
+  color:green;
+}
+
+.fc-right .fc-prev-button, .fc-right .fc-next-button{
+  background-color: #b1d583;
+  color: green;
+  background-image: none;
+}
+
+.fc-button {
+  color:red;
+  background-color: red;
 }

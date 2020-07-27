@@ -49,9 +49,9 @@ const URL = () => {
     }
   }
 
-  export const deletingGift = gift => {
+  export const deletingGift = (gift, thisEvent) => {
     return (dispatch) => {
-      fetch(`${URL()}/events/${gift.id}`, {
+      fetch(`${URL()}/gifts/${gift.id}`, {
         method: 'DELETE',
         headers: authHeaders(),
         body: JSON.stringify(gift)

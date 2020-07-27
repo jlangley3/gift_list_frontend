@@ -31,7 +31,8 @@ class ContactContainer extends Component {
     return (
       <Modal trigger={<Button onClick={() => this.handleOpen('addContactModal')}
       basic
-      color='green'>Add Contact</Button>} 
+      size="huge"
+      color='green'><Icon name='add user' />Add Contact</Button>} 
         open={this.state.addContactModal}
         onClose={() => this.handleClose('addContactModal')}
         closeIcon
@@ -51,42 +52,58 @@ class ContactContainer extends Component {
   }
 
   render() {
-    debugger;
+   
     return(
       <div>
-        <Grid stackable>
+        {/* <Grid stackable>
         <Grid.Row>
           <Grid.Column >
-          <div>
+          <div> */}
              <Segment >
-                  <Header icon>
-                    <Icon name='search' />
-                        Find Contact
-                        </Header>
-                          <br />
+               <Grid columns="equal" stackable>
+               <Grid.Row>
+                 <Grid.Column >
+                 <Header as='h1'  >
+                    <Icon name='search' size="huge" color="green"/>
+                    <Header.Content as="h1" className="ui red header">Find Contact</Header.Content>
+                      </Header>
+                    </Grid.Column>
+                                  <Grid.Column>
+                                  <Input
+                                  icon='search'
+                                  type='text'
+                                  size='huge'
+                                  value={this.props.searchTerm}
+                                  onChange={(event) => this.props.updateSearchTerm(event.target.value)}
+                                  name='filter'
+                                  placeholder='Search For Contacts'>
+                                    </Input>
+                                  </Grid.Column>
+                      <Grid.Column>
+                      {this.addContactBtn()}
+                      </Grid.Column>
+                    <Grid.Column>
+                    <Segment compact>
                           <Checkbox 
                               toggle
                               color="green"
                               // label='Sort By Name'
                               checked={this.state.checked}
-                              onChange={this.handleToggle}/>
-                                 <Label color="red" as='p' tag>
+                              onChange={this.handleToggle}
+                              label='Sort By Name'
+                              />
+                                 {/* <Label color="red" as='h1' tag>
                                       Sort By Name
-                                </Label>
+                                    </Label> */}
                                 {/* <Label color='red' horizontal>
                                     Sort By name
                                   </Label> */}
-                                <Input
-                                icon='search'
-                                type='text'
-                                size='large'
-                                value={this.props.searchTerm}
-                                onChange={(event) => this.props.updateSearchTerm(event.target.value)}
-                                name='filter'
-                                placeholder='Search For Contacts'>
-                                  </Input>
-                                  {this.addContactBtn()}
+                                  
                                   </Segment>
+                                  </Grid.Column>
+                          </Grid.Row>
+                      </Grid>
+                </Segment>
                                           
                                   
                                   <p />
@@ -127,10 +144,10 @@ class ContactContainer extends Component {
                                     {/* {this.props.contacts.map(c => <ContactCard key={c.id} contact={c} />)} */}
                           </div>
                     </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-      </div>
+      //     </Grid.Column>
+      //   </Grid.Row>
+      // </Grid>
+      // </div>
     )
     }
 }

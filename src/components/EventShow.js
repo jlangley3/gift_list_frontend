@@ -33,10 +33,8 @@ class ContactShow extends React.PureComponent {
 
 
   giftPrice = () => { 
-
    var cash =  this.props.currentEvent.gifts.reduce(function(previousValue, currentValue) {
-    return { price: previousValue.price + currentValue.price}
-  })
+    return { price: previousValue.price + currentValue.price}})
     return cash.price
 }
   
@@ -88,22 +86,22 @@ class ContactShow extends React.PureComponent {
       <Grid columns={2} divided>
            <Grid.Row>
         <Grid.Column>
+      <EditEventForm event={this.props.currentEvent} 
+                     title={"Edit Event Form"} 
+                     handleClose={() => this.handleClose('editEventModal')}/>
+      </Grid.Column>
+        <Grid.Column>
         <Modal.Description>
             {/* <Grid.Column> */}
             <Icon circular inverted size="huge" color='green' name="edit" />
         {/* </Grid.Column> */}
-          <Header>Add Contacts to List</Header>
+          {/* <Header>Add Contacts to List</Header>
           <p>
             Insert the name of the Gift.
           </p>
-          <p>Pick a Contact from the DropDown.</p>
+          <p>Pick a Contact from the DropDown.</p> */}
         </Modal.Description>
         </Grid.Column>
-        <Grid.Column>
-      <EditEventForm event={this.props.event} 
-                     title={"Edit Event Form"} 
-                     handleClose={() => this.handleClose('editEventModal')}/>
-      </Grid.Column>
       </Grid.Row>
               </Grid>
       </Modal.Content>
@@ -141,7 +139,7 @@ class ContactShow extends React.PureComponent {
 
   render(){
       console.log(this.props)
-      debugger;
+  
     const {title, start_date, end_date, budget, repeating} = this.props.currentEvent
     return(
       <Grid columns='equal' padded stackable>
@@ -150,27 +148,19 @@ class ContactShow extends React.PureComponent {
             <Header as='h2' dividing>
               <Header.Content>
                 { title } 
-                <Header.Subheader>Date: { moment(start_date).format('ll') }</Header.Subheader>
-                <Header.Subheader>End: { moment(end_date).format('ll') }</Header.Subheader>
+                <Header.Subheader>Start Date: { moment(start_date).format('ll') }</Header.Subheader>
+                <Header.Subheader>End Date: { moment(end_date).format('ll') }</Header.Subheader>
                 <Header.Subheader>Budget: ${ budget}</Header.Subheader>
                 <Header.Subheader>
-                {!isEmpty(this.props.currentEvent) ? <p>Money Spent on Gifts for this List: ${this.giftPrice()}</p> : <p>Money Spent on Gifts for this List: $0</p>}
+                {!isEmpty(this.props.currentEvent.gifts) ? <p>Money Spent on Gifts for this List: ${this.giftPrice()}</p> : <p>Money Spent on Gifts for this List: $0</p>}
                     </Header.Subheader>
               </Header.Content>
             </Header>
           </Grid.Column>
-          <Grid.Column>
-          <Image floated='right' size='medium' src={GiftList} alt="No Picture" />
-          </Grid.Column>
+          <Grid.Column >
+          <Image  size='medium' src={GiftList} alt="No Picture" />
+          </Grid.Column >
         </Grid.Row>
-        <Grid.Row columns={1} >
-        <List>
-    {!isEmpty(this.props.currentEvent) ? this.props.currentEvent.gifts.map(gift => <GiftContact 
-          key={gift.id} 
-          gift={gift} 
-          event={this.props.event}/>) : <h3>"Please add Contacts to this list"</h3>}
-            </List>    
-           </Grid.Row>
         <Grid.Row columns={3}>
           <Grid.Column>
             { this.editEventBtn() }
@@ -182,6 +172,14 @@ class ContactShow extends React.PureComponent {
             { this.deleteEventBtn() }
           </Grid.Column>
         </Grid.Row>
+        <Grid.Row columns={2} >
+        <List>
+    {!isEmpty(this.props.currentEvent.gifts) ? this.props.currentEvent.gifts.map(gift => <GiftContact 
+          key={gift.id} 
+          gift={gift} 
+          event={this.props.event}/>) : <h3>"Please add Contacts to this list"</h3>}
+            </List>    
+           </Grid.Row>
 
       </Grid>
     )

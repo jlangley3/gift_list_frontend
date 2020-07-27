@@ -10,6 +10,7 @@ import '../styles/Calendar.css';
 // import moment from 'moment';
 import NewEventForm from '../components/NewEventForm';
 import EventShow from '../components/EventShow';
+import EditEventForm from '../components/EditEventForm';
 import { Modal, Button, Segment } from 'semantic-ui-react';
 import { editCurrentEvent, addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events';
 import { setCurrentEvent } from '../redux/actions';
@@ -20,6 +21,8 @@ class CalendarContainer extends React.Component {
   this.state = {
     modalOpen: false,
     addEventModal: false,
+    editEventModal: false,
+    editForm: false,
     thisEvent: {},
     weekendsVisible: true,
     currentEvents: [],
@@ -37,19 +40,20 @@ handleOpen = (clickInfo = null, modal) => {
   end_date: clickInfo.endStr })}
 
 handleClose = (modal) => this.setState({ [modal]: false })
-
+toggleEditForm = () => this.setState({editForm: !this.state.editForm})
 
   formatEvents = () => {
     return this.props.events.map(event => {
               const {title, end_date, start_date} = event
   
-              let startTime = new Date(start_date)
-              let endTime = new Date(end_date)
+              let startTime = start_date
+              let endTime = end_date
   
               return {
                 title: title, 
                 start: startTime,
                 end: endTime, 
+                allDay: true,
                 extendedProps: {...event}
               }
           })
@@ -58,9 +62,10 @@ handleClose = (modal) => this.setState({ [modal]: false })
 
 
   render() {
+    // debugger;
     return (
       <div className='demo-app'>
-        {this.renderSidebar()}
+        {/* {this.renderSidebar()} */}
         <div className='demo-app-main'>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -82,7 +87,8 @@ handleClose = (modal) => this.setState({ [modal]: false })
             eventClick={this.handleEventClick}
             eventAdd={this.handleEventAdd}
             eventChange={this.handleEventChange} // called for drag-n-drop/resize
-            eventRemove={this.handleEventRemove}
+            eventRemove={(event) => this.handleEventRemove(event)}
+            eventBackgroundColor="green"
           />
 
           <Modal
@@ -115,31 +121,46 @@ handleClose = (modal) => this.setState({ [modal]: false })
        </Modal>
 
 
-        {/* <Modal
-              open={this.state.editEventModal}
+        <Modal
+              open={this.state.editEventModal} 
+              closeIcon
+              centered={true}
               onClose={() => {
                 this.toggleEditForm()
-                this.handleClose()
-              }} 
+                this.handleClose('editEventModal')}
+              }
               size='small'
               >
-              {!this.state.editForm ? 
+              {/* {!this.state.editForm ?  */}
               <Segment>
-              <EventShow
-                event={this.state.thisEvent}
-                handleClose={this.handleClose}
-              />
-              <Button content='Edit Event' onClick={this.toggleEditForm}/> 
+                  <EventShow
+                    event={this.props.currentEvent}
+                    handleClose={this.handleClose}
+                  />
+                  {/* <Button content='Edit Event' onClick={this.toggleEditForm}/>  */}
               </Segment>
-              :
-              <EditEventForm 
-              contact={null} 
-              title={'Update Event!'} 
-              event={this.state.thisEvent} 
-              handleClose={this.handleClose}
-              />
-              }
-              </Modal> */}
+              {/* : */}
+              {/* <Segment><Modal.Header>Edit Gift List</Modal.Header>
+                <Modal.Content>
+                  <Grid columns={2} divided>
+                    <Grid.Row>
+                     <Grid.Column>
+                        <Modal.Description>
+                      
+                            <Icon circular inverted size="huge" color='green' name="edit" />
+                    
+                            </Modal.Description>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <EditEventForm event={this.props.currentEvent} 
+                              title={"Edit Event Form"} 
+                              handleClose={() => this.handleClose('editEventModal')}/>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                </Modal.Content></Segment>
+  } */}
+              </Modal>
 
         </div>
       </div>
@@ -201,19 +222,19 @@ handleClose = (modal) => this.setState({ [modal]: false })
 
   handleEventClick = (clickInfo) => {
     console.log(clickInfo)
-    
-    if (alert(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove() // will render immediately. will call handleEventRemove
-    }
-  }
+    this.props.setCurrentEvent(clickInfo.event._def.extendedProps)
+    this.setState({ 
+      editEventModal: true})}
+    // if (alert(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    //   clickInfo.event.remove() // will render immediately. will call handleEventRemove
+  
 
   // handlers that initiate reads/writes via the 'action' props
   // ------------------------------------------------------------------------------------------
 
-  // handleDates = (rangeInfo) => {
-  //   this.props.requestEvents(rangeInfo.startStr, rangeInfo.endStr)
-  //     .catch(reportNetworkError)
-  // }
+  handleDates = (rangeInfo) => {
+    console.log(rangeInfo)
+  }
 
   // handleEventAdd = (addInfo) => {
   //   this.props.createEvent(addInfo.event.toPlainObject())
@@ -259,7 +280,7 @@ function renderEventContent(eventInfo) {
 
 function renderSidebarEvent(event) {
   return (
-    <li key={event.id}>
+    <li key={event.id} className="colors">
       {/* <Moment>{event.start_date}</Moment> */}
       <b>{formatDate(event.start_date, {year: 'numeric', month: 'long', day: 'numeric'})}</b> 
       <i>{event.title}</i>

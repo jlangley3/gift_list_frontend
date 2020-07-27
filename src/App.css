@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
+  margin: 2rem;
 }
 
 .App-logo {
@@ -27,6 +28,9 @@
   to { transform: rotate(360deg); }
 }
 
+.footer {
+  text-align: center;
+}
 
 
 
