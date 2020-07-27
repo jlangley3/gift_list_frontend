@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { Menu, Icon, Image, Header, Segment } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
 import { logoutUser } from '../redux/actions/users';
-import { editCurrentEvent, updatingEvent } from '../redux/actions/events'
+import { editCurrentEvent, updatingEvent } from '../redux/actions/events';
+import { fetchingUser, clearLoading } from '../redux/actions/users';
 import Head from "../images/Header.png";
 import '../styles/Nav.css';
 
@@ -17,6 +18,7 @@ class NavBar extends Component {
 
 
   render() {
+    const token = localStorage.getItem('token')
     return (
       <nav>
         <Menu 
@@ -25,7 +27,7 @@ class NavBar extends Component {
           { !isEmpty(this.props.user) ?
           <React.Fragment>
             <Menu.Item  header src={Header}>
-              <Image as={ Link } to='/profile' src={Head} size="small" onClick={this.props.updatingEvent(this.props.currentEvent)}/></Menu.Item>
+              <Image as={ Link } to='/profile' src={Head} size="small" onClick={() => this.props.updatingEvent(this.props.currentEvent)}/></Menu.Item>
             <Menu.Item 
               name='profile' 
               as={ Link } to='/profile'
@@ -53,16 +55,16 @@ class NavBar extends Component {
               name='contacts' 
               as={ Link } to="/contacts"
             >
-              <Icon name='address book outline' size='big' color='green'/>
+              <Icon name='address book outline' size='big' color='green' onClick={() => this.props.fetchingUser(token)}/>
 
             </Menu.Item> 
-            {/* <Menu.Item 
-              name='event_form' 
-              as={ Link } to='/new_event'
+            <Menu.Item 
+              name='stats' 
+              as={ Link } to='/stats'
             >
-              <Icon name='add' size='large' color='green'/>
+              <Icon name='chart bar' size='large' color='green' onClick={() => this.props.fetchingUser(token)}/>
 
-            </Menu.Item>  */}
+            </Menu.Item> 
               <Segment basic>
              <Header as='h2' textAlign='center'>  Hello {this.props.user.username}!
                 </Header> 
@@ -110,7 +112,9 @@ const mapDispatchToProps = (dispatch )=> {
   return {
     logoutUser: () => dispatch(logoutUser()),
     updatingEvent: (event) => dispatch(updatingEvent(event)),
-    editCurrentEvent: (e) => dispatch(editCurrentEvent(e))
+    editCurrentEvent: (e) => dispatch(editCurrentEvent(e)),
+    fetchingUser: (token) => dispatch(fetchingUser(token)),
+    clearLoading: () => dispatch(clearLoading())
   }
 }
 

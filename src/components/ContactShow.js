@@ -6,6 +6,10 @@ import ContactForm from './ContactForm';
 import { deletingContact, addingContact, updatingContact} from '../redux/actions/contacts';
 import { isEmpty } from 'lodash';
 import ContactGifts from "./ContactGifts"
+import { getStickyHeaderDates } from '@fullcalendar/react';
+import {
+  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
 
 class ContactShow extends React.PureComponent {
 
@@ -27,25 +31,25 @@ class ContactShow extends React.PureComponent {
   
 
 
-  createContactBtn = () => {
-    return (
-      <Modal
-        size='tiny'
-        trigger={<Button
-          onClick={() => this.handleOpen('createContactModal')}
-          content='Create Friend'
-          basic
-          color='green'
-        />}
-        open={this.state.createContactModal}
-        onClose={() => this.handleClose('createContactModal')}
-        closeIcon
-      >
+  // createContactBtn = () => {
+  //   return (
+  //     <Modal
+  //       size='tiny'
+  //       trigger={<Button
+  //         onClick={() => this.handleOpen('createContactModal')}
+  //         content='Create Friend'
+  //         basic
+  //         color='green'
+  //       />}
+  //       open={this.state.createContactModal}
+  //       onClose={() => this.handleClose('createContactModal')}
+  //       closeIcon
+  //     >
           
-        <ContactForm contact={this.props.contact} handleClose={() => this.handleClose('createContactModal')} />
-      </Modal>
-    )
-  }
+  //       <ContactForm contact={this.props.contact} handleClose={() => this.handleClose('createContactModal')} />
+  //     </Modal>
+  //   )
+  // }
  
   editContactBtn = () => {
     return (
@@ -61,8 +65,9 @@ class ContactShow extends React.PureComponent {
         onClose={() => this.handleClose('editContactModal')}
         closeIcon
       >
-          
+          <Modal.Content>
         <ContactForm contact={this.props.contact} handleClose={() => this.handleClose('editContactModal')} />
+      </Modal.Content>
       </Modal>
     )
   }
@@ -101,6 +106,21 @@ class ContactShow extends React.PureComponent {
  return contactGifts
   }
 
+  formatEvents = () => {
+    return this.props.contact.gifts.map(gift => {
+              const {name, price, contact} = gift
+  
+            //   let startTime = start_date
+            //   let endTime = end_date
+  
+              return {
+                name: name, 
+                price: price,
+                amt: true
+              }
+          })
+  }
+
  
 
   render(){
@@ -132,10 +152,7 @@ class ContactShow extends React.PureComponent {
             </p>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row columns={4}>
-          <Grid.Column>
-            { this.createContactBtn() }
-          </Grid.Column>
+        <Grid.Row columns={2}>
           <Grid.Column>
             { this.editContactBtn() }
           </Grid.Column>
@@ -143,14 +160,33 @@ class ContactShow extends React.PureComponent {
             { this.deleteContactBtn() }
           </Grid.Column>
         </Grid.Row>
-
+        <Grid.Row>
+                <BarChart
+                width={800}
+                height={600}
+                data={this.formatEvents()}
+                margin={{
+                  top: 5, right: 30, left: 20, bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="price" fill="#8884d8" />
+              </BarChart>
+        </Grid.Row>
       </Grid>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return { events: state.events, user: state.user }
+  return { 
+    events: state.events, 
+    user: state.user 
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

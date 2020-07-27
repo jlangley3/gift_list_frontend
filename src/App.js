@@ -12,6 +12,7 @@ import Profile from './components/Profile';
 import LoginForm from './components/LoginForm';
 import EventForm from './components/NewEventForm';
 import NotFound from './components/NotFound';
+import StatsContainer from './containers/StatsContainer';
 import CalendarContainer from './containers/CalendarContainer';
 import ContactCardContainer from './containers/ContactContainer'
 import ContactForm from './components/ContactForm';
@@ -105,7 +106,10 @@ class App extends React.Component {
                 return !isEmpty(this.props.user) ? <ContactCardContainer /> : <Redirect to='/login' />
               }}
               />
-          
+        <Route exact path='/stats' render={() => {
+                return !isEmpty(this.props.user) ? <StatsContainer /> : <Redirect to='/login' />
+              }}
+              />          
           <Route exact path='/events/:id' render={props => {
                 const eventId = parseInt(props.match.params.id)
                 const list = this.props.events.find(event=> event.id === eventId)

@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react"
-import { Card, Image } from "semantic-ui-react";
+import { Card, Image, Icon } from "semantic-ui-react";
 import { withRouter, Link} from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
@@ -9,12 +9,13 @@ import moment from 'moment';
 
 class Events extends Component {
     render() {
-   
+         
         let { budget, start_date, end_date, title, id} = this.props.event
         return (
             <Fragment>
             <Card as={Link} to={`/events/${id}`} onClick={() => this.props.setCurrentEvent(this.props.event)}>
-               <Image src={EventPic} alt="No Picture" />
+               {/* <Image src={EventPic} alt="No Picture" /> */}
+               <Icon name='gift' color="green" size="massive"/>
                <Card.Content>
                  <Card.Header>{title}</Card.Header>
          

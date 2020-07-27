@@ -9,10 +9,11 @@ class ContactForm extends React.Component {
       console.log(props)
     super(props)
     this.state = {
-      name: '',
-      birthday:  '',
-      kind: '',
-      avatar: 'https://listimg.pinclipart.com/picdir/s/351-3519728_png-file-svg-default-profile-picture-free-clipart.png'
+      id: this.props.contact ? this.props.contact.id : '',
+      name: this.props.contact ? this.props.contact.name : '',
+      birthday: this.props.contact ? this.props.contact.birthday : '',
+      type: this.props.contact ? this.props.contact.kind : '',
+      avatar: this.props.contact ? this.props.contact.avatar : 'https://listimg.pinclipart.com/picdir/s/351-3519728_png-file-svg-default-profile-picture-free-clipart.png'
     }
   }
 
@@ -20,7 +21,7 @@ class ContactForm extends React.Component {
     [event.target.name]: event.target.value
   })
 
-  handleChangeKind = (event) => this.setState({kind: event.target.value})
+  handleChangeType = (event) => this.setState({type: event.target.value})
 
 
   handleSubmit = event => {
@@ -29,14 +30,27 @@ class ContactForm extends React.Component {
     if (this.state.name === '') {
       alert('Please enter a name')
 
+    } else if (this.props.contact) {
+      const updatedContact = {
+        contact: { 
+          id: this.state.id,
+          name: this.state.name,
+          birthday: this.state.birthday,
+          type: this.state.type,
+          avatar: this.state.avatar,
+          user_id: this.props.user.id
+        }
+      }
+      this.props.updatingContact(this.state.id, updatedContact)
+      this.props.handleClose('editContactModal')
     } else {
       const newContact = {
           contact: { 
             name: this.state.name,
             birthday: this.state.birthday,
-            kind: this.state.kind,
+            type: this.state.type,
             avatar: this.state.avatar,
-            user_id: this.props.id
+            user_id: this.props.user.id
           }
         }
         
@@ -80,7 +94,7 @@ class ContactForm extends React.Component {
                   name='kind'
                   placeholder="Select an Option"
                   options={this.kindDropdown()}
-                  onChange={this.handleChangeKind}
+                  onChange={this.handleChangeType}
                   value={this.state.kind}
                   selection
                 />

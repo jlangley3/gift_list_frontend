@@ -44,9 +44,12 @@ export const updatingEvent = event => {
       console.log(eventData)
       dispatch(updateEvent(eventData))
       
+      
     })
   }
 }
+
+
 
 
 export const updateEvent = newEvent => {

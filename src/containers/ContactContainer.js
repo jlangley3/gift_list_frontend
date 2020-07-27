@@ -107,7 +107,7 @@ class ContactContainer extends Component {
                                           
                                   
                                   <p />
-                                  <div className='ui two stackable cards'>
+                                  <div className='ui four stackable cards'>
 
                                 
                                         {this.props.contacts.length === 0 ?

@@ -68,7 +68,7 @@ class Homepage extends React.Component{
   
 
 render(){
-  
+  var randomColor = Math.floor(Math.random()*16777215).toString(16);
     return (
         <div className='wrapper'>
          <Grid columns="equal" divided stackable>
@@ -161,12 +161,6 @@ render(){
         </div>
       )
      }}
-   
-
-
-
-
-    
 
 const mapStateToProps = (state) => {
   return {
