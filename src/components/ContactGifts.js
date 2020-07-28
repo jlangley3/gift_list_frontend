@@ -1,21 +1,29 @@
 import React, {Component, Fragment} from "react"
-import { Card, Image } from "semantic-ui-react";
+import { Card, Image, Icon } from "semantic-ui-react";
 import { withRouter, Link } from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
-
+import moment from 'moment';
 
 class ContactGifts extends Component {
+
+
+  giftDateFinder = () => {
+       const newDate = this.props.events.find(event => event.id === this.props.gift.event_id)
+       return moment(newDate.start_date).format('ll')
+        
+  }
+
+
     render() {
-        let { name} = this.props.gift
+        let { name, price} = this.props.gift
         return (
             <Fragment>
                 <Card>
-               {/* <Image src="https://www.netclipart.com/pp/m/402-4026927_blank-avatar-black-png.png" alt="No Picture" /> */}
                <Card.Content>
                  <Card.Header>{name}</Card.Header>
-         
-                 {/* <Card.Description>{"Birthday: "}{birthday}</Card.Description> */}
+                 <Card.Description><Icon name='checked calendar' color="red" size="small"/>{"Date Given: "}{this.giftDateFinder()}</Card.Description>
+                 <Card.Description><Icon name='gift' color="green" size="small"/>{"Price: $"}{price}</Card.Description>
                </Card.Content>
              </Card>
             </Fragment>
@@ -26,7 +34,8 @@ class ContactGifts extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user
+    user: state.user,
+    events: state.events
   }
 }
 

@@ -8,7 +8,6 @@ import { isEmpty } from 'lodash';
 import { Image, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import Navbar from './components/Navbar';
 
-import Profile from './components/Profile';
 import LoginForm from './components/LoginForm';
 import EventForm from './components/NewEventForm';
 import NotFound from './components/NotFound';
@@ -75,8 +74,8 @@ class App extends React.Component {
                 return isEmpty(this.props.user) ? <LoginForm /> : <Redirect to='/' />
               }}
               />
-        <Route exact path='/profile' render={() => {
-                return isEmpty(this.props.user) ? <Profile/> :<Redirect to='/login' />
+        <Route exact path='/home' render={() => {
+                return isEmpty(this.props.user) ? <Homepage/> :<Redirect to='/login' />
               }}
               />
         <Route exact path='/calendar' render={() => {
@@ -97,10 +96,6 @@ class App extends React.Component {
               }}
               />
 
-        <Route exact path='/profile' render={() => {
-                return !isEmpty(this.props.user) ? <Profile /> : <Redirect to='/login' />
-              }} 
-              />
 
         <Route exact path='/contacts' render={() => {
                 return !isEmpty(this.props.user) ? <ContactCardContainer /> : <Redirect to='/login' />

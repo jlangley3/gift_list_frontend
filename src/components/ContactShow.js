@@ -1,17 +1,17 @@
-import React from 'react'
-import { Image, Header, Modal, Grid, Button } from 'semantic-ui-react'
+import React, {Component, Fragment} from 'react'
+import { Image, Header, Modal, Grid, Button, Segment, Label } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import ContactForm from './ContactForm';
 import { deletingContact, addingContact, updatingContact} from '../redux/actions/contacts';
 import { isEmpty } from 'lodash';
-import ContactGifts from "./ContactGifts"
+import ContactGifts from "./ContactGifts";
 import { getStickyHeaderDates } from '@fullcalendar/react';
 import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 
-class ContactShow extends React.PureComponent {
+class ContactShow extends React.Component {
 
   constructor(){
       
@@ -20,36 +20,18 @@ class ContactShow extends React.PureComponent {
     this.state = {
         editContactModal: false,
         deleteContactModal: false
-      
     }
   }
  
-
   handleOpen = (modal) => this.setState({ [modal]: true })
   handleClose = (modal) => this.setState({ [modal]: false })
 
-  
+  giftPrice = () => { 
+    var cash =  this.props.contact.gifts.reduce(function(previousValue, currentValue) {
+     return { price: previousValue.price + currentValue.price}})
+     return cash.price
+ }
 
-
-  // createContactBtn = () => {
-  //   return (
-  //     <Modal
-  //       size='tiny'
-  //       trigger={<Button
-  //         onClick={() => this.handleOpen('createContactModal')}
-  //         content='Create Friend'
-  //         basic
-  //         color='green'
-  //       />}
-  //       open={this.state.createContactModal}
-  //       onClose={() => this.handleClose('createContactModal')}
-  //       closeIcon
-  //     >
-          
-  //       <ContactForm contact={this.props.contact} handleClose={() => this.handleClose('createContactModal')} />
-  //     </Modal>
-  //   )
-  // }
  
   editContactBtn = () => {
     return (
@@ -58,7 +40,7 @@ class ContactShow extends React.PureComponent {
         trigger={<Button
           onClick={() => this.handleOpen('editContactModal')}
           content='Edit Friend'
-          basic
+          inverted
           color='green'
         />}
         open={this.state.editContactModal}
@@ -79,7 +61,7 @@ class ContactShow extends React.PureComponent {
         trigger={<Button
           onClick={() => this.handleOpen('deleteContactModal')}
           content='Remove Friend'
-          basic
+          inverted
           color='red'
         />}
         open={this.state.deleteContactModal}
@@ -109,10 +91,7 @@ class ContactShow extends React.PureComponent {
   formatEvents = () => {
     return this.props.contact.gifts.map(gift => {
               const {name, price, contact} = gift
-  
-            //   let startTime = start_date
-            //   let endTime = end_date
-  
+
               return {
                 name: name, 
                 price: price,
@@ -128,38 +107,38 @@ class ContactShow extends React.PureComponent {
 
     const {contact: {name, created_at, kind, avatar, birthday}} = this.props
     return(
-      <Grid columns='equal' padded stackable>
+      <Fragment>
+      <Grid  stackable>
         <Grid.Row>
           <Grid.Column>
             <Header as='h2' dividing>
               <Header.Content>
                 { name } 
                 <Header.Subheader>Birthday { moment(birthday).format('ll') }</Header.Subheader>
-              </Header.Content>
-            </Header>
+                <Header.Subheader>
+                {!isEmpty(this.props.contact.gifts) ? <p>Total Spent on Gifts for this Contact: ${this.giftPrice()}</p> : <p>0$ Spent on this Contact</p>}
+                    </Header.Subheader>
+                  </Header.Content>
+                <Label color='red' horizontal>
+                { this.props.contact.kind ? this.props.contact.kind.toUpperCase() : null}
+                 </Label>
+                <Header as='h2' floated='right'>
+                { this.editContactBtn() }
+                { this.deleteContactBtn() }
+              </Header>
+            </Header>  
           </Grid.Column>
         </Grid.Row>
-        <Image floated='right' size='large' src={avatar} />
-        {!isEmpty(this.props.contact.gifts) ? <p>Money Spent on Gifts for this List: {this.listOfGifts()}</p> : <p>Money Spent on Gifts for this List: $0</p>}
-        {this.listOfGifts()}
-        <Grid.Row columns={2}>
+       </Grid>
+       <Grid celled>
           <Grid.Column width={4}>
-            <Button>{kind}</Button>
-          </Grid.Column>
-          <Grid.Column>
-            <p>
-              
-            </p>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row columns={2}>
-          <Grid.Column>
-            { this.editContactBtn() }
-          </Grid.Column>
-          <Grid.Column>
-            { this.deleteContactBtn() }
-          </Grid.Column>
-        </Grid.Row>
+        <Image floated='right' size='large' src={avatar} />
+        </Grid.Column>
+        <Grid.Column width={12} stackable columns={3}>
+        {!isEmpty(this.props.contact.gifts) ? <h3>Recent Gifts Given: {this.listOfGifts()}</h3> : <p>Money Spent on Gifts for this List: $0</p>}
+        </Grid.Column>
+       
+      
         <Grid.Row>
                 <BarChart
                 width={800}
@@ -178,6 +157,7 @@ class ContactShow extends React.PureComponent {
               </BarChart>
         </Grid.Row>
       </Grid>
+      </Fragment>
     )
   }
 }
