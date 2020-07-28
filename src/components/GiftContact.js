@@ -36,37 +36,35 @@ class GiftContact extends React.Component {
         return (
           <Modal 
               trigger={<Button onClick={() => this.handleOpen('editGiftModal')}
-              >Add/Change Gift</Button>}
+              >Change Gift</Button>}
               open={this.state.editGiftModal}
               onClose={() => this.handleClose('editGiftModal')}
               centered={false}>
-          <Modal.Header as="h1">Edit Gift</Modal.Header>
-          <Modal.Content >
-          <Grid columns={2} divided>
-           <Grid.Row>
-            <Grid.Column>
-              <Header>Add Contacts to List</Header>
-              <Modal.Description>
-              <p>Type the name of the Gift.</p>
-              <p>Pick a Contact from the DropDown.</p>
-              </Modal.Description>
-            </Grid.Column>
-            <Grid.Column>
-              <Icon name='gift' size='massive' color='green' />
-              </Grid.Column>
-              </Grid.Row>
-              </Grid>
-          
-          
-          <GiftForm event={this.props.event} 
-                    gift={this.props.gift} 
-                    contact={this.props.gift.contact} 
-                    title={'Edit Gift'} 
-                    handleClose={() => this.handleClose('editGiftModal')}
-                  />
-          
-          </Modal.Content>
-        </Modal>
+              <Modal.Header as="h1">Edit Gift</Modal.Header>
+                <Modal.Content >
+                 <Grid columns={2} divided>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Header>Add Contacts to List</Header>
+                      <Modal.Description>
+                      <p>Type the name of the Gift.</p>
+                      <p>Pick a Contact from the DropDown.</p>
+                      </Modal.Description>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Icon name='gift' size='massive' color='green' />
+                      </Grid.Column>
+                      </Grid.Row>
+                      </Grid>
+                    <GiftForm event={this.props.event} 
+                              gift={this.props.gift} 
+                              contact={this.props.gift.contact} 
+                              title={'Edit Gift'} 
+                              handleClose={() => this.handleClose('editGiftModal')}
+                            />
+                    
+                    </Modal.Content>
+           </Modal>
         )}    
         
         deleteGiftBtn = () => {
@@ -75,7 +73,7 @@ class GiftContact extends React.Component {
               size='mini'
               trigger={<Button
                 onClick={() => this.handleOpen('deleteGiftModal')}
-                content='Delete Gift/Contact'
+                content='Delete Gift'
                 color='red'
               />}
               open={this.state.deleteGiftModal}
@@ -97,7 +95,10 @@ class GiftContact extends React.Component {
           )
         }
 
-
+        filterGifts = () => {
+          const gifts = this.props.currentEvent.gifts.filter(gift => gift.contact_id === this.props.gift.contact_id)
+          return gifts
+        }
 
     render(){
         console.log(this.props)
@@ -111,8 +112,9 @@ class GiftContact extends React.Component {
              <List.Content>
                 <List.Header as='h2'>{contact.name}</List.Header>
                 <List.Description>
-                {`1st Day On Earth: ${ moment(contact.birthday).format('ll')} `}
+                {`Birthday: ${ moment(contact.birthday).format('ll')} `}
                 </List.Description>
+        {this.filterGifts().map(gift => <List.Description>{gift.name}{"||  Price:  $"}{gift.price}</List.Description>)}
             </List.Content>
              </Grid.Column>
              <Grid.Column>

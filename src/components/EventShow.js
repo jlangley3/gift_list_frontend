@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Modal, Grid, Button, GridColumn, List, Icon } from 'semantic-ui-react'
+import { Image, Header, Modal, Grid, Button, GridColumn, List, Icon, Label } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import AddEventContacts from './AddEventContacts';
@@ -35,9 +35,18 @@ class ContactShow extends React.PureComponent {
   giftPrice = () => { 
    var cash =  this.props.currentEvent.gifts.reduce(function(previousValue, currentValue) {
     return { price: previousValue.price + currentValue.price}})
-    return cash.price
+     if (cash.price > this.props.currentEvent.budget){
+    return   <Label color='red' horizontal>{cash.price}</Label>
+  } else {return <Label color='green' horizontal>{cash.price}</Label>}
 }
+  filteredNames = () => {
+    function onlyUnique(value, index, self) { 
+      return self.indexOf(value) === index;
+  }
+  var unique = this.props.currentEvent.contacts.filter( onlyUnique );
   
+  return unique
+  }
 
 
 
@@ -92,14 +101,7 @@ class ContactShow extends React.PureComponent {
       </Grid.Column>
         <Grid.Column>
         <Modal.Description>
-            {/* <Grid.Column> */}
             <Icon circular inverted size="huge" color='green' name="edit" />
-        {/* </Grid.Column> */}
-          {/* <Header>Add Contacts to List</Header>
-          <p>
-            Insert the name of the Gift.
-          </p>
-          <p>Pick a Contact from the DropDown.</p> */}
         </Modal.Description>
         </Grid.Column>
       </Grid.Row>
@@ -139,6 +141,7 @@ class ContactShow extends React.PureComponent {
 
   render(){
       console.log(this.props)
+      
   
     const {title, start_date, end_date, budget, repeating} = this.props.currentEvent
     return(
@@ -148,8 +151,7 @@ class ContactShow extends React.PureComponent {
             <Header as='h2' dividing>
               <Header.Content>
                 { title } 
-                <Header.Subheader>Start Date: { moment(start_date).format('ll') }</Header.Subheader>
-                <Header.Subheader>End Date: { moment(end_date).format('ll') }</Header.Subheader>
+                <Header.Subheader>Date: { moment(start_date).format('ll') } - { moment(end_date).format('ll') }</Header.Subheader>
                 <Header.Subheader>Budget: ${ budget}</Header.Subheader>
                 <Header.Subheader>
                 {!isEmpty(this.props.currentEvent.gifts) ? <p>Money Spent on Gifts for this List: ${this.giftPrice()}</p> : <p>Money Spent on Gifts for this List: $0</p>}
@@ -180,7 +182,10 @@ class ContactShow extends React.PureComponent {
           event={this.props.event}/>) : <h3>"Please add Contacts to this list"</h3>}
             </List>    
            </Grid.Row>
-
+            {!isEmpty(this.props.currentEvent.contacts) ? this.filteredNames().map(contact => <GiftContact
+              key={contact.id}
+              contact={contact}
+              event={this.props.event}/>) : null}
       </Grid>
     )
   }

@@ -44,19 +44,6 @@ class Homepage extends React.Component{
         Add a New Event Gift List
       </Modal.Header>
       <Modal.Content>
-      {/* <Grid columns={2} divided>
-           <Grid.Row>
-            <Grid.Column>
-        <Modal.Description>
-          <Header>Add a New Event Gift List</Header>
-        </Modal.Description>
-        </Grid.Column>
-        <Grid.Column>
-        <Icon name='add circle' size='massive' color='green' />
-        </Grid.Column>
-        </Grid.Row>
-          </Grid> */}
-     
       <NewEventForm 
       title={"Add Event Form"} 
       handleClose={() => this.handleClose('addEventModal')}/> 
@@ -64,7 +51,9 @@ class Homepage extends React.Component{
     </Modal>
     )
   }
-
+ randomColor = () => {
+  Math.floor(Math.random()*16777215).toString(16);
+ }
   
 
 render(){
@@ -75,7 +64,6 @@ render(){
             <Grid.Row>
               <Grid.Column >
                 <Header as='h1'  dividing>
-                  {/* Hello {this.props.user.username}! */}
                   <Icon name='gift' color="green" />
                     <Header.Content as="h1" className="ui red header">These are Your Gift Lists:</Header.Content>
                       </Header>
@@ -96,21 +84,20 @@ render(){
                           <Checkbox 
                               toggle
                               color="green"
-                              // label='Sort By Name'
                               checked={this.state.checked}
                               onChange={this.handleToggle}
                               label='Sort By Name'
                               />
                     
-                      </Segment>
-                      </Grid.Column>
+                        </Segment>
+                        </Grid.Column>
                         <Grid.Column >
                         {this.addEventBtn()}  
                     </Grid.Column>
-            </Grid.Row>
-        </Grid>
+              </Grid.Row>
+          </Grid>
 
-        <p />
+                                    <p />
                                   <div className='ui four stackable cards'>
                                       {this.props.events.length === 0 ?
                                       <div>
@@ -132,7 +119,7 @@ render(){
                           return 1
                         }
                         return 0
-                      }).map(e => <Events key={e.id} event={e} />)
+                      }).map(e => <Events key={e.id} event={e} color={this.randomColor()}/>)
                     :
                       this.filteredEvents().sort((a, b) => {
                         const createdA = new Date(a.start_date)
@@ -145,15 +132,9 @@ render(){
                           return 1
                         }
                           return 0
-                      }).map(e => <Events key={e.id} event={e} />)}
+                      }).map(e => <Events key={e.id} event={e} color={this.randomColor()}/>)}
                       </div>
-                      {/* //  <Card.Group itemsPerRow={4} stackable>
-                      //    {this.props.events.map(event => { return <Events key={event.id} event={event}/>})}
-                      //  </Card.Group>
-                      } */}
-             {/* </Grid.Column>
-           </Grid.Row>     
-         </Grid> */}
+                  
          {this.props.contacts.length === 0 ?
          <div>
            <NoContacts />

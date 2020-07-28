@@ -15,7 +15,7 @@ class Events extends Component {
             <Fragment>
             <Card as={Link} to={`/events/${id}`} onClick={() => this.props.setCurrentEvent(this.props.event)}>
                {/* <Image src={EventPic} alt="No Picture" /> */}
-               <Icon name='gift' color="green" size="massive"/>
+               <Icon name='gift' color="green"size="massive"/>
                <Card.Content>
                  <Card.Header>{title}</Card.Header>
          

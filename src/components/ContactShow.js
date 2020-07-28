@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react'
-import { Image, Header, Modal, Grid, Button, Segment, Label } from 'semantic-ui-react'
+import { Image, Header, Modal, Grid, Button, Segment, Label, Card } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import ContactForm from './ContactForm';
@@ -131,17 +131,16 @@ class ContactShow extends React.Component {
         </Grid.Row>
        </Grid>
        <Grid celled>
+         
           <Grid.Column width={4}>
         <Image floated='right' size='large' src={avatar} />
         </Grid.Column>
-        <Grid.Column width={12} stackable columns={3}>
-        {!isEmpty(this.props.contact.gifts) ? <h3>Recent Gifts Given: {this.listOfGifts()}</h3> : <p>Money Spent on Gifts for this List: $0</p>}
-        </Grid.Column>
-       
-      
+        <Grid.Column width={12} columns={4}>
+                 {!isEmpty(this.props.contact.gifts) ? <Card.Group stackable> {this.listOfGifts()}</Card.Group> : <p>Money Spent on Gifts for this List: $0</p>}
+                 </Grid.Column>
         <Grid.Row>
                 <BarChart
-                width={800}
+                width={900}
                 height={600}
                 data={this.formatEvents()}
                 margin={{
