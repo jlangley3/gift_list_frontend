@@ -87,7 +87,8 @@ export const addingEventContact = (newContactData, thisEvent) => {
       body: JSON.stringify({
         name: "No Gift Yet",
         event_id: thisEvent.id,
-        contact_id: newContactData.id
+        contact_id: newContactData.id,
+        price: 0
         
       })
     })

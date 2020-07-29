@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Grid, Dropdown } from 'semantic-ui-react';
 import { addingEventContact } from '../redux/actions';
 
-class AddEventContacts extends React.Component {
+class AddGifts extends React.Component {
 
       constructor(){
           super();
@@ -13,11 +13,9 @@ class AddEventContacts extends React.Component {
       }
 
 
-
-
     contactDropdown = () => {
         return (
-          this.props.user.contacts.map(contact => {return {key: contact.id, text: contact.name, value: contact}}) 
+          this.props.eventContacts.map(contact => {return {key: contact.id, text: contact.name, value: contact}}) 
         )}
         
     handleContactChange = (e, { value }) => this.setState({currentContact: value})
@@ -63,4 +61,4 @@ const mapStateToProps = (state )=> {
     }
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(AddEventContacts)
+  export default connect(mapStateToProps, mapDispatchToProps)(AddGifts)

@@ -7,6 +7,7 @@ class GiftForm extends React.Component {
 
       constructor(props){
         super(props)
+      
         console.log(props)
             this.state = {
               id: props.gift ? props.gift.id : "",
@@ -14,7 +15,7 @@ class GiftForm extends React.Component {
               price: props.gift ? props.gift.price : "",
               given: props.gift ? props.gift.given : false,
               rating: props.gift ? props.gift.rating : 0,
-              link: props.gift ? props.gift.link : "No Link",
+              link: props.gift ? props.gift.link : "",
               event_id: props.gift ? props.gift.event_id : "",
               contact_id: props.gift ? props.gift.contact_id : ""
             }
