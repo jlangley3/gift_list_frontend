@@ -79,22 +79,22 @@ export const deleteEvent = newEvent => {
 
 
 
-export const addingEventContact = (newContactData, thisEvent) => {
+export const addingEventContact = (newData, thisEvent) => {
   return (dispatch) => {
     fetch(`${URL()}/gifts`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify({
-        name: "No Gift Yet",
+        name: newData.name,
         event_id: thisEvent.id,
-        contact_id: newContactData.id,
+        contact_id: newData.contact.id,
         price: 0
         
       })
     })
     .then(resp => resp.json())
     .then(newGift => {
-      dispatch(addEventContact(newContactData));
+      dispatch(addEventContact(newData.contact));
       dispatch(addGiftToEvent(newGift));
       // dispatch(editCurrentEvent({...thisEvent,
       // gifts: {...gifts, newGift},

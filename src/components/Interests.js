@@ -5,17 +5,17 @@ import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
 
 
-class Reminders extends Component {
+class Interests extends Component {
     render() {
-        let { title, start_date, end_date} = this.props.reminder
+        let { name } = this.props.interest
         return (
             <Fragment>
             <Card>
                
                <Card.Content>
-                 <Card.Header>{title}</Card.Header>
+                 <Card.Header>{name}</Card.Header>
          
-        <Card.Description>{start_date}{"  <-->  "}{end_date}</Card.Description>
+        {/* <Card.Description>{start_date}{"  <-->  "}{end_date}</Card.Description> */}
                </Card.Content>
              </Card>
             </Fragment>
@@ -37,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Reminders));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Interests));

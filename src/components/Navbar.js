@@ -26,11 +26,11 @@ class NavBar extends Component {
           >
           { !isEmpty(this.props.user) ?
           <React.Fragment>
-            <Menu.Item  header src={Header}>
+            <Menu.Item  header >
               <Image as={ Link } to='/home' src={Head} size="small" onClick={() => this.props.updatingEvent(this.props.currentEvent)}/></Menu.Item>
             <Menu.Item 
               name='home' 
-              as={ Link } to='/home'
+              as={ Link } to='/home' onClick={() => this.props.updatingEvent(this.props.currentEvent)}
             >
               <Icon name='home' size='big' color='green' />
             </Menu.Item>

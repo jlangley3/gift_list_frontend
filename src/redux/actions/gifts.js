@@ -9,20 +9,23 @@ const URL = () => {
     }
   }
     
-  export const addingGift = (newContactData, thisEvent) => {
+  export const addingGift = (newData, thisEvent) => {
     return (dispatch) => {
       fetch(`${URL()}/gifts`, {
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify({
-          name: "No Gift Yet",
+          name: newData.name,
           event_id: thisEvent.id,
-          contact_id: newContactData.id
-
+          contact_id: newData.contact.id,
+          price: 0
+          
         })
       })
       .then(resp => resp.json())
-      .then(newGift => dispatch(addGift(newGift)))
+      .then(newGift => {
+        dispatch(addGift(newGift));
+      })
     }
   }
   

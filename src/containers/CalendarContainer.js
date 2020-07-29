@@ -88,7 +88,8 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
             eventAdd={this.handleEventAdd}
             eventChange={this.handleEventChange} // called for drag-n-drop/resize
             eventRemove={(event) => this.handleEventRemove(event)}
-            eventBackgroundColor="green"
+            eventBackgroundColor="rgb(19, 179, 19)"
+            eventBorderColor="rgb(19, 179, 19)"
           />
 
           <Modal
@@ -109,10 +110,10 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
                 </Grid.Column>
             <Grid.Column>
                 <NewEventForm 
-           title={'New Event!'} 
-           start_date={this.state.start_date} 
-           end_date={this.state.end_date}
-           handleClose={() => this.handleClose('addEventModal')}
+                    title={'New Event!'} 
+                    start_date={this.state.start_date} 
+                    end_date={this.state.end_date}
+                    handleClose={() => this.handleClose('addEventModal')}
          />
          </Grid.Column>
               </Grid.Row>

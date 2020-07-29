@@ -45,75 +45,64 @@ class Gifts extends Component {
         let { gift } = this.props
         return (
             <Fragment>
-            <Card>
-          
+              <Card>
                <Card.Content>
                  <Card.Header>{gift.name}</Card.Header>
                  {"Price:  $"}{gift.price}
                  {/* <Card.Description>{"Price: "}{gift.price}{"  Rating: "}{gift.rating}</Card.Description> */}
                </Card.Content>
              
-             <div className='ui two buttons'>
+                 <div className='ui two buttons'>
                 <Button size="mini" color="green" onClick={() => this.handleOpen('editGiftModal')}>
-              <Icon name='edit' />
-              </Button>
-               <Button size="mini" color="red" onClick={() => this.handleOpen('deleteGiftModal')}>
-              <Icon name='delete' />
-              </Button></div>
+                  <Icon name='edit' />
+                </Button>
+                <Button size="mini" color="red" onClick={() => this.handleOpen('deleteGiftModal')}>
+                  <Icon name='trash' />
+                </Button></div>
                 <Modal 
-              open={this.state.editGiftModal}
-              onClose={() => this.handleClose('editGiftModal')}
-              centered={false}>
-              <Modal.Header as="h1">Edit Gift</Modal.Header>
-                <Modal.Content >
-                 <Grid columns={2} divided>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Header>Add Contacts to List</Header>
-                      <Modal.Description>
-                      <p>Type the name of the Gift.</p>
-                      <p>Pick a Contact from the DropDown.</p>
-                      </Modal.Description>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Icon name='gift' size='massive' color='green' />
-                      </Grid.Column>
-                      </Grid.Row>
+                    open={this.state.editGiftModal}
+                    onClose={() => this.handleClose('editGiftModal')}
+                    centered={false}>
+                    <Modal.Header as="h1"><Icon name='edit' size='huge' color='green' />Edit Gift</Modal.Header>
+                    <Modal.Content >
+                      <Grid columns={2} divided>
+                        <Grid.Row>
+                        <Grid.Column>
+                            
+                        </Grid.Column>
+                        </Grid.Row>
                       </Grid>
-                    <GiftForm event={this.props.event} 
-                              gift={gift} 
-                              contact={this.props.contact} 
-                              title={'Edit Gift'} 
-                              handleClose={() => this.handleClose('editGiftModal')}
-                            />
-                    
+                        <GiftForm event={this.props.event} 
+                                  gift={gift} 
+                                  contact={this.props.contact} 
+                                  title={'Edit Gift'} 
+                                  handleClose={() => this.handleClose('editGiftModal')}
+                                />
                     </Modal.Content>
-           </Modal>
-               <Modal
-              size='mini'
-              open={this.state.deleteGiftModal}
-              onClose={() => this.handleClose('deleteGiftModal')}
-            >
-              <Header icon='trash' content='Delete this List?' />
-              <Modal.Content>
-                <p>You Sure?</p>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button inverted negative content='No' onClick={() => this.handleClose('deleteGiftModal')} />
-                {this.props.contact ?
-                <Button inverted positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
-                  this.props.deletingGift(gift, this.props.event)
-                  this.handleClose('deleteGiftModal')
-                }
-                }/> 
-                :
-                <Button inverted positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
-                  this.props.deletingGift(gift, this.props.event)
-                  this.handleClose('deleteGiftModal')}}/>}
-              </Modal.Actions>
-            </Modal>
+                </Modal>
+                    <Modal
+                        size='mini'
+                        open={this.state.deleteGiftModal}
+                        onClose={() => this.handleClose('deleteGiftModal')}
+                      >
+                      <Header icon='trash' content='Delete this Gift?' />
+                        <Modal.Content>You Sure?</Modal.Content>
+                          <Modal.Actions>
+                            <Button inverted negative content='No' onClick={() => this.handleClose('deleteGiftModal')} />
+                              {this.props.contact ?
+                            <Button inverted positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
+                                  this.props.deletingGift(gift, this.props.event)
+                                  this.handleClose('deleteGiftModal')
+                      }
+                      }/> 
+                      :
+                            <Button inverted positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
+                              this.props.deletingGift(gift, this.props.event)
+                              this.handleClose('deleteGiftModal')}}/>}
+                      </Modal.Actions>
+                  </Modal>
               </Card>
-            </Fragment>
+          </Fragment>
         )
     }
 }

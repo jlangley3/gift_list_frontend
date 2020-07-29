@@ -1,28 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Grid, Dropdown } from 'semantic-ui-react';
+import { Button, Grid, Dropdown, Form } from 'semantic-ui-react';
 import { addingEventContact } from '../redux/actions';
 
 class AddGifts extends React.Component {
 
-      constructor(){
-          super();
+      constructor(props){
+          super(props);
           this.state = {
-            currentContact: null
+            contact: props.contact ? props.contact : null,
+            name: "TBD"
           }
       }
 
 
-    contactDropdown = () => {
-        return (
-          this.props.eventContacts.map(contact => {return {key: contact.id, text: contact.name, value: contact}}) 
-        )}
-        
-    handleContactChange = (e, { value }) => this.setState({currentContact: value})
+      handleChange = (event) => this.setState({
+        [event.target.name]: event.target.value
+      })
+
 
      
     handleSubmitForm = (event) => {
-        this.props.addingEventContact(this.state.currentContact, this.props.event)
+        this.props.addingEventContact(this.state, this.props.event)
         this.props.handleClose('addContactModal')
     }
 
@@ -30,17 +29,16 @@ class AddGifts extends React.Component {
         console.log(this.props)
         return (
         <div>
-            <Grid.Column>
-                <Dropdown
-                  name='kind'
-                  placeholder="Select and option"
-                  options={this.contactDropdown()}
-                 onChange={this.handleContactChange }
-                 value={this.state.currentContact}
-                  selection
-                /><p />
-              <Button onClick={this.handleSubmitForm}>Submit</Button>
-
+          <Grid.Column>
+            <Form onSubmit={this.handleSubmitForm}>
+              <Form.Input 
+                fluid label='Type Name of Gift' 
+                name='name'
+                placeholder='Gift Name'
+                onChange={this.handleChange}
+                value={this.state.name} />
+                <Button>Submit</Button>
+              </Form>
           </Grid.Column>
             </div>)
     }
@@ -56,7 +54,7 @@ const mapStateToProps = (state )=> {
   
   const mapDispatchToProps = dispatch => {
     return {
-      addingEventContact: (newContact, thisEvent) => dispatch(addingEventContact(newContact, thisEvent))
+      addingEventContact: (state, thisEvent) => dispatch(addingEventContact(state, thisEvent))
       
     }
   }

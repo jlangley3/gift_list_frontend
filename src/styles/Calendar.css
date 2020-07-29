@@ -28,14 +28,9 @@ li {
 b { /* used for event dates/times */
   margin-right: 3px;
   color: green;
-  background-color: green;
+  background-color:  rgb(19, 179, 19);
 }
 
-/* each event
-/* i {
-  color: green; 
-   background-color: green; 
-} */
 
 .demo-app {
   display: flex;
@@ -72,45 +67,46 @@ b { /* used for event dates/times */
   /* color: green; */
 }
 
-/* changed month color */
 
+/* override Month and year */
 .fc .fc-toolbar-title {
   font-size: 1.75em;
   margin: 0;
-  color: green;
-}
-
-.fc-day-number {
-  font-size: 1.5em;
-  color: #005c08;
-}
-
-/* override day title color and size */
-.fc-day-header {
-  font-size: 1.5em;
-  color: #00b294;
-}
-
-.colors {
-  background-color: green;
-  color:green;
-}
-
-.fc-right .fc-prev-button, .fc-right .fc-next-button{
-  background-color: #b1d583;
-  color: green;
-  background-image: none;
-}
-
-.fc-button {
-  color:red;
-  background-color: red;
+  color: rgb(13, 14, 13);
 }
 
 
-
+/* days of week*/
 .fc .fc-col-header-cell-cushion {
     display: inline-block;
     padding: 2px 4px;
-    color: greenyellow;
+    color: rgb(240, 50, 44);
+}
+
+/* left arrow and month buttons*/
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color:  rgb(19, 179, 19);
+}
+
+/* day and week buttons and Right arrow*/
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+  margin-left: -1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color:  rgb(19, 179, 19);
+}
+
+/* today Button */
+.fc .fc-button:not(:disabled) {
+  cursor: pointer;
+  background-color: rgb(19, 179, 19);
+  border-color: whitesmoke;
+}
+
+/* number days  */
+.fc .fc-daygrid-day-number {
+    padding: 4px;
+    color: grey;
 }

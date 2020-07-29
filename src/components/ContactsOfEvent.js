@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Grid, Modal, Image, Header, List, Icon, Card, Segment} from 'semantic-ui-react';
 import { deletingGift } from '../redux/actions/';
 import GiftForm from './GiftForm';
+import AddGifts from './AddGifts';
 import moment from 'moment';
 import Gifts from './Gifts';
 
@@ -16,6 +17,7 @@ class GiftContact extends React.Component {
               currentGift: props.gift ? props.gift : "",
               editGiftModal: false,
               deleteGiftModal: false,
+              addGiftModal: false,
               thisEvent: props.event
             }
           }
@@ -33,73 +35,35 @@ class GiftContact extends React.Component {
         this.props.addingGift(this.state, this.props.event)
     }
 
-    // editGiftBtn = (gift) => {
-    //     return (
-    //       <Modal 
-    //           trigger={<Button size="mini" color="green" onClick={() => this.handleOpen('editGiftModal')}>
-    //           <Icon name='edit' />
-    //           </Button>}
-    //           open={this.state.editGiftModal}
-    //           onClose={() => this.handleClose('editGiftModal')}
-    //           centered={false}>
-    //           <Modal.Header as="h1">Edit Gift</Modal.Header>
-    //             <Modal.Content >
-    //              <Grid columns={2} divided>
-    //               <Grid.Row>
-    //                 <Grid.Column>
-    //                   <Header>Add Contacts to List</Header>
-    //                   <Modal.Description>
-    //                   <p>Type the name of the Gift.</p>
-    //                   <p>Pick a Contact from the DropDown.</p>
-    //                   </Modal.Description>
-    //                 </Grid.Column>
-    //                 <Grid.Column>
-    //                   <Icon name='gift' size='massive' color='green' />
-    //                   </Grid.Column>
-    //                   </Grid.Row>
-    //                   </Grid>
-    //                 <GiftForm event={this.props.event} 
-    //                           gift={gift} 
-    //                           contact={this.props.contact} 
-    //                           title={'Edit Gift'} 
-    //                           handleClose={() => this.handleClose('editGiftModal')}
-    //                         />
-                    
-    //                 </Modal.Content>
-    //        </Modal>
-    //     )}    
-        
-    //     deleteGiftBtn = (gift) => {
-    //       return (
-    //         <Modal
-    //           size='mini'
-    //           trigger={<Button size="mini" color="red" onClick={() => this.handleOpen('deleteGiftModal')}>
-    //           <Icon name='delete' />
-    //           </Button>}
-    //           open={this.state.deleteGiftModal}
-    //           onClose={() => this.handleClose('deleteGiftModal')}
-    //         >
-    //           <Header icon='trash' content='Delete this List?' />
-    //           <Modal.Content>
-    //             <p>You Sure?</p>
-    //           </Modal.Content>
-    //           <Modal.Actions>
-    //             <Button inverted negative content='No' onClick={() => this.handleClose('deleteGiftModal')} />
-    //             {this.props.contact ?
-    //             <Button inverted positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
-    //               this.props.deletingGift(this.filterGifts()[this.filterGifts().length - 1], this.props.event)
-    //               this.handleClose('deleteGiftModal')
-    //             }
-    //             }/> 
-    //             :
-    //             <Button inverted positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
-    //               this.props.deletingGift(gift, this.props.event)
-    //               this.handleClose('deleteGiftModal')}}/>}
-                
-    //           </Modal.Actions>
-    //         </Modal>
-    //       )
-    //     }
+    addGiftBtn = () => {
+      return (
+        <Modal 
+          trigger={<Button 
+            color="grey" 
+            onClick={() => this.handleOpen('addGiftModal')}
+            icon="gift"
+            size="mini" 
+            content= "Add Gift" />}
+        open={this.state.addGiftModal}
+        onClose={() => this.handleClose('addGiftModal')}>
+          <Modal.Header>Add a Gift to This List</Modal.Header>
+            <Modal.Content >
+              <Grid>
+                <Grid.Row columns="equal">
+                  <Grid.Column>
+                    <AddGifts event={this.props.event} contact={this.props.contact}
+                    title={'Add Gifts to List'}  handleClose={() => this.handleClose('addGiftModal')}/>
+                </Grid.Column>
+                <Grid.Column>
+                <Icon name='gift' color="red" size='massive' />
+                </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Modal.Content>
+      </Modal>
+          
+      )
+    }
 
         filterGifts = () => {
           const gifts = this.props.currentEvent.gifts.filter(gift => gift.contact_id === this.props.contact.id )
@@ -117,9 +81,11 @@ class GiftContact extends React.Component {
               <Image avatar src={avatar} />
               <Card.Header>{name}</Card.Header>            
                {/* {gifts.map(gift => <Card.Description>{gift.name}{"||  Price:  $"}{gift.price}</Card.Description>)} */}
-               {this.filterGifts().map(gift => <Gifts key={gift} gift={gift}/>)}
-      </Card.Content>
-        </Card>)
+               {this.filterGifts().map(gift => <Gifts key={gift.id} gift={gift}/>)}
+            </Card.Content>
+            {this.addGiftBtn()}
+         </Card>
+         )
     }
 }
 

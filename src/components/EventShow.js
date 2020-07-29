@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Modal, Grid, Button, GridColumn, List, Icon, Label, Card } from 'semantic-ui-react'
+import { Image, Header, Modal, Grid, Button, GridColumn, List, Icon, Label, Card, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import AddEventContacts from './AddEventContacts';
@@ -23,8 +23,6 @@ class ContactShow extends React.PureComponent {
         editingEvent: null,
         newEventModal: false,
         addContactModal: false,
-        addGiftModal: false,
-        addGiftModal: false,
         newGiftModal: false
     }
   }
@@ -43,12 +41,6 @@ class ContactShow extends React.PureComponent {
   } else {return <Label color='green' horizontal>${cash.price}</Label>}
 }
   filteredNames = () => {
-  //   function onlyUnique(value, index, self) { 
-  //     return self.indexOf(value) === index;
-  // }
-  // var unique = this.props.currentEvent.contacts.filter( onlyUnique );
-  
-  // return unique
    if(this.props.currentEvent.contacts) {
      const array = this.props.currentEvent.contacts
  
@@ -62,29 +54,30 @@ class ContactShow extends React.PureComponent {
           }
           return result
    }
-  
-          
+       
   }
-
-
 
   addContactBtn = () => {
     return (
       <Modal 
-        trigger={<Button color="green" onClick={() => this.handleOpen('addContactModal')}>Add Contact</Button>}
+        trigger={<Button inverted color="green" 
+        icon="user plus" 
+        onClick={() => this.handleOpen('addContactModal')} 
+        content="Add Contact" />}
+       
       open={this.state.addContactModal}
       onClose={() => this.handleClose('addContactModal')}>
         <Modal.Header>Add a Contact to This List</Modal.Header>
           <Modal.Content >
-            <Grid columns={2} divided>
+            <Grid celled>
               <Grid.Row>
-                <Grid.Column>
+                <Grid.Column width={12}>
                   <AddEventContacts event={this.props.event} 
                   title={'Add Contacts to List'}  handleClose={() => this.handleClose('addContactModal')}/>
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column width={3}>
                 <Modal.Description>
-                  Pick a Contact from the DropDown to add to this list
+                  Pick a Contact from the DropDown to add to this list.
                   <Icon circular inverted size="huge" color='green' name='users' />
             </Modal.Description>
             </Grid.Column>
@@ -96,60 +89,34 @@ class ContactShow extends React.PureComponent {
     )
   }
 
-  addGiftBtn = () => {
-    return (
-      <Modal 
-        trigger={<Button color="orange" onClick={() => this.handleOpen('addGiftModal')}>Add Gift</Button>}
-      open={this.state.addGiftModal}
-      onClose={() => this.handleClose('addGiftModal')}>
-        <Modal.Header>Add a Gift to This List</Modal.Header>
-          <Modal.Content >
-            <Grid columns={2} divided>
-              <Grid.Row>
-                <Grid.Column>
-                  <AddGifts event={this.props.event} eventContacts={this.filteredNames()}
-                  title={'Add Gifts to List'}  handleClose={() => this.handleClose('addGiftModal')}/>
-              </Grid.Column>
-              <Grid.Column>
-                <Modal.Description>
-                  Pick the Gift You would Like to add the gift for
-                  <Icon circular inverted size="huge" color='green' name='users' />
-             </Modal.Description>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Modal.Content>
-    </Modal>
-        
-    )
-  }
 
  
   editEventBtn = () => {
     return (
       <Modal trigger={<Button onClick={() => this.handleOpen('editEventModal')}
-      basic
-      color='green'>Edit Gift List</Button>} 
-        open={this.state.editEventModal}
-        onClose={() => this.handleClose('editEventModal')}
-        closeIcon
-      centered={false}>
-      <Modal.Header>Edit Gift List</Modal.Header>
-      <Modal.Content>
-      <Grid columns={2} divided>
+          icon='edit' 
+          color='green'
+          content="Edit Gift List"/>} 
+            open={this.state.editEventModal}
+            onClose={() => this.handleClose('editEventModal')}
+            closeIcon
+            centered={false}>
+          <Modal.Header>Edit Gift List</Modal.Header>
+          <Modal.Content>
+          <Grid columns={2} divided>
            <Grid.Row>
-        <Grid.Column>
-      <EditEventForm event={this.props.currentEvent} 
-                     title={"Edit Event Form"} 
-                     handleClose={() => this.handleClose('editEventModal')}/>
-      </Grid.Column>
-        <Grid.Column>
-        <Modal.Description>
-            <Icon circular inverted size="huge" color='green' name="edit" />
-        </Modal.Description>
-        </Grid.Column>
-      </Grid.Row>
-              </Grid>
+              <Grid.Column>
+                  <EditEventForm event={this.props.currentEvent} 
+                          title={"Edit Event Form"} 
+                          handleClose={() => this.handleClose('editEventModal')}/>
+              </Grid.Column>
+              <Grid.Column>
+                  <Modal.Description>
+                    <Icon circular inverted size="huge" color='green' name="edit" />
+                </Modal.Description>
+             </Grid.Column>
+            </Grid.Row>
+          </Grid>
       </Modal.Content>
     </Modal>
     )
@@ -163,6 +130,7 @@ class ContactShow extends React.PureComponent {
           onClick={() => this.handleOpen('deleteEventModal')}
           content='Delete List'
           color='red'
+          icon='trash' 
         />}
         open={this.state.deleteEventModal}
         onClose={() => this.handleClose('deleteEventModal')}
@@ -197,9 +165,9 @@ class ContactShow extends React.PureComponent {
                 { title } 
                 <Header.Subheader>Date: { moment(start_date).format('ll') } - { moment(end_date).format('ll') }</Header.Subheader>
                 <Header.Subheader>Budget: <Label color='green' horizontal>${ budget}</Label></Header.Subheader>
-                <Header.Subheader>
-                {!isEmpty(this.props.currentEvent.gifts) ? <p>Money Spent on Gifts for this List: {this.giftPrice()}</p> : <p>Money Spent on Gifts for this List: $0</p>}
-                    </Header.Subheader>
+                
+                {!isEmpty(this.props.currentEvent.gifts) ? <Header.Subheader>Money Spent on Gifts for this List: {this.giftPrice()}</Header.Subheader> : <p>Money Spent on Gifts for this List: $0</p>}
+                    
               </Header.Content>
             </Header>
           </Grid.Column>
@@ -207,34 +175,20 @@ class ContactShow extends React.PureComponent {
           <Image  size='medium' src={GiftList} alt="No Picture" />
           </Grid.Column >
         </Grid.Row>
-        <Grid.Row columns={4}>
-          <Grid.Column>
+        <Grid.Row >
+          <Button.Group widths='3'>
             { this.editEventBtn() }
-          </Grid.Column>
-          <Grid.Column>
             { this.addContactBtn() }
-          </Grid.Column>
-          <Grid.Column>
             { this.deleteEventBtn() }
-          </Grid.Column>
-          <Grid.Column>
-            { this.addGiftBtn() }
-          </Grid.Column>
+          </Button.Group>
+           <Divider />
         </Grid.Row>
-        {/* <Grid.Row columns={2} >
-        <List>
-    {!isEmpty(this.props.currentEvent.gifts) ? this.props.currentEvent.gifts.map(gift => <GiftContact 
-          key={gift.id} 
-          gift={gift} 
-          event={this.props.event}/>) : <h3>"Please add Contacts to this list"</h3>}
-            </List>    
-           </Grid.Row> */}
-           <Card.Group>
-            {!isEmpty(this.props.currentEvent.contacts) ? this.filteredNames().map(contact => <ContactsOfEvent
+           
+            <Card.Group>{!isEmpty(this.props.currentEvent.contacts) ? this.filteredNames().map(contact => <ContactsOfEvent
               key={contact.id}
               contact={contact}
-              event={this.props.event}/>) : null}
-              </Card.Group>
+              event={this.props.event}/>) : null}</Card.Group>
+              
       </Grid>
     )
   }

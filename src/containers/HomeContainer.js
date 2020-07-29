@@ -63,9 +63,9 @@ render(){
          <Grid columns="equal" divided stackable>
             <Grid.Row>
               <Grid.Column >
-                <Header as='h1'  dividing>
+                <Header as='h2'  dividing>
                   <Icon name='gift' color="green" />
-                    <Header.Content as="h1" className="ui red header">These are Your Gift Lists:</Header.Content>
+                    <Header.Content  className="ui red header">Your Gift Lists</Header.Content>
                       </Header>
                           </Grid.Column>
                             <Grid.Column>
@@ -80,16 +80,16 @@ render(){
                                     </Input>
                                   </Grid.Column>
                                   <Grid.Column>
-                    <Segment compact>
-                          <Checkbox 
-                              toggle
-                              color="green"
-                              checked={this.state.checked}
-                              onChange={this.handleToggle}
-                              label='Sort By Name'
-                              />
-                    
-                        </Segment>
+                              <Segment compact>
+                                    <Checkbox 
+                                        toggle
+                                        color="green"
+                                        checked={this.state.checked}
+                                        onChange={this.handleToggle}
+                                        label='Sort By Name'
+                                        />
+                              
+                                  </Segment>
                         </Grid.Column>
                         <Grid.Column >
                         {this.addEventBtn()}  

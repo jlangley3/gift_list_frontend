@@ -6,6 +6,7 @@ import ContactForm from './ContactForm';
 import { deletingContact, addingContact, updatingContact} from '../redux/actions/contacts';
 import { isEmpty } from 'lodash';
 import ContactGifts from "./ContactGifts";
+import Interests from "./Interests";
 import { getStickyHeaderDates } from '@fullcalendar/react';
 import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
@@ -155,6 +156,12 @@ class ContactShow extends React.Component {
                 <Bar dataKey="price" fill="#8884d8" />
               </BarChart>
         </Grid.Row>
+        <Header as='h2' color="red" dividing> INTERESTS</Header>
+              
+        <Card.Group>
+          {this.props.contact.interests.map(interest => <Interests key={interest.id} interest={interest}/>)}
+        </Card.Group>
+        
       </Grid>
       </Fragment>
     )
@@ -173,8 +180,6 @@ const mapDispatchToProps = (dispatch) => {
     deletingContact: (contact) => dispatch(deletingContact(contact)),
     addingContact: (contact) => dispatch(addingContact(contact)),
     updatingCOntact: (contact) => dispatch(updatingContact)
-  
-    
   }
 }
 
