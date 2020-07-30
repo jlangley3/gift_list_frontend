@@ -48,7 +48,7 @@ class Gifts extends Component {
                <Card.Content>
                  <Card.Header>{gift.name}</Card.Header>
                  <Card.Description>{"Price:  $"}{gift.price}</Card.Description> 
-                 {/* <Card.Description as={Link} to={gift.link}>Link to gift</Card.Description>  */}
+                 <Card.Description>Rating: {gift.rating}</Card.Description> 
                </Card.Content>
              
                  <div className='ui two buttons'>

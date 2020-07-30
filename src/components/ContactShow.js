@@ -91,11 +91,12 @@ class ContactShow extends React.Component {
 
   formatEvents = () => {
     return this.props.contact.gifts.map(gift => {
-              const {name, price, contact} = gift
+              const {name, price, contact, rating} = gift
 
               return {
                 name: name, 
                 price: price,
+                rating: rating,
                 amt: true
               }
           })
@@ -156,17 +157,16 @@ class ContactShow extends React.Component {
                 width={900}
                 height={600}
                 data={this.formatEvents()}
-                margin={{
-                  top: 5, right: 30, left: 20, bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="price" fill="#8884d8" />
-              </BarChart>
+                  margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+              <CartesianGrid strokeDasharray="3 3"/>
+                    <XAxis dataKey="name"/>
+                    <YAxis yAxisId="left" orientation="left" stroke="green"/>
+                    <YAxis yAxisId="right" orientation="right" stroke="red"/>
+                    <Tooltip/>
+                    <Legend />
+                    <Bar yAxisId="left" dataKey="price" fill="green" />
+                    <Bar yAxisId="right" dataKey="rating" fill="red" />
+                    </BarChart>
               </Grid.Column>
         </Grid.Row>
               

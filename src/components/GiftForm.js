@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Grid, Form } from 'semantic-ui-react';
+import { Button, Grid, Form, Select } from 'semantic-ui-react';
 import {  updatingGift } from '../redux/actions/gifts';
 
 class GiftForm extends React.Component {
@@ -25,7 +25,22 @@ class GiftForm extends React.Component {
         [event.target.name]: event.target.value
       })
 
+      handleChangeRating = (e, { value }) => this.setState({rating: value})
+      ratingSelect = () => {
+        return ([
+          {key: 1, text: 1, value: 1},
+          {key: 2, text: 2, value: 2},
+          {key: 3, text: 3, value: 3},
+          {key: 4, text: 4, value: 4},
+          {key: 5, text: 5, value: 5},
+          {key: 6, text: 6, value: 6},
+          {key: 7, text: 7, value: 7},
+          {key: 8, text: 8, value: 8},
+          {key: 9, text: 9, value: 9},
+          {key: 10, text: 10, value: 10}
 
+        ])
+      }
      
     handleSubmitForm = (event) => {
       event.preventDefault();
@@ -47,15 +62,26 @@ class GiftForm extends React.Component {
               <Form.Input 
               fluid label='Type price of Gift' 
               name='price'
+              type="number"
               placeholder='Gift Price'
               onChange={this.handleChange}
               value={this.state.price} />
-              <Form.Input 
+              {/* <Form.Input 
               fluid label='Link to Gift' 
               name='link'
               placeholder='Link to Gift'
               onChange={this.handleChange}
-              value={this.state.link} />
+              value={this.state.link} /> */}
+              <Select
+              fluid label='Type price of Gift' 
+                name='rating'
+                fluid label='Change Rating' 
+                placeholder="Select a Rating"
+                options={this.ratingSelect()}
+                onChange={this.handleChangeRating}
+                value={this.state.rating}
+                selection
+              />
               <Button>Submit</Button>
               </Form>
           </Grid.Row>)

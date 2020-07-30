@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addingContact, updatingContact } from '../redux/actions/contacts'
-import { Button, Grid, Dropdown, Form } from 'semantic-ui-react'
+import { Button, Grid, Dropdown, Form, Select } from 'semantic-ui-react'
 
 
 class ContactForm extends React.Component {
@@ -90,8 +90,9 @@ class ContactForm extends React.Component {
                 <label htmlFor='name'>Name:</label>
                 <input type='text' value={this.state.name} name='name' onChange={this.handleChange} ></input><p />
                 <label htmlFor="type">Type:</label>
-                <Dropdown
+                <Select
                   name='kind'
+                  fluid label='Choose a Contact' 
                   placeholder="Select an Option"
                   options={this.kindDropdown()}
                   onChange={this.handleChangeKind}
