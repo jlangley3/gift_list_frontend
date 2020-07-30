@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react"
 import { Image, Header, Modal, Grid, Button, GridColumn, List, Icon, Label, Card } from 'semantic-ui-react'
 import { connect } from 'react-redux';
+import { Link, withRouter} from 'react-router-dom'
 import moment from 'moment';
 import AddEventContacts from './AddEventContacts';
 import AddGifts from './AddGifts';
@@ -47,7 +48,7 @@ class Gifts extends Component {
                <Card.Content>
                  <Card.Header>{gift.name}</Card.Header>
                  <Card.Description>{"Price:  $"}{gift.price}</Card.Description> 
-                 <Card.Description as="a" src={gift.link}>Link to gift</Card.Description> 
+                 {/* <Card.Description as={Link} to={gift.link}>Link to gift</Card.Description>  */}
                </Card.Content>
              
                  <div className='ui two buttons'>
@@ -119,4 +120,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Gifts);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Gifts));

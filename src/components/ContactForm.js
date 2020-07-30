@@ -21,7 +21,7 @@ class ContactForm extends React.Component {
     [event.target.name]: event.target.value
   })
 
-  handleChangeType = (event) => this.setState({kind: event.target.value})
+  handleChangeKind = (e, { value }) => this.setState({kind: value})
 
 
   handleSubmit = event => {
@@ -94,7 +94,7 @@ class ContactForm extends React.Component {
                   name='kind'
                   placeholder="Select an Option"
                   options={this.kindDropdown()}
-                  onChange={this.handleChangeType}
+                  onChange={this.handleChangeKind}
                   value={this.state.kind}
                   selection
                 />
