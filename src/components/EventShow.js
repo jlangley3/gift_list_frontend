@@ -12,7 +12,7 @@ import ContactsOfEvent from './ContactsOfEvent';
 import GiftList from "../images/GiftList.png";
 import Edit from "../images/edit.gif";
 
-class ContactShow extends React.PureComponent {
+class EventShow extends React.PureComponent {
 
   constructor(){
       
@@ -35,10 +35,10 @@ class ContactShow extends React.PureComponent {
 
   giftPrice = () => { 
    var cash =  this.props.currentEvent.gifts.reduce(function(previousValue, currentValue) {
-    return { price: previousValue.price + currentValue.price}})
-     if (cash.price > this.props.currentEvent.budget){
-    return   <Label color='red' horizontal>${cash.price}</Label>
-  } else {return <Label color='green' horizontal>${cash.price}</Label>}
+        return { price: previousValue.price + currentValue.price}})
+        if (cash.price > this.props.currentEvent.budget){
+        return   <Label color='red' horizontal>${cash.price}</Label>
+      } else {return <Label color='green' horizontal>${cash.price}</Label>}
 }
   filteredNames = () => {
    if(this.props.currentEvent.contacts) {
@@ -60,20 +60,20 @@ class ContactShow extends React.PureComponent {
   addContactBtn = () => {
     return (
       <Modal 
-        trigger={<Button inverted color="green" 
-        icon="user plus" 
-        onClick={() => this.handleOpen('addContactModal')} 
-        content="Add Contact" />}
-       
-      open={this.state.addContactModal}
-      onClose={() => this.handleClose('addContactModal')}>
-        <Modal.Header>Add a Contact to This List</Modal.Header>
-          <Modal.Content >
-            <Grid celled>
-              <Grid.Row>
-                <Grid.Column width={12}>
-                  <AddEventContacts event={this.props.event} 
-                  title={'Add Contacts to List'}  handleClose={() => this.handleClose('addContactModal')}/>
+          trigger={<Button inverted color="green" 
+          icon="user plus" 
+          onClick={() => this.handleOpen('addContactModal')} 
+          content="Add Contact" />}
+        
+          open={this.state.addContactModal}
+          onClose={() => this.handleClose('addContactModal')}>
+          <Modal.Header>Add a Contact to This List</Modal.Header>
+            <Modal.Content >
+              <Grid celled>
+                <Grid.Row>
+                  <Grid.Column width={12}>
+                    <AddEventContacts event={this.props.currentEvent} 
+                    title={'Add Contacts to List'}  handleClose={() => this.handleClose('addContactModal')}/>
               </Grid.Column>
               <Grid.Column width={3}>
                 <Modal.Description>
@@ -142,8 +142,9 @@ class ContactShow extends React.PureComponent {
         <Modal.Actions>
           <Button inverted negative content='No' onClick={() => this.handleClose('deleteEventModal')} />
           <Button inverted positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
-            this.props.deletingEvent(this.props.currentEvent)
+            this.props.deletingEvent(this.props.event)
             this.handleClose('deleteEventModal')
+            this.props.handleClose("editEventModal")
           }
           } />
         </Modal.Actions>
@@ -155,7 +156,7 @@ class ContactShow extends React.PureComponent {
       console.log(this.props)
       
 
-    const {title, start_date, end_date, budget, repeating} = this.props.currentEvent
+    const {title, start_date, end_date, budget, repeating} = this.props.event
     return(
       <Grid columns='equal' padded stackable>
         <Grid.Row>
@@ -166,7 +167,7 @@ class ContactShow extends React.PureComponent {
                 <Header.Subheader>Date: { moment(start_date).format('ll') } - { moment(end_date).format('ll') }</Header.Subheader>
                 <Header.Subheader>Budget: <Label color='green' horizontal>${ budget}</Label></Header.Subheader>
                 
-                {!isEmpty(this.props.currentEvent.gifts) ? <Header.Subheader>Money Spent on Gifts for this List: {this.giftPrice()}</Header.Subheader> : <p>Money Spent on Gifts for this List: $0</p>}
+                {!isEmpty(this.props.event.gifts) ? <Header.Subheader>Money Spent on Gifts for this List: {this.giftPrice()}</Header.Subheader> : <Header.Subheader>Money Spent on Gifts for this List: $0</Header.Subheader>}
                     
               </Header.Content>
             </Header>
@@ -213,7 +214,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactShow)
+export default connect(mapStateToProps, mapDispatchToProps)(EventShow)
 
 
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Button, Grid, Modal, Image, Header, List, Icon, Card, Segment} from 'semantic-ui-react';
 import { deletingGift } from '../redux/actions/';
@@ -6,12 +6,13 @@ import GiftForm from './GiftForm';
 import AddGifts from './AddGifts';
 import moment from 'moment';
 import Gifts from './Gifts';
+import { isEmpty } from 'lodash';
 
 class GiftContact extends React.Component {
 
       constructor(props){
         super(props)
-        console.log(props)
+        // console.log(props)
             this.state = {
               currentContact: props.recipient ? props.recipient: "",
               currentGift: props.gift ? props.gift : "",
@@ -39,26 +40,26 @@ class GiftContact extends React.Component {
       return (
         <Modal 
           trigger={<Button 
-            color="grey" 
+            // color="grey" 
             onClick={() => this.handleOpen('addGiftModal')}
             icon="gift"
             size="mini" 
             content= "Add Gift" />}
-        open={this.state.addGiftModal}
-        onClose={() => this.handleClose('addGiftModal')}>
-          <Modal.Header>Add a Gift to This List</Modal.Header>
-            <Modal.Content >
-              <Grid>
-                <Grid.Row columns="equal">
-                  <Grid.Column>
-                    <AddGifts event={this.props.event} contact={this.props.contact}
-                    title={'Add Gifts to List'}  handleClose={() => this.handleClose('addGiftModal')}/>
-                </Grid.Column>
-                <Grid.Column>
-                <Icon name='gift' color="red" size='massive' />
-                </Grid.Column>
-            </Grid.Row>
-          </Grid>
+            open={this.state.addGiftModal}
+            onClose={() => this.handleClose('addGiftModal')}>
+              <Modal.Header>Add a Gift to This List</Modal.Header>
+                <Modal.Content >
+                  <Grid>
+                    <Grid.Row columns="equal">
+                      <Grid.Column>
+                        <AddGifts event={this.props.event} contact={this.props.contact}
+                        title={'Add Gifts to List'}  handleClose={() => this.handleClose('addGiftModal')}/>
+                    </Grid.Column>
+                    <Grid.Column>
+                    <Icon name='gift' color="red" size='massive' />
+                    </Grid.Column>
+                </Grid.Row>
+              </Grid>
         </Modal.Content>
       </Modal>
           
@@ -72,10 +73,12 @@ class GiftContact extends React.Component {
         }
 
     render(){
-        console.log(this.props)
+        // console.log(this.props)
     
         let {name, gifts, birthday, avatar} = this.props.contact
         return (
+          <Fragment>
+            {!isEmpty(this.filterGifts()) ? 
           <Card>
             <Card.Content>
               <Image avatar src={avatar} />
@@ -85,7 +88,10 @@ class GiftContact extends React.Component {
             </Card.Content>
             {this.addGiftBtn()}
          </Card>
-         )
+        :
+        null 
+        }
+         </Fragment>)
     }
 }
 

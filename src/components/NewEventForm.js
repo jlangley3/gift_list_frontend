@@ -4,8 +4,6 @@ import { addingEvent, updatingEvent } from '../redux/actions/events'
 import { Grid, Form, Input, Button } from 'semantic-ui-react'
 
 
-
-
 class NewEventForm extends React.Component {
   constructor(props){
     super(props)

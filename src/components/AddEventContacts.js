@@ -27,7 +27,6 @@ class AddEventContacts extends React.Component {
     
 
     handleSubmitForm = (event) => {
-      debugger;
         this.props.addingEventContact(this.state, this.props.event)
         this.props.handleClose('addContactModal')
     }

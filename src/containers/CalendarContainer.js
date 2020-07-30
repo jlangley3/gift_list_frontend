@@ -127,42 +127,18 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
               closeIcon
               centered={true}
               onClose={() => {
-                this.toggleEditForm()
+                // this.toggleEditForm()
                 this.handleClose('editEventModal')}
               }
               size='small'
               >
-              {/* {!this.state.editForm ?  */}
               <Segment>
                   <EventShow
-                    event={this.props.currentEvent}
-                    handleClose={this.handleClose}
+                    event={this.state.thisEvent}
+                    handleClose={() => this.handleClose('editEventModal')}
                   />
-                  {/* <Button content='Edit Event' onClick={this.toggleEditForm}/>  */}
               </Segment>
-              {/* : */}
-              {/* <Segment><Modal.Header>Edit Gift List</Modal.Header>
-                <Modal.Content>
-                  <Grid columns={2} divided>
-                    <Grid.Row>
-                     <Grid.Column>
-                        <Modal.Description>
-                      
-                            <Icon circular inverted size="huge" color='green' name="edit" />
-                    
-                            </Modal.Description>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <EditEventForm event={this.props.currentEvent} 
-                              title={"Edit Event Form"} 
-                              handleClose={() => this.handleClose('editEventModal')}/>
-                        </Grid.Column>
-                      </Grid.Row>
-                    </Grid>
-                </Modal.Content></Segment>
-  } */}
               </Modal>
-
         </div>
       </div>
     )
@@ -201,6 +177,28 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
 
   // handlers for user actions
   // ------------------------------------------------------------------------------------------
+  //When a labeled event is clicked, opends a Modal to show and edit List/Event    
+  handleEventClick = (clickInfo) => {
+        console.log(clickInfo)
+        this.props.setCurrentEvent(clickInfo.event._def.extendedProps)
+        this.setState({ 
+          editEventModal: true,
+           thisEvent: clickInfo.event._def.extendedProps })}
+        // if (alert(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+        //   clickInfo.event.remove() // will render immediately. will call handleEventRemove
+      
+        handleEventChange = (changeInfo) => {
+         console.log(changeInfo)
+         let start = changeInfo.event._instance.range.start
+         let end = changeInfo.event._instance.range.end
+         let clickedEvent = changeInfo.event._def.extendedProps
+            this.props.updatingEvent({...clickedEvent, start_date: start, end_date: end });
+            this.props.editCurrentEvent({...clickedEvent, start_date: start, end_date: end });
+        }
+
+
+
+
 
   handleDateSelect = (selectInfo) => {
     // this.handleOpen('addEventModal', selectInfo);
@@ -221,14 +219,6 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
     }
   }
 
-  handleEventClick = (clickInfo) => {
-    console.log(clickInfo)
-    this.props.setCurrentEvent(clickInfo.event._def.extendedProps)
-    this.setState({ 
-      editEventModal: true})}
-    // if (alert(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-    //   clickInfo.event.remove() // will render immediately. will call handleEventRemove
-  
 
   // handlers that initiate reads/writes via the 'action' props
   // ------------------------------------------------------------------------------------------
@@ -245,14 +235,6 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
   //     })
   // }
 
-  handleEventChange = (changeInfo) => {
-   console.log(changeInfo)
-   let start = changeInfo.event._instance.range.start
-   let end = changeInfo.event._instance.range.end
-     let clickedEvent = changeInfo.event._def.extendedProps
-   this.props.updatingEvent({...clickedEvent, start_date: start, end_date: end });
-   this.props.editCurrentEvent({...clickedEvent, start_date: start, end_date: end });
-  }
 
 //   handleEventRemove = (removeInfo) => {
 //     this.props.deleteEvent(removeInfo.event.id)

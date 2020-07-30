@@ -4,23 +4,26 @@ import { Link } from "react-router-dom";
 import { Card, Icon, Input, Segment, Checkbox } from 'semantic-ui-react';
 import NoEvents from '../components/NoEvents';
 import NoContacts from '../components/NoContacts';
+import EventShow from '../components/EventShow';
 import NewEventForm from '../components/NewEventForm';
 import { Grid, Button, Modal, Image, Header} from 'semantic-ui-react';
 import Events from '../components/Events.js';
 import { updateSearchTerm } from '../redux/actions';
 
 class Homepage extends React.Component{
-
   constructor(){
     super();
-    console.log(this.props)
     this.state = {
         newEventModal: false,
-        checked: false
+        checked: false,
+        editEventModal: false,
+        thisEvent: {}
     }
+    console.log(this.state)
   }
 
   handleOpen = (modal) => this.setState({ [modal]: true })
+  setEvent = (clickedEvent) => this.setState({  thisEvent: clickedEvent })
   handleClose = (modal) => this.setState({ [modal]: false })
   handleToggle = () => this.setState({ checked: !this.state.checked })
 
@@ -109,8 +112,8 @@ render(){
      
                       this.state.checked ?
                       this.filteredEvents().sort((a, b) => {
-                        const nameA = a.name
-                        const nameB = b.name
+                        const nameA = a.title
+                        const nameB = b.title
 
                         if (nameA < nameB) {
                           return -1
@@ -119,7 +122,10 @@ render(){
                           return 1
                         }
                         return 0
-                      }).map(e => <Events key={e.id} event={e} color={this.randomColor()}/>)
+                      }).map(e => <Events key={e.id} event={e} 
+                        color={this.randomColor()} 
+                        handleOpen={() =>this.handleOpen("editEventModal")}
+                        setEvent={() => this.setEvent(e)}/>)
                     :
                       this.filteredEvents().sort((a, b) => {
                         const createdA = new Date(a.start_date)
@@ -132,13 +138,35 @@ render(){
                           return 1
                         }
                           return 0
-                      }).map(e => <Events key={e.id} event={e} color={this.randomColor()}/>)}
+                      }).map(e => <Events key={e.id} event={e} 
+                      color={this.randomColor()} 
+                      handleOpen={() =>this.handleOpen("editEventModal")}
+                      setEvent={() => this.setEvent(e)}/>)}
                       </div>
                   
-         {this.props.contacts.length === 0 ?
-         <div>
-           <NoContacts />
-         </div> : null}
+                    {this.props.contacts.length === 0 ?
+                    <div>
+                      <NoContacts />
+                    </div> : null}
+
+                    <Modal
+                          open={this.state.editEventModal} 
+                          closeIcon
+                          centered={true}
+                          onClose={() => {
+                            // this.toggleEditForm()
+                            this.handleClose('editEventModal')}
+                          }
+                          size='large'
+                          >
+                          <Segment>
+                              <EventShow
+                                event={this.state.thisEvent}
+                                handleClose={() => this.handleClose('editEventModal')}
+                              />
+                          </Segment>
+                          </Modal>
+
         </div>
       )
      }}
@@ -149,7 +177,8 @@ const mapStateToProps = (state) => {
     user: state.user,
     events: state.events,
     contacts: state.contacts,
-    searchTerm: state.searchTerm
+    searchTerm: state.searchTerm,
+    currentEvent: state.currentEvent
   }
 }
 

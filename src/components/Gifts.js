@@ -16,10 +16,8 @@ import GiftForm from './GiftForm';
 
 
 class Gifts extends Component {
-
   constructor(props){
     super(props)
-    console.log(props)
         this.state = {
           currentContact: props.recipient ? props.recipient: "",
           currentGift: props.gift ? props.gift : "",
@@ -48,8 +46,8 @@ class Gifts extends Component {
               <Card>
                <Card.Content>
                  <Card.Header>{gift.name}</Card.Header>
-                 {"Price:  $"}{gift.price}
-                 {/* <Card.Description>{"Price: "}{gift.price}{"  Rating: "}{gift.rating}</Card.Description> */}
+                 <Card.Description>{"Price:  $"}{gift.price}</Card.Description> 
+                 <Card.Description as="a" src={gift.link}>Link to gift</Card.Description> 
                </Card.Content>
              
                  <div className='ui two buttons'>

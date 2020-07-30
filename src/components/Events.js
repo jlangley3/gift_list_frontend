@@ -9,13 +9,14 @@ import moment from 'moment';
 
 class Events extends Component {
     render() {
-         
         let { budget, start_date, end_date, title, id} = this.props.event
         return (
             <Fragment>
-            <Card as={Link} to={`/events/${id}`} onClick={() => this.props.setCurrentEvent(this.props.event)}>
-               {/* <Image src={EventPic} alt="No Picture" /> */}
-               <Icon name='gift' color="green"size="massive"/>
+            <Card onClick={() => {
+              this.props.handleOpen("editEventModal", this.props.event)
+              this.props.setEvent(this.props.event)
+              this.props.setCurrentEvent(this.props.event)}}>
+               <Icon name='gift' color="green" size="massive"/>
                <Card.Content>
                  <Card.Header>{title}</Card.Header>
          
@@ -28,6 +29,7 @@ class Events extends Component {
     }
 }
 
+// as={Link} to={`/events/${id}`}
 
 const mapStateToProps = (state) => {
   return {

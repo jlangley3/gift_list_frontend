@@ -68,7 +68,7 @@ export const deletingEvent = thisEvent => {
     .then(eventData => {
       console.log(eventData)
       dispatch(deleteEvent(eventData))
-      dispatch(editCurrentEvent(eventData))
+      dispatch(removeCurrentEvent(eventData))
     })
   }
 }
@@ -76,6 +76,13 @@ export const deletingEvent = thisEvent => {
 export const deleteEvent = newEvent => {
   return {type: "DELETE_EVENT", event: newEvent}
 }
+
+export const removeCurrentEvent = newEvent => {
+  return {type: "REMOVE_CURRENT_EVENT", event: newEvent}
+}
+
+
+
 
 
 
@@ -96,6 +103,7 @@ export const addingEventContact = (newData, thisEvent) => {
     .then(newGift => {
       dispatch(addEventContact(newData.contact));
       dispatch(addGiftToEvent(newGift));
+      dispatch(addContactToEvent(thisEvent, newData.contact))
       // dispatch(editCurrentEvent({...thisEvent,
       // gifts: {...gifts, newGift},
       // contacts: {...contacts, newContactData}
@@ -103,6 +111,10 @@ export const addingEventContact = (newData, thisEvent) => {
     })
   }
 }
+export const addContactToEvent = (event, contact) => {
+  return { type: "ADD_CONTACT_TO_EVENT", payload: {contact: contact, event: event}}
+}
+
 export const addEventContact = (contact) => {
   return { type: "ADD_CONTACT_TO_CURRENT_EVENT", contact: contact}
 }
