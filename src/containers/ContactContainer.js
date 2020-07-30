@@ -129,8 +129,8 @@ class ContactContainer extends Component {
                                       }).map(c => <ContactCard key={c.id} contact={c} />)
                                     :
                                       this.filteredContacts().sort((a, b) => {
-                                        const createdA = new Date(a.created_at)
-                                        const createdB = new Date(b.created_at)
+                                        const createdA = new Date(a.updated_at)
+                                        const createdB = new Date(b.updated_at)
 
                                         if (createdB < createdA) {
                                           return -1

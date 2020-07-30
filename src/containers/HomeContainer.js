@@ -27,13 +27,15 @@ class Homepage extends React.Component{
   handleClose = (modal) => this.setState({ [modal]: false })
   handleToggle = () => this.setState({ checked: !this.state.checked })
 
-  upcomingEvents = () => {
-    return this.props.events.filter(e => new Date(e.end_date) > Date.now())
-  }
-
+  
   filteredEvents = () => {
     return this.props.events.filter(e => e.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
   }
+  
+  upcomingEvents = () => {
+    return this.filteredEvents().filter(e => new Date(e.end_date) > Date.now())
+  }
+
 
   addEventBtn = () => {
     return (

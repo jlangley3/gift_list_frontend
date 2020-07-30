@@ -65,7 +65,7 @@ class ContactForm extends React.Component {
       {key: 'family', text: 'Family', value: 'Family'},
       {key: 'friend', text:'Friend', value: 'Friend'},
       {key: 'Co-Worker', text: 'Co-Worker', value: 'Co-Worker'},
-      {key: 'I dont Know this Person', text: 'I dont Know this Person', value:'I dont Know this Person'}
+      {key: 'I dont know this Person', text: 'I do not know this person', value:'I do not know this person'}
     ])
   }
 
