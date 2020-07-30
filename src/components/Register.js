@@ -8,7 +8,7 @@ class Register extends React.Component {
   constructor(){
     super()
     this.state = {
-      avatar: "../images/goku.jpg",
+      avatar: "",
       first_name: '',
       last_name: '',
       username: '',
@@ -41,7 +41,7 @@ class Register extends React.Component {
 
   resetState = () => {
     this.setState({
-      avatar: "../images/goku.jpg",
+      avatar: "",
       first_name: '',
       last_name: '',
       username: '',
@@ -57,7 +57,7 @@ class Register extends React.Component {
         <Grid.Column>
         <div className="ui form">
         <Segment compact>
-        <img className='ui small image' src={ avatar } alt='user_avatar'/>
+        <img className='ui small image' src={ avatar } alt='Your avatar goes here'/>
         </Segment>
         <label htmlFor='avatar'>Avatar: </label><br />
         <input type='text' name='avatar' value={ avatar } onChange={this.handleChange}></input><br />
