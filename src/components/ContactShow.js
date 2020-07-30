@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react'
-import { Image, Header, Modal, Grid, Button, Segment, Label, Card } from 'semantic-ui-react'
+import { Image, Header, Modal, Grid, Button, Segment, Label, Card, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { isEmpty } from 'lodash';
@@ -11,6 +11,7 @@ import { getStickyHeaderDates } from '@fullcalendar/react';
 import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
+import { addingInterests } from '../redux/actions/interests';
 
 class ContactShow extends React.Component {
 
@@ -20,7 +21,8 @@ class ContactShow extends React.Component {
     console.log(this.props)
     this.state = {
         editContactModal: false,
-        deleteContactModal: false
+        deleteContactModal: false,
+        interest: ""
     }
   }
  
@@ -33,6 +35,11 @@ class ContactShow extends React.Component {
      return <Label color='green' horizontal>${cash.price}</Label>
  }
 
+ handleChange = (event) => this.setState({ interest: event.target.value })
+
+ handleSubmit = (event) => {
+  this.props.addingInterests(this.state.interest, this.props.contact)
+  this.setState({ interest: '' })}
  
   editContactBtn = () => {
     return (
@@ -146,11 +153,22 @@ class ContactShow extends React.Component {
           <Segment>
           <Label.Group tag>
             {this.props.contact.interests.map(interest => <Interests key={interest.id} interest={interest}/>)}
-          </Label.Group></Segment>
-          
+          </Label.Group>
+          </Segment>
+              <Form onSubmit={this.handleSubmit}>
+            <Form.Group>
+              <Label>Add Interests</Label>
+              <Form.Input
+                placeholder='Interest'
+                name='interest'
+                value={this.state.interest}
+                onChange={this.handleChange}
+              />
+              <Form.Button content='Submit' />
+            </Form.Group>
+          </Form>
  
         <Grid.Row>
-        
         <Grid.Column width={12}>
           <Header as='h2' color="red" dividing> Money Spent vs Gift Rating</Header>
                 <BarChart
@@ -188,7 +206,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deletingContact: (contact) => dispatch(deletingContact(contact)),
     addingContact: (contact) => dispatch(addingContact(contact)),
-    updatingCOntact: (contact) => dispatch(updatingContact)
+    updatingContact: (contact) => dispatch(updatingContact),
+    addingInterests: (interest, contact) => dispatch(addingInterests(interest, contact))
   }
 }
 

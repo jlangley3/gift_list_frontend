@@ -14,7 +14,7 @@ class NewEventForm extends React.Component {
       end_date: props.end_date ? props.end_date : "",
       budget: props.event ? props.event.budget: "",
     }
-    console.log(this.state)
+    
   }
     
       handleChange = event => this.setState({
