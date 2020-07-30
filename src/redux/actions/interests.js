@@ -51,28 +51,33 @@ const URL = () => {
     }
   }
 
-  export const deletingInterest = (Interest, thisEvent) => {
+  export const deletingInterests = (interest, contact) => {
     return (dispatch) => {
-      fetch(`${URL()}/Interests/${Interest.id}`, {
+      fetch(`${URL()}/interests/${interest.id}`, {
         method: 'DELETE',
         headers: authHeaders(),
-        body: JSON.stringify(Interest)
+        body: JSON.stringify(interest)
       })
       .then(resp => resp.json())
-      .then(InterestData => {
-        console.log(InterestData)
-        dispatch(deletedInterest(InterestData))
-        dispatch(deletedEventInterest(InterestData))
+      .then(interestData => {
+        console.log(interestData)
+        dispatch(deletedInterests(interestData, contact))
       })
     }
   }
   
+  export const deletedInterests = (interest, contact) => {
+    return {type: "UPDATE_CONTACT", contact: {...contact, interests: contact.interests.filter(i => i.id !== interest.id)}}
+  }
+
+
+
+
   export const deletedEventInterest = Interest => {
     return {type: "DELETE_Interest_FROM_EVENT", Interest: Interest}
   }
-  export const deletedInterest = Interest => {
-    return {type: "DELETE_Interest", Interest: Interest}
-  }
+
+
   
   export const updateInterest = Interest => {
     return {type: "UPDATE_Interest", Interest: Interest}

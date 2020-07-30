@@ -3,7 +3,7 @@ import { logoutUser, updatingUser, handlingLoginSubmit, addingUser, fetchingUser
 import { addingContact, deletingContact, updatingContact, updateSearchTerm } from './contacts'
 import { addingEvent, updatingEvent, deletingEvent, setCurrentEvent, editCurrentEvent, addingEventContact} from './events'
 import {addGift, updatingGift, deletingGift} from './gifts'
-import {addingInterests} from './interests'
+import {addingInterests, deletingInterests} from './interests'
 
 export {
 
@@ -26,6 +26,7 @@ export {
   editCurrentEvent,
   deletingGift,
   updateSearchTerm,
-  addingInterests
+  addingInterests,
+  deletingInterests
   
 }

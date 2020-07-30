@@ -152,7 +152,7 @@ class ContactShow extends React.Component {
           <Header as='h2' color="red" dividing> INTERESTS</Header></Segment>
           <Segment>
           <Label.Group tag>
-            {this.props.contact.interests.map(interest => <Interests key={interest.id} interest={interest}/>)}
+            {this.props.contact.interests.map(interest => <Interests key={interest.id} interest={interest} contact={this.props.contact}/>)}
           </Label.Group>
           </Segment>
               <Form onSubmit={this.handleSubmit}>
