@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react"
-import { Label } from "semantic-ui-react";
+import { Label, Button } from "semantic-ui-react";
 import {  withRouter } from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
@@ -17,7 +17,8 @@ handleDelete = () => {
         let { name } = this.props.interest
         return (
             <Fragment>
-            <Label onClick={this.handleDelete} color="green">{name}</Label>
+            <Label  color="green">{name}</Label>
+            <Button circular size="tiny" color="red" icon='trash' onClick={this.handleDelete}/>
             </Fragment>
         )
     }

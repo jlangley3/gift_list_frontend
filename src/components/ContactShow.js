@@ -144,7 +144,7 @@ class ContactShow extends React.Component {
           <Grid.Column width={4}>
         <Image floated='right' size='large' src={avatar} />
         </Grid.Column>
-        <Grid.Column width={12} columns={4}>
+        <Grid.Column width={12} columns={4} dividing>
           <Header dividing color="red">List of Gifts Given</Header>
                  {!isEmpty(this.props.contact.gifts) ? <Card.Group stackable> {this.listOfGifts()}</Card.Group> : <p>No gifts for this contact yet.</p>}
                  </Grid.Column>
@@ -155,18 +155,20 @@ class ContactShow extends React.Component {
             {this.props.contact.interests.map(interest => <Interests key={interest.id} interest={interest} contact={this.props.contact}/>)}
           </Label.Group>
           </Segment>
+          <Segment>
               <Form onSubmit={this.handleSubmit}>
             <Form.Group>
-              <Label>Add Interests</Label>
+              {/* <Label>Add Interests</Label> */}
               <Form.Input
-                placeholder='Interest'
+                placeholder='Add Interests'
+                // label="Add Interests"
                 name='interest'
                 value={this.state.interest}
                 onChange={this.handleChange}
               />
               <Form.Button content='Submit' />
             </Form.Group>
-          </Form>
+          </Form></Segment>
  
         <Grid.Row>
         <Grid.Column width={12}>
