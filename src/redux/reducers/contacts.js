@@ -6,7 +6,6 @@ const contactsReducer = (state = [], action) => {
       case "ADD_CONTACT":
         return [...state, action.contact]
       case "UPDATE_CONTACT":
-        debugger
         return state.map(c => c.id === action.contact.id ? action.contact : c)
       case "DELETE_CONTACT":
         return state.filter(c => c.id !== action.contact.id)

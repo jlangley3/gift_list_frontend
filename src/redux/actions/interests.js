@@ -23,7 +23,7 @@ const URL = () => {
       .then(resp => resp.json())
       .then(newInterest => {
         console.log(newInterest)
-        // dispatch(addInterest(newInterest));
+        dispatch(addInterests(newInterest, contact));
       })
     }
   }
