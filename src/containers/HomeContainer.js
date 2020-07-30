@@ -27,6 +27,10 @@ class Homepage extends React.Component{
   handleClose = (modal) => this.setState({ [modal]: false })
   handleToggle = () => this.setState({ checked: !this.state.checked })
 
+  upcomingEvents = () => {
+    return this.props.events.filter(e => new Date(e.end_date) > Date.now())
+  }
+
   filteredEvents = () => {
     return this.props.events.filter(e => e.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
   }
@@ -61,6 +65,7 @@ class Homepage extends React.Component{
 
 render(){
   var randomColor = Math.floor(Math.random()*16777215).toString(16);
+
     return (
         <div className='wrapper'>
          <Grid columns="equal" divided stackable>
@@ -89,7 +94,7 @@ render(){
                                         color="green"
                                         checked={this.state.checked}
                                         onChange={this.handleToggle}
-                                        label='Sort By Name'
+                                        label='Show all Lists'
                                         />
                               
                                   </Segment>
@@ -112,22 +117,22 @@ render(){
      
                       this.state.checked ?
                       this.filteredEvents().sort((a, b) => {
-                        const nameA = a.title
-                        const nameB = b.title
+                        const createdA = new Date(a.start_date)
+                        const createdB = new Date(b.start_date)
 
-                        if (nameA < nameB) {
+                        if (createdB > createdA) {
                           return -1
                         }
-                        if (nameA > nameB) {
+                        if (createdB < createdA) {
                           return 1
                         }
-                        return 0
+                          return 0
                       }).map(e => <Events key={e.id} event={e} 
                         color={this.randomColor()} 
                         handleOpen={() =>this.handleOpen("editEventModal")}
                         setEvent={() => this.setEvent(e)}/>)
                     :
-                      this.filteredEvents().sort((a, b) => {
+                      this.upcomingEvents().sort((a, b) => {
                         const createdA = new Date(a.start_date)
                         const createdB = new Date(b.start_date)
 
