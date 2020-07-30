@@ -47,9 +47,10 @@ class ContactShow extends React.Component {
         size='tiny'
         trigger={<Button
           onClick={() => this.handleOpen('editContactModal')}
-          content='Edit Friend'
+          content='Edit Contact'
           inverted
           color='green'
+          icon="edit"
         />}
         open={this.state.editContactModal}
         onClose={() => this.handleClose('editContactModal')}
@@ -68,8 +69,9 @@ class ContactShow extends React.Component {
         size='mini'
         trigger={<Button
           onClick={() => this.handleOpen('deleteContactModal')}
-          content='Remove Friend'
+          content='Remove Contact'
           inverted
+          icon="trash"
           color='red'
         />}
         open={this.state.deleteContactModal}
@@ -145,7 +147,7 @@ class ContactShow extends React.Component {
         <Image floated='right' size='large' src={avatar} />
         </Grid.Column>
         <Grid.Column width={12} columns={4} dividing>
-          <Header dividing color="red">List of Gifts Given</Header>
+          <Header dividing color="red">List of Gifts</Header>
                  {!isEmpty(this.props.contact.gifts) ? <Card.Group stackable> {this.listOfGifts()}</Card.Group> : <p>No gifts for this contact yet.</p>}
                  </Grid.Column>
                  <Segment>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
-import { Card, Icon, Input, Segment, Checkbox } from 'semantic-ui-react';
+import { Card, Icon, Input, Segment, Checkbox, Label } from 'semantic-ui-react';
 import NoEvents from '../components/NoEvents';
 import NoContacts from '../components/NoContacts';
 import EventShow from '../components/EventShow';
@@ -42,8 +42,9 @@ class Homepage extends React.Component{
       <Modal trigger={<Button onClick={() => this.handleOpen('addEventModal')}
       className="fluid ui button"
       inverted
+      
       size="massive"
-      color='green'>Create a Gift List</Button>} 
+      color='green'><Icon name="add square"/>Create Gift List</Button>} 
         open={this.state.addEventModal}
         onClose={() => this.handleClose('addEventModal')}
         closeIcon
@@ -70,14 +71,14 @@ render(){
 
     return (
         <div className='wrapper'>
-         <Grid columns="equal" divided stackable>
-            <Grid.Row>
-              <Grid.Column >
-                <Header as='h2'  dividing>
+                <Header as='h2' color="red" dividing>
                   <Icon name='gift' color="green" />
                     <Header.Content  className="ui red header">Your Gift Lists</Header.Content>
                       </Header>
-                          </Grid.Column>
+         <Grid columns="equal"  stackable>
+            <Grid.Row>
+              {/* <Grid.Column >
+                          </Grid.Column> */}
                             <Grid.Column>
                                   <Input
                                         icon='search'
@@ -86,13 +87,15 @@ render(){
                                         value={this.props.searchTerm}
                                         onChange={(event) => this.props.updateSearchTerm(event.target.value)}
                                         name='filter'
-                                        placeholder='Search For a List'>
+                                        placeholder='Search for a list'>
                                     </Input>
                                   </Grid.Column>
                                   <Grid.Column>
                               <Segment compact>
+                                <Label>Show All Lists</Label>
                                     <Checkbox 
                                         toggle
+                                        className="togglehome"
                                         color="green"
                                         checked={this.state.checked}
                                         onChange={this.handleToggle}

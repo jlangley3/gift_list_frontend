@@ -32,6 +32,17 @@
   text-align: center;
 }
 
+.togglehome:visited {
+color: red;
+background-color: red;
+
+}
+
+/* . {
+  background-color: red;
+  color: red;
+} */
+
 
 
 
