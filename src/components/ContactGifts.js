@@ -19,6 +19,7 @@ class ContactGifts extends Component {
         let { name, price} = this.props.gift
         return (
             <Fragment>
+              {this.props.gift.name !== "TBD" ? 
                 <Card>
                <Card.Content>
                  <Card.Header>{name}</Card.Header>
@@ -26,6 +27,8 @@ class ContactGifts extends Component {
                  <Card.Description><Icon name='gift' color="green" size="small"/>{"Price: $"}{price}</Card.Description>
                </Card.Content>
              </Card>
+             :
+             null}
             </Fragment>
         )
     }

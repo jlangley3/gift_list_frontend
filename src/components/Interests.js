@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react"
-import { Card } from "semantic-ui-react";
+import { Label } from "semantic-ui-react";
 import {  withRouter } from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
@@ -10,14 +10,7 @@ class Interests extends Component {
         let { name } = this.props.interest
         return (
             <Fragment>
-            <Card>
-               
-               <Card.Content>
-                 <Card.Header>{name}</Card.Header>
-         
-        {/* <Card.Description>{start_date}{"  <-->  "}{end_date}</Card.Description> */}
-               </Card.Content>
-             </Card>
+            <Label color="green">{name}</Label>
             </Fragment>
         )
     }

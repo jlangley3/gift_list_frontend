@@ -30,7 +30,7 @@ class ContactShow extends React.Component {
   giftPrice = () => { 
     var cash =  this.props.contact.gifts.reduce(function(previousValue, currentValue) {
      return { price: previousValue.price + currentValue.price}})
-     return cash.price
+     return <Label color='green' horizontal>${cash.price}</Label>
  }
 
  
@@ -116,9 +116,9 @@ class ContactShow extends React.Component {
               <Header.Content>
                 { name } 
                 <Header.Subheader>Birthday { moment(birthday).format('ll') }</Header.Subheader>
-                <Header.Subheader>
-                {!isEmpty(this.props.contact.gifts) ? <p>Total Spent on Gifts for this Contact: ${this.giftPrice()}</p> : <p>0$ Spent on this Contact</p>}
-                    </Header.Subheader>
+                
+                {!isEmpty(this.props.contact.gifts) ? <Header.Subheader>Total Spent on Gifts for this Contact: {this.giftPrice()}</Header.Subheader> : null}
+                    
                   </Header.Content>
                 <Label color='red' horizontal>
                 { this.props.contact.kind ? this.props.contact.kind.toUpperCase() : null}
@@ -137,9 +137,21 @@ class ContactShow extends React.Component {
         <Image floated='right' size='large' src={avatar} />
         </Grid.Column>
         <Grid.Column width={12} columns={4}>
-                 {!isEmpty(this.props.contact.gifts) ? <Card.Group stackable> {this.listOfGifts()}</Card.Group> : <p>Money Spent on Gifts for this List: $0</p>}
+          <Header dividing color="red">List of Gifts Given</Header>
+                 {!isEmpty(this.props.contact.gifts) ? <Card.Group stackable> {this.listOfGifts()}</Card.Group> : <p>No gifts for this contact yet.</p>}
                  </Grid.Column>
+                 <Segment>
+          <Header as='h2' color="red" dividing> INTERESTS</Header></Segment>
+          <Segment>
+          <Label.Group tag>
+            {this.props.contact.interests.map(interest => <Interests key={interest.id} interest={interest}/>)}
+          </Label.Group></Segment>
+          
+ 
         <Grid.Row>
+        
+        <Grid.Column width={12}>
+          <Header as='h2' color="red" dividing> Money Spent vs Gift Rating</Header>
                 <BarChart
                 width={900}
                 height={600}
@@ -155,12 +167,9 @@ class ContactShow extends React.Component {
                 <Legend />
                 <Bar dataKey="price" fill="#8884d8" />
               </BarChart>
+              </Grid.Column>
         </Grid.Row>
-        <Header as='h2' color="red" dividing> INTERESTS</Header>
               
-        <Card.Group>
-          {this.props.contact.interests.map(interest => <Interests key={interest.id} interest={interest}/>)}
-        </Card.Group>
         
       </Grid>
       </Fragment>
