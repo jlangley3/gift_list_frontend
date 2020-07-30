@@ -81,8 +81,9 @@ class GiftContact extends React.Component {
             {!isEmpty(this.filterGifts()) ? 
           <Card>
             <Card.Content>
-              <Image avatar src={avatar} />
-              <Card.Header>{name}</Card.Header>            
+              <Image avatar src={avatar} floated="right"/>
+              <Card.Header>{name}</Card.Header> 
+              <Card.Meta>Gifts:</Card.Meta>           
                {/* {gifts.map(gift => <Card.Description>{gift.name}{"||  Price:  $"}{gift.price}</Card.Description>)} */}
                {this.filterGifts().map(gift => <Gifts key={gift.id} gift={gift}/>)}
             </Card.Content>

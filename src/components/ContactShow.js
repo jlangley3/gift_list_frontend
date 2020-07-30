@@ -2,9 +2,9 @@ import React, {Component, Fragment} from 'react'
 import { Image, Header, Modal, Grid, Button, Segment, Label, Card } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { isEmpty } from 'lodash';
 import ContactForm from './ContactForm';
 import { deletingContact, addingContact, updatingContact} from '../redux/actions/contacts';
-import { isEmpty } from 'lodash';
 import ContactGifts from "./ContactGifts";
 import Interests from "./Interests";
 import { getStickyHeaderDates } from '@fullcalendar/react';

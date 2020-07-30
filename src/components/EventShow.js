@@ -60,26 +60,28 @@ class EventShow extends React.PureComponent {
   addContactBtn = () => {
     return (
       <Modal 
-          trigger={<Button inverted color="green" 
+          trigger={<Button 
+            // inverted 
+            // color="green" 
           icon="user plus" 
           onClick={() => this.handleOpen('addContactModal')} 
           content="Add Contact" />}
-        
+          centered={true}
           open={this.state.addContactModal}
           onClose={() => this.handleClose('addContactModal')}>
           <Modal.Header>Add a Contact to This List</Modal.Header>
             <Modal.Content >
               <Grid celled>
                 <Grid.Row>
-                  <Grid.Column width={12}>
+                  <Grid.Column width={13}>
                     <AddEventContacts event={this.props.currentEvent} 
                     title={'Add Contacts to List'}  handleClose={() => this.handleClose('addContactModal')}/>
               </Grid.Column>
               <Grid.Column width={3}>
                 <Modal.Description>
-                  Pick a Contact from the DropDown to add to this list.
+                  Pick a Contact from the DropDown to add to this list.</Modal.Description>
                   <Icon circular inverted size="huge" color='green' name='users' />
-            </Modal.Description>
+            
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -156,7 +158,7 @@ class EventShow extends React.PureComponent {
       console.log(this.props)
       
 
-    const {title, start_date, end_date, budget, repeating} = this.props.event
+    const {title, start_date, end_date, budget, repeating} = this.props.currentEvent
     return(
       <Grid columns='equal' padded stackable>
         <Grid.Row>

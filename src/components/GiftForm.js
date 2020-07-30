@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Grid, Form, Select } from 'semantic-ui-react';
+import { Button, Grid, Form, Select, Label } from 'semantic-ui-react';
 import {  updatingGift } from '../redux/actions/gifts';
 
 class GiftForm extends React.Component {
@@ -72,9 +72,11 @@ class GiftForm extends React.Component {
               placeholder='Link to Gift'
               onChange={this.handleChange}
               value={this.state.link} /> */}
+              <Label>Rate Gift from 1-10 (10 being best Gift Ever)</Label>
               <Select
-              fluid label='Type price of Gift' 
+              label='Type price of Gift' 
                 name='rating'
+                upward
                 fluid label='Change Rating' 
                 placeholder="Select a Rating"
                 options={this.ratingSelect()}

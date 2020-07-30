@@ -38,7 +38,7 @@ class EditEventForm extends React.Component {
 
       handleSubmit = event => {
         event.preventDefault();
-        console.log(this.state.start_date)
+ 
         const newEvent = {
                 id: this.props.currentEvent.id,
                 title: this.state.title,
@@ -60,9 +60,9 @@ class EditEventForm extends React.Component {
       resetForm = () => {
         this.setState({
             title: '',
-            date: '',
+            start_date: '',
+            end_date: '',
             budget: "",
-            user_id: this.props.user ? this.props.user.id : ""
           })
       }
 

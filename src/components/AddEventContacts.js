@@ -9,7 +9,7 @@ class AddEventContacts extends React.Component {
           super();
           this.state = {
             contact: "",
-            name: "No name"
+            name: "TBD"
           }
       }
 
@@ -35,22 +35,31 @@ class AddEventContacts extends React.Component {
         console.log(this.props)
         console.log(this.state)
         return (
-        <div>
+        
             <Fragment>
-              <div className='ui form' >
-
+              {/* <div className='ui form' > */}
+                <Form onClick={this.handleSubmitForm}>
                 <Dropdown
                     name='contact'
+                    width={12}
+                    search
+                    selection
+                    fluid
+                    size="small"
                     placeholder="Select contact"
                     options={this.contactDropdown()}
                     onChange={this.handleContactChange}
                     // value={this.state.contact}
                     selection
-                /><p />
+                />
+                <p />
+                <Button>Submit</Button>
+                </Form>
+                {/* <p />
               <Button onClick={this.handleSubmitForm}>Submit</Button>
-            </div>
+            </div> */}
           </Fragment>
-            </div>)
+           )
     }
 }
 
