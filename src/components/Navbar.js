@@ -27,7 +27,8 @@ class NavBar extends Component {
           { !isEmpty(this.props.user) ?
           <React.Fragment>
             <Menu.Item  header >
-              <Image as={ Link } to='/home' src={Head} size="small" onClick={() => !isEmpty(this.props.currentEvent) ? this.props.updatingEvent(this.props.currentEvent) : null }/></Menu.Item>
+              <Image as={ Link } to='/home' src={Head} size="small" onClick={() => !isEmpty(this.props.currentEvent) ? this.props.updatingEvent(this.props.currentEvent) : null }/>
+              </Menu.Item>
             <Menu.Item 
               name='home' 
               as={ Link } to='/home'  onClick={() => !isEmpty(this.props.currentEvent) ? this.props.updatingEvent(this.props.currentEvent) : null }
@@ -84,7 +85,7 @@ class NavBar extends Component {
 
           <React.Fragment>
           <Menu.Item  header >
-          <Image  src={Header} size="small"/></Menu.Item>
+          <Image  src={Head} size="small"/></Menu.Item>
             <Menu.Item 
             name='login' 
             as={ Link } to="/login"
@@ -93,7 +94,8 @@ class NavBar extends Component {
             
             <Icon name='sign-in' size='large' color='green' onClick={this.logout}/>
 
-          </Menu.Item> </React.Fragment>
+          </Menu.Item> 
+          </React.Fragment>
           }
         </Menu>
 

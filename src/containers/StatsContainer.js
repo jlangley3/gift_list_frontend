@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
-import { withRouter } from "react-router-dom";
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
-import { Modal, Button, Segment, Label, Header, Grid } from 'semantic-ui-react';
-import { editCurrentEvent, addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events';
+import { Label, Header, Grid } from 'semantic-ui-react';
+import { addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events';
 import { setCurrentEvent } from '../redux/actions';
 import moment from 'moment';
 import { isEmpty } from 'lodash';
@@ -99,4 +98,4 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   
-  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StatsContainer));
+  export default connect(mapStateToProps, mapDispatchToProps)(StatsContainer);

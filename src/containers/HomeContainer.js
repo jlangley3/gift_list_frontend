@@ -92,16 +92,16 @@ render(){
                                   </Grid.Column>
                                   <Grid.Column>
                               <Segment compact>
-                                <Label>Show All Lists</Label>
+                                <Label>Upcoming Events</Label>
                                     <Checkbox 
                                         toggle
                                         className="togglehome"
                                         color="green"
                                         checked={this.state.checked}
                                         onChange={this.handleToggle}
-                                        label='Show all Lists'
+                                        // label='Show all Lists'
                                         />
-                              
+                              <Label>Show All Lists</Label>
                                   </Segment>
                         </Grid.Column>
                         <Grid.Column >
@@ -111,16 +111,16 @@ render(){
           </Grid>
 
                                     <p />
-                                  <div className='ui four stackable cards'>
                                       {this.props.events.length === 0 ?
                                       <div>
                                         <NoEvents />
-                                        <NoContacts />
+                                        
                                       </div>
         
                       :
+                                      <div className='ui four stackable cards'>
      
-                      this.state.checked ?
+                     { this.state.checked ?
                       this.filteredEvents().sort((a, b) => {
                         const createdA = new Date(a.start_date)
                         const createdB = new Date(b.start_date)
@@ -152,7 +152,7 @@ render(){
                       color={this.randomColor()} 
                       handleOpen={() =>this.handleOpen("editEventModal")}
                       setEvent={() => this.setEvent(e)}/>)}
-                      </div>
+                      </div>}
                   
                     {this.props.contacts.length === 0 ?
                     <div>
