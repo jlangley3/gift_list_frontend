@@ -1,17 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from "react-router-dom";
-import { Checkbox, Image, Header, Grid, Icon} from 'semantic-ui-react';
+import { Header, Grid, Icon} from 'semantic-ui-react';
 import FullCalendar, { formatDate } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import '../styles/Calendar.css';
-// import moment from 'moment';
 import NewEventForm from '../components/NewEventForm';
 import EventShow from '../components/EventShow';
-import EditEventForm from '../components/EditEventForm';
-import { Modal, Button, Segment } from 'semantic-ui-react';
+import { Modal,Segment } from 'semantic-ui-react';
 import { editCurrentEvent, addingEvent, updatingEvent, deletingEvent } from '../redux/actions/events';
 import { setCurrentEvent } from '../redux/actions';
 
@@ -59,14 +56,10 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
           })
   }
 
-
-
   render() {
-    // debugger;
     return (
-      <div className='demo-app'>
-        {/* {this.renderSidebar()} */}
-        <div className='demo-app-main'>
+      <div className='app'>
+        <div className='app-main'>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{
@@ -127,7 +120,6 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
               closeIcon
               centered={true}
               onClose={() => {
-                // this.toggleEditForm()
                 this.handleClose('editEventModal')}
               }
               size='small'
@@ -146,8 +138,8 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
 
   renderSidebar() {
     return (
-      <div className='demo-app-sidebar'>
-        <div className='demo-app-sidebar-section'>
+      <div className='app-sidebar'>
+        <div className='app-sidebar-section'>
           <h2>Instructions</h2>
           <ul>
             <li>Select dates and you will be prompted to create a new event</li>
@@ -155,7 +147,7 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
             <li>Click an event to delete it</li>
           </ul>
         </div>
-        <div className='demo-app-sidebar-section'>
+        <div className='app-sidebar-section'>
           <label>
             <input
               type='checkbox'
@@ -165,7 +157,7 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
             toggle weekends
           </label>
         </div>
-        <div className='demo-app-sidebar-section'>
+        <div className='app-sidebar-section'>
           <h2>All Events ({this.props.events.length})</h2>
           <ul>
             {this.props.events.map(renderSidebarEvent)}
@@ -184,10 +176,9 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
         this.setState({ 
           editEventModal: true,
            thisEvent: clickInfo.event._def.extendedProps })}
-        // if (alert(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-        //   clickInfo.event.remove() // will render immediately. will call handleEventRemove
+
       
-        handleEventChange = (changeInfo) => {
+  handleEventChange = (changeInfo) => {
          console.log(changeInfo)
          let start = changeInfo.event._instance.range.start
          let end = changeInfo.event._instance.range.end
@@ -198,64 +189,13 @@ toggleEditForm = () => this.setState({editForm: !this.state.editForm})
 
 
 
-
-
-  handleDateSelect = (selectInfo) => {
-    // this.handleOpen('addEventModal', selectInfo);
-    console.log(selectInfo)
-
-    let calendarApi = selectInfo.view.calendar
-    let title = prompt('Please enter a new title for your event')
-
-    calendarApi.unselect() // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({ // will render immediately. will call handleEventAdd
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      }, true) // temporary=true, will get overwritten when reducer gives new events
-    }
-  }
-
-
   // handlers that initiate reads/writes via the 'action' props
   // ------------------------------------------------------------------------------------------
 
-  handleDates = (rangeInfo) => {
-    console.log(rangeInfo)
-  }
-
-  // handleEventAdd = (addInfo) => {
-  //   this.props.createEvent(addInfo.event.toPlainObject())
-  //     .catch(() => {
-  //       reportNetworkError()
-  //       addInfo.revert()
-  //     })
-  // }
-
-
-//   handleEventRemove = (removeInfo) => {
-//     this.props.deleteEvent(removeInfo.event.id)
-//       .catch(() => {
-//         reportNetworkError()
-//         removeInfo.revert()
-//       })
-//   }
-
-// }
-
-
-
-// function reportNetworkError() {
-//   alert('This action could not be completed')
-// }
 }
 function renderEventContent(eventInfo) {
   return (
     <>
-      {/* <b>{eventInfo.timeText}</b> */}
       <i>{eventInfo.event.title}</i>
     </>
   )
@@ -264,14 +204,11 @@ function renderEventContent(eventInfo) {
 function renderSidebarEvent(event) {
   return (
     <li key={event.id} className="colors">
-      {/* <Moment>{event.start_date}</Moment> */}
       <b>{formatDate(event.start_date, {year: 'numeric', month: 'long', day: 'numeric'})}</b> 
       <i>{event.title}</i>
     </li>
   )
 }
-
-
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -295,4 +232,4 @@ return {
 }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CalendarContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarContainer);

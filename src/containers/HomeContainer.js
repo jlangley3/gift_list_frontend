@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
-import { Card, Icon, Input, Segment, Checkbox, Label } from 'semantic-ui-react';
+import { Icon, Input, Segment, Checkbox, Label } from 'semantic-ui-react';
 import NoEvents from '../components/NoEvents';
 import NoContacts from '../components/NoContacts';
 import EventShow from '../components/EventShow';
 import NewEventForm from '../components/NewEventForm';
-import { Grid, Button, Modal, Image, Header} from 'semantic-ui-react';
+import { Grid, Button, Modal, Header} from 'semantic-ui-react';
 import Events from '../components/Events.js';
 import { updateSearchTerm } from '../redux/actions';
 
