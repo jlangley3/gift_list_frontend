@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from "react"
-import { Card, Image, Icon } from "semantic-ui-react";
-import { withRouter, Link } from "react-router-dom";
+import { Card, Icon } from "semantic-ui-react";
+import { withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
 import moment from 'moment';
