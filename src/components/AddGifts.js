@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Grid, Dropdown, Form } from 'semantic-ui-react';
+import { Button, Grid, Form } from 'semantic-ui-react';
 import { addingEventContact } from '../redux/actions';
 
 class AddGifts extends React.Component {
@@ -20,7 +20,7 @@ class AddGifts extends React.Component {
 
 
      
-    handleSubmitForm = (event) => {
+    handleSubmitForm = () => {
         this.props.addingEventContact(this.state, this.props.event)
         this.props.handleClose('addContactModal')
     }

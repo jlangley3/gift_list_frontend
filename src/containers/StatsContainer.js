@@ -34,9 +34,6 @@ giftPrice = () => {
 }
 
 
-
-
-
   render() {
     return (
       <Fragment>

@@ -9,7 +9,5 @@ export default class NewUserContainer extends React.Component{
       <h2>Sign Up!</h2>
       <UserForm />
     </div>
-  )
-  
-}
+   )}
 }
