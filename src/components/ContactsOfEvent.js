@@ -1,10 +1,8 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Button, Grid, Modal, Image, Header, List, Icon, Card, Segment} from 'semantic-ui-react';
+import { Button, Grid, Modal, Image, Icon, Card} from 'semantic-ui-react';
 import { deletingGift } from '../redux/actions/';
-import GiftForm from './GiftForm';
 import AddGifts from './AddGifts';
-import moment from 'moment';
 import Gifts from './Gifts';
 import { isEmpty } from 'lodash';
 

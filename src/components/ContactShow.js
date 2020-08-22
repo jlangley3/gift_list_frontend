@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, { Fragment} from 'react'
 import { Image, Header, Modal, Grid, Button, Segment, Label, Card, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -7,9 +7,8 @@ import ContactForm from './ContactForm';
 import { deletingContact, addingContact, updatingContact} from '../redux/actions/contacts';
 import ContactGifts from "./ContactGifts";
 import Interests from "./Interests";
-import { getStickyHeaderDates } from '@fullcalendar/react';
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 import { addingInterests } from '../redux/actions/interests';
 
