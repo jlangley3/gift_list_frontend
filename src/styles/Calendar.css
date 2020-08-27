@@ -32,7 +32,7 @@ b { /* used for event dates/times */
 }
 
 
-.demo-app {
+.app {
   display: flex;
   min-height: 100%;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
@@ -41,19 +41,19 @@ b { /* used for event dates/times */
   /* background-color: #c2c0c0; */
 }
 
-.demo-app-sidebar {
+.app-sidebar {
   width: 300px;
   line-height: 1.5;
   /* background: #767979; */
   border-right: 1px solid #e01b0d;
 }
 
-.demo-app-sidebar-section {
+.app-sidebar-section {
   padding: 2em;
 }
 
 
-.demo-app-main {
+.app-main {
   flex-grow: 1;
   padding: 3em;
   /* color: green; */
