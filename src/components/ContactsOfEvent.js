@@ -30,7 +30,7 @@ class GiftContact extends React.Component {
 
     handleSubmitForm = (event) => {
        event.preventDefault();
-       let giftAndContact = this.state.currentContact
+      //  let giftAndContact = this.state.currentContact
         this.props.addingGift(this.state, this.props.event)
     }
 
@@ -38,7 +38,6 @@ class GiftContact extends React.Component {
       return (
         <Modal 
           trigger={<Button 
-            // color="grey" 
             onClick={() => this.handleOpen('addGiftModal')}
             icon="gift"
             size="mini" 
@@ -66,12 +65,10 @@ class GiftContact extends React.Component {
 
         filterGifts = () => {
           const gifts = this.props.currentEvent.gifts.filter(gift => gift.contact_id === this.props.contact.id )
-          // && gift.name !== "No Gift Yet"
           return gifts
         }
 
     render(){
-        // console.log(this.props)
     
         let {name, gifts, birthday, avatar} = this.props.contact
         return (
@@ -82,7 +79,6 @@ class GiftContact extends React.Component {
               <Image avatar src={avatar} floated="right"/>
               <Card.Header>{name}</Card.Header> 
               <Card.Meta>Gifts:</Card.Meta>           
-               {/* {gifts.map(gift => <Card.Description>{gift.name}{"||  Price:  $"}{gift.price}</Card.Description>)} */}
                {this.filterGifts().map(gift => <Gifts key={gift.id} gift={gift}/>)}
             </Card.Content>
             {this.addGiftBtn()}
@@ -105,7 +101,6 @@ const mapStateToProps = (state )=> {
   
   const mapDispatchToProps = dispatch => {
     return {
-      // addingGiftContact: (newContactGift, thisEvent) => dispatch(addingGift(newContactGift, thisEvent)),
       deletingGift: (gift, thisEvent) => dispatch(deletingGift(gift, thisEvent))
       
     }

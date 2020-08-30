@@ -8,12 +8,7 @@ import moment from 'moment';
 
 class ContactCard extends React.Component {
 
-
-
-  
-
   render() {
-    
     return (
       <React.Fragment>
         <Card as={Link} to={`/contacts/${this.props.contact.id}` }>

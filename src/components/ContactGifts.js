@@ -7,13 +7,10 @@ import moment from 'moment';
 
 class ContactGifts extends Component {
 
-
   giftDateFinder = () => {
        const newDate = this.props.events.find(event => event.id === this.props.gift.event_id)
        return moment(newDate.start_date).format('ll')
-        
   }
-
 
     render() {
         let { name, price} = this.props.gift
