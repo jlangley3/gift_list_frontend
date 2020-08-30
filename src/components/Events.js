@@ -4,7 +4,6 @@ import { withRouter, Link} from "react-router-dom";
 import {connect} from "react-redux";
 import { fetchingUser } from '../redux/actions/users';
 import { setCurrentEvent } from '../redux/actions';
-import EventPic from '../images/Event.jpg'
 import moment from 'moment';
 
 class Events extends Component {

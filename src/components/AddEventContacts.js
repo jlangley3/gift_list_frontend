@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Button, Grid, Dropdown, Form } from 'semantic-ui-react';
+import { Button, Dropdown, Form } from 'semantic-ui-react';
 import { addingEventContact } from '../redux/actions';
 
 class AddEventContacts extends React.Component {
@@ -37,7 +37,6 @@ class AddEventContacts extends React.Component {
         return (
         
             <Fragment>
-              {/* <div className='ui form' > */}
                 <Form onClick={this.handleSubmitForm}>
                 <Dropdown
                     name='contact'
@@ -49,15 +48,11 @@ class AddEventContacts extends React.Component {
                     placeholder="Select contact"
                     options={this.contactDropdown()}
                     onChange={this.handleContactChange}
-                    // value={this.state.contact}
                     selection
                 />
                 <p />
                 <Button>Submit</Button>
                 </Form>
-                {/* <p />
-              <Button onClick={this.handleSubmitForm}>Submit</Button>
-            </div> */}
           </Fragment>
            )
     }
