@@ -1,17 +1,17 @@
 import React, {Component, Fragment} from "react"
-import { Image, Header, Modal, Grid, Button, GridColumn, List, Icon, Label, Card } from 'semantic-ui-react'
+import { Image, Header, Modal, Grid, Button, Icon, Card } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { Link, withRouter} from 'react-router-dom'
-import moment from 'moment';
-import AddEventContacts from './AddEventContacts';
-import AddGifts from './AddGifts';
-import EditEventForm from './EditEventForm';
-import { isEmpty } from 'lodash';
-import { updatingEvent, deletingEvent, addingEvent} from '../redux/actions/events';
-import GiftContact from './GiftContact';
-import ContactsOfEvent from './ContactsOfEvent';
-import GiftList from "../images/GiftList.png";
-import Edit from "../images/edit.gif";
+// import moment from 'moment';
+// import AddEventContacts from './AddEventContacts';
+// import AddGifts from './AddGifts';
+// import EditEventForm from './EditEventForm';
+// import { isEmpty } from 'lodash';
+// import { updatingEvent, deletingEvent, addingEvent} from '../redux/actions/events';
+// import GiftContact from './GiftContact';
+// import ContactsOfEvent from './ContactsOfEvent';
+// import GiftList from "../images/GiftList.png";
+// import Edit from "../images/edit.gif";
 import { deletingGift } from '../redux/actions/';
 import GiftForm from './GiftForm';
 
